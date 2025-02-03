@@ -1,35 +1,54 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import styled from 'styled-components';
+import Navbar from './components/Navbar';
+import Display from './components/Display';
+import { game, states } from './types';
+
+const games: game[] = [
+  {
+    name: 'Hollow Knight',
+    image:
+      'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/367520/header.jpg?t=1695270428',
+    state: states.Playing,
+  },
+  {
+    name: 'Ultrakill',
+    image:
+      'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1229490/header.jpg?t=1734890718',
+    state: states.Finished,
+  },
+  {
+    name: 'Ultrakill',
+    image:
+      'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1229490/header.jpg?t=1734890718',
+    state: states.FinishedFully,
+  },
+  {
+    name: 'Ultrakill',
+    image:
+      'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1229490/header.jpg?t=1734890718',
+    state: states.Abandoned,
+  },
+  {
+    name: 'Ultrakill',
+    image:
+      'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1229490/header.jpg?t=1734890718',
+    state: states.Queued,
+  },
+];
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Wrapper>
+      <Navbar />
+      <Display games={games} />
+    </Wrapper>
+  );
 }
 
-export default App
+export default App;
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100vh;
+  background-color: var(--background-color);
+`;
