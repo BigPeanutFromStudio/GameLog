@@ -1,34 +1,40 @@
 import styled from 'styled-components';
 import Navbar from './components/Navbar';
 import Display from './components/Display';
-import { game, states } from './types';
+import { game, GameContextType, states } from './types';
+import { createContext, useState } from 'react';
 
-const games: game[] = [
+const initialGames: game[] = [
   {
+    id: 1,
     name: 'Hollow Knight',
     image:
       'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/367520/header.jpg?t=1695270428',
     state: states.Playing,
   },
   {
+    id: 2,
     name: 'Ultrakill',
     image:
       'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1229490/header.jpg?t=1734890718',
     state: states.Finished,
   },
   {
+    id: 3,
     name: 'Ultrakill',
     image:
       'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1229490/header.jpg?t=1734890718',
     state: states.FinishedFully,
   },
   {
+    id: 4,
     name: 'Ultrakill',
     image:
       'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1229490/header.jpg?t=1734890718',
     state: states.Abandoned,
   },
   {
+    id: 5,
     name: 'Ultrakill',
     image:
       'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1229490/header.jpg?t=1734890718',
@@ -36,12 +42,22 @@ const games: game[] = [
   },
 ];
 
+export const GameContext = createContext<GameContextType | null>(null);
+
 function App() {
+  const [games, setGames] = useState<game[]>(initialGames);
+
+  const deleteGame = (id: number) => {
+    setGames(games.filter((game) => game.id !== id));
+  };
+
   return (
-    <Wrapper>
-      <Navbar />
-      <Display games={games} />
-    </Wrapper>
+    <GameContext.Provider value={{ games, setGames, deleteGame }}>
+      <Wrapper>
+        <Navbar />
+        <Display />
+      </Wrapper>
+    </GameContext.Provider>
   );
 }
 

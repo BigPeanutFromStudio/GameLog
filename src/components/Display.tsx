@@ -1,12 +1,22 @@
 import styled from 'styled-components';
 import Card from './Card';
-import { DisplayProps } from '../types';
+import AddGameBtn from './AddGameBtn';
+import { useContext } from 'react';
+import { GameContext } from '../App';
+import { game, GameContextType } from '../types';
 
-const Display = ({ games }: DisplayProps) => {
+const Display = () => {
+  const gameContext = useContext(GameContext);
+  if (!gameContext) {
+    console.log('Something went wrong with the context');
+    return null;
+  }
+  const { games, deleteGame }: GameContextType = gameContext;
   return (
     <Wrapper>
-      {games.map((game) => (
-        <Card game={game} />
+      <AddGameBtn />
+      {games.map((game: game) => (
+        <Card game={game} key={game.id} deleteGame={deleteGame} />
       ))}
     </Wrapper>
   );
