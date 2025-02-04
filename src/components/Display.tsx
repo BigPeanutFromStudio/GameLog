@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Card from './Card';
 import AddGameBtn from './AddGameBtn';
 import { useContext } from 'react';
-import { GameContext } from '../App';
+import { GameContext } from '../main';
 import { game, GameContextType } from '../types';
 
 const Display = () => {

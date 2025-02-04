@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import Navbar from './components/Navbar';
 import Display from './components/Display';
-import { game, GameContextType, states } from './types';
-import { createContext, useState } from 'react';
+import { game, states } from './types';
+import { useState } from 'react';
+import { GameContext } from './main';
 
 const initialGames: game[] = [
   {
@@ -42,8 +43,6 @@ const initialGames: game[] = [
   },
 ];
 
-export const GameContext = createContext<GameContextType | null>(null);
-
 function App() {
   const [games, setGames] = useState<game[]>(initialGames);
 
@@ -51,8 +50,14 @@ function App() {
     setGames(games.filter((game) => game.id !== id));
   };
 
+  const addGame = (game: game) => {
+    const gameList = games;
+    gameList.push(game);
+    setGames(gameList);
+  };
+
   return (
-    <GameContext.Provider value={{ games, setGames, deleteGame }}>
+    <GameContext.Provider value={{ games, setGames, deleteGame, addGame }}>
       <Wrapper>
         <Navbar />
         <Display />

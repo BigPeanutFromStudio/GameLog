@@ -28,4 +28,5 @@ export type GameContextType = {
   games: game[];
   setGames: Dispatch<SetStateAction<game[]>>;
   deleteGame: (id: number) => void;
+  addGame: (game: game) => void;
 };
