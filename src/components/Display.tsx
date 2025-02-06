@@ -3,20 +3,38 @@ import Card from './Card';
 import AddGameBtn from './AddGameBtn';
 import { useContext } from 'react';
 import { GameContext } from '../main';
-import { game, GameContextType } from '../types';
+import { DisplayProps, game, GameContextType, states } from '../types';
 
-const Display = () => {
+const Display = ({ games }: DisplayProps) => {
   const gameContext = useContext(GameContext);
   if (!gameContext) {
     console.log('Something went wrong with the context');
     return null;
   }
-  const { games, deleteGame }: GameContextType = gameContext;
+  const { deleteGame, updateGame }: GameContextType = gameContext;
+
+  const cycleStates = (game: game) => {
+    const currentStateIndex = Object.values(states).indexOf(game.state);
+    const nextStateIndex = (currentStateIndex + 1) % 5;
+
+    updateGame({
+      id: game.id,
+      name: game.name,
+      state: Object.values(states)[nextStateIndex] as states,
+      image: game.image,
+    });
+  };
+
   return (
     <Wrapper>
       <AddGameBtn />
       {games.map((game: game) => (
-        <Card game={game} key={game.id} deleteGame={deleteGame} />
+        <Card
+          game={game}
+          key={game.id}
+          deleteGame={deleteGame}
+          onClickBadge={cycleStates}
+        />
       ))}
     </Wrapper>
   );

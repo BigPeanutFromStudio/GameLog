@@ -10,7 +10,7 @@ const stateToColor = new Map<states, string>([
   [states.Queued, 'var(--queued-color)'],
 ]);
 
-const Card = ({ game, deleteGame }: CardProps) => {
+const Card = ({ game, deleteGame, onClickBadge }: CardProps) => {
   return (
     <Wrapper $badgeColor={stateToColor.get(game.state) || 'gray'}>
       <div className='container'>
@@ -18,7 +18,12 @@ const Card = ({ game, deleteGame }: CardProps) => {
         <div className='delete' onClick={() => deleteGame(game.id)}>
           <TiDelete size={30} style={{ color: 'var(--icon-color)' }} />
         </div>
-        <div className='badge'>{game.state}</div>
+        <div className='badge' onClick={() => onClickBadge(game)}>
+          {game.state}
+        </div>
+        <div className='overlay'>
+          <h1>{game.name}</h1>
+        </div>
       </div>
     </Wrapper>
   );
@@ -26,11 +31,12 @@ const Card = ({ game, deleteGame }: CardProps) => {
 export default Card;
 
 const Wrapper = styled.div<{ $badgeColor: string }>`
+  position: relative;
   width: 460px;
   height: 215px;
-  .container {
-    position: relative;
-  }
+  user-select: none;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  border-radius: 10px;
   img {
     border-radius: 10px;
     user-select: none;
@@ -41,12 +47,14 @@ const Wrapper = styled.div<{ $badgeColor: string }>`
     right: 5px;
     top: 5px;
     cursor: pointer;
-    transform: scale(1);
+    transform: scale(0);
     transition: transform 0.1s ease;
   }
-  .delete:hover {
+  .container:hover .delete:hover {
     transform: scale(1.2);
-    transition: transform 0.1s ease;
+  }
+  .container:hover .delete {
+    transform: scale(1);
   }
   .badge {
     position: absolute;
@@ -61,15 +69,43 @@ const Wrapper = styled.div<{ $badgeColor: string }>`
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 1);
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 1);
     user-select: none;
+    cursor: pointer;
+  }
+  .badge:hover {
+    transform: scale(1.05);
+    transition: transform 0.1s ease;
   }
   .container {
+    position: relative;
+    overflow: hidden;
     transform: scale(1);
     transition: transform 0.5s ease;
   }
   .container:hover {
     transform: scale(1.05);
     transition: transform 0.5s ease;
+  }
+  .overlay {
+    position: absolute;
+    inset: 0;
+    width: 460px;
+    height: 215px;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgba(0, 0, 0, 0);
+    transition: 0.5s ease;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .overlay h1 {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+  .container:hover .overlay {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
   }
 `;

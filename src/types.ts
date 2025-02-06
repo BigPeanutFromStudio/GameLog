@@ -1,15 +1,15 @@
 import { Dispatch, SetStateAction } from 'react';
 
 export enum states {
-  Finished = 'Finished',
   FinishedFully = '100%',
+  Finished = 'Finished',
   Playing = 'Playing',
   Queued = 'Queued',
   Abandoned = 'Abandoned',
 }
 
 export type game = {
-  id: number;
+  id: string;
   name: string;
   state: states;
   image: string;
@@ -17,16 +17,27 @@ export type game = {
 
 export type CardProps = {
   game: game;
-  deleteGame: (id: number) => void;
+  deleteGame: (id: string) => void;
+  onClickBadge: (game: game) => void;
 };
 
 export type DisplayProps = {
   games: game[];
 };
 
+export type NavbarProps = {
+  setFilter: (filter: string) => void;
+  setSearch: (search: string | null) => void;
+  isAscending: boolean;
+  setIsAscending: (isAscending: boolean) => void;
+  setSortMethod: (sortMethod: string) => void;
+};
+
 export type GameContextType = {
   games: game[];
   setGames: Dispatch<SetStateAction<game[]>>;
-  deleteGame: (id: number) => void;
+  deleteGame: (id: string) => void;
   addGame: (game: game) => void;
+  updateGame: (updatedGame: game) => void;
+  getFilteredGames: (name: string | null, filter: string | states) => game[];
 };

@@ -2,65 +2,98 @@ import styled from 'styled-components';
 import Navbar from './components/Navbar';
 import Display from './components/Display';
 import { game, states } from './types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GameContext } from './main';
 
-const initialGames: game[] = [
-  {
-    id: 1,
-    name: 'Hollow Knight',
-    image:
-      'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/367520/header.jpg?t=1695270428',
-    state: states.Playing,
-  },
-  {
-    id: 2,
-    name: 'Ultrakill',
-    image:
-      'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1229490/header.jpg?t=1734890718',
-    state: states.Finished,
-  },
-  {
-    id: 3,
-    name: 'Ultrakill',
-    image:
-      'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1229490/header.jpg?t=1734890718',
-    state: states.FinishedFully,
-  },
-  {
-    id: 4,
-    name: 'Ultrakill',
-    image:
-      'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1229490/header.jpg?t=1734890718',
-    state: states.Abandoned,
-  },
-  {
-    id: 5,
-    name: 'Ultrakill',
-    image:
-      'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1229490/header.jpg?t=1734890718',
-    state: states.Queued,
-  },
-];
+// TODO: Add edit page, ratings
+// TODO: Add full customizability
+// TODO: Add seperation by state
 
+const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
 function App() {
   const [games, setGames] = useState<game[]>(initialGames);
+  const [filter, setFilter] = useState('all');
+  const [search, setSearch] = useState<string | null>(null);
+  const [sortMethod, setSortMethod] = useState('byname');
+  const [isAscending, setIsAscending] = useState(true);
 
-  const deleteGame = (id: number) => {
+  useEffect(() => {
+    localStorage.setItem('games', JSON.stringify(games));
+  }, [games]);
+
+  const deleteGame = (id: string) => {
     setGames(games.filter((game) => game.id !== id));
   };
 
   const addGame = (game: game) => {
-    const gameList = games;
-    gameList.push(game);
-    setGames(gameList);
+    setGames([...games, game]);
+  };
+
+  const updateGame = (updatedGame: game) => {
+    setGames(
+      games.map((game) => (game.id === updatedGame.id ? updatedGame : game))
+    );
+  };
+
+  const getFilteredGames = (name: string | null, filter: string | states) => {
+    let filteredGames = [...games];
+    if (name !== null && name !== '') {
+      filteredGames = games.filter((game) =>
+        game.name.toLocaleLowerCase().startsWith(name.toLocaleLowerCase())
+      );
+    }
+    if (filter === 'all') {
+      return filteredGames;
+    } else {
+      filter = filter === 'FinishedFully' ? '100%' : filter;
+      return filteredGames.filter((game) => game.state == filter);
+    }
+  };
+
+  const sortGames = (unsortedGames: game[]) => {
+    switch (sortMethod) {
+      case 'byname': {
+        return isAscending
+          ? unsortedGames.sort((a, b) => a.name.localeCompare(b.name))
+          : unsortedGames.sort((a, b) => b.name.localeCompare(a.name));
+      }
+      case 'bystate': {
+        const stateOrder = Object.values(states);
+        return isAscending
+          ? unsortedGames.sort(
+              (a, b) =>
+                stateOrder.indexOf(a.state) - stateOrder.indexOf(b.state)
+            )
+          : unsortedGames.sort(
+              (a, b) =>
+                stateOrder.indexOf(b.state) - stateOrder.indexOf(a.state)
+            );
+      }
+      default:
+        return unsortedGames;
+    }
   };
 
   return (
-    <GameContext.Provider value={{ games, setGames, deleteGame, addGame }}>
+    <GameContext.Provider
+      value={{
+        games,
+        setGames,
+        deleteGame,
+        addGame,
+        updateGame,
+        getFilteredGames,
+      }}
+    >
       <Wrapper>
-        <Navbar />
-        <Display />
+        <Navbar
+          setFilter={setFilter}
+          setSearch={setSearch}
+          setIsAscending={setIsAscending}
+          isAscending={isAscending}
+          setSortMethod={setSortMethod}
+        />
+        <Display games={sortGames(getFilteredGames(search, filter))} />
       </Wrapper>
     </GameContext.Provider>
   );
