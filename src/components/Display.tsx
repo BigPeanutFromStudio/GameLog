@@ -22,6 +22,7 @@ const Display = ({ games, categorize }: DisplayProps) => {
       name: game.name,
       state: Object.values(states)[nextStateIndex] as states,
       image: game.image,
+      rating: game.rating,
     });
   };
 

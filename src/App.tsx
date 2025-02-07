@@ -80,6 +80,11 @@ function App() {
                 stateOrder.indexOf(b.state) - stateOrder.indexOf(a.state)
             );
       }
+      case 'byreview': {
+        return isAscending
+          ? unsortedGames.sort((a, b) => a.rating - b.rating)
+          : unsortedGames.sort((a, b) => b.rating - a.rating);
+      }
       default:
         return unsortedGames;
     }

@@ -44,6 +44,7 @@ const AddGameForm = ({ setShowModal }: any) => {
       name: formJson.name.toString(),
       state: states[formJson.state as keyof typeof states],
       image: formJson.image.toString(),
+      rating: parseFloat(formJson.rating.toString()),
     };
     addGame(game);
     setShowModal(false);
@@ -64,6 +65,7 @@ const AddGameForm = ({ setShowModal }: any) => {
               ))}
             </optgroup>
           </select>
+          <input type='number' step='0.01' name='rating' defaultValue='0' />
           <input type='text' name='image' placeholder='Image url (460x215)' />
           <button type='submit'>Add game</button>
         </form>

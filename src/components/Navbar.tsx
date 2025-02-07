@@ -36,6 +36,7 @@ const Navbar = ({
           <optgroup>
             <option value='byname'>Name</option>
             <option value='bystate'>State</option>
+            <option value='byreview'>Review</option>
           </optgroup>
         </select>
         <div

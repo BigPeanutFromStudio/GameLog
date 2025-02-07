@@ -13,6 +13,7 @@ export type game = {
   name: string;
   state: states;
   image: string;
+  rating: number;
 };
 
 export type CardProps = {
