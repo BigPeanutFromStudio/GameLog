@@ -7,19 +7,30 @@ import { GameContext } from './main';
 
 // TODO: Add edit page, ratings
 // TODO: Add full customizability
-// TODO: Add seperation by state
 
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
+const initialSettings = JSON.parse(
+  localStorage.getItem('settings') ||
+    "{ filter: 'all', sortMethod: 'byname', isAscending: true, categorize: false,}"
+);
 function App() {
   const [games, setGames] = useState<game[]>(initialGames);
-  const [filter, setFilter] = useState('all');
+  const [filter, setFilter] = useState(initialSettings.filter);
   const [search, setSearch] = useState<string | null>(null);
-  const [sortMethod, setSortMethod] = useState('byname');
-  const [isAscending, setIsAscending] = useState(true);
+  const [sortMethod, setSortMethod] = useState(initialSettings.sortMethod);
+  const [isAscending, setIsAscending] = useState(initialSettings.isAscending);
+  const [categorize, setCategorize] = useState(initialSettings.categorize);
 
   useEffect(() => {
     localStorage.setItem('games', JSON.stringify(games));
-  }, [games]);
+    const settings = {
+      filter: filter,
+      sortMethod: sortMethod,
+      isAscending: isAscending,
+      categorize: categorize,
+    };
+    localStorage.setItem('settings', JSON.stringify(settings));
+  }, [games, filter, sortMethod, isAscending, categorize]);
 
   const deleteGame = (id: string) => {
     setGames(games.filter((game) => game.id !== id));
@@ -92,8 +103,15 @@ function App() {
           setIsAscending={setIsAscending}
           isAscending={isAscending}
           setSortMethod={setSortMethod}
+          setCategorize={setCategorize}
+          categorize={categorize}
+          filter={filter}
+          sortMethod={sortMethod}
         />
-        <Display games={sortGames(getFilteredGames(search, filter))} />
+        <Display
+          categorize={categorize}
+          games={sortGames(getFilteredGames(search, filter))}
+        />
       </Wrapper>
     </GameContext.Provider>
   );
@@ -103,6 +121,6 @@ export default App;
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background-color: var(--background-color);
 `;

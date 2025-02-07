@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { NavbarProps, states } from '../types';
 import { FaSortAmountDownAlt, FaSortAmountDown } from 'react-icons/fa';
+import { MdCategory, MdOutlineCategory } from 'react-icons/md';
 
 const Navbar = ({
   setSearch,
@@ -8,6 +9,10 @@ const Navbar = ({
   isAscending,
   setIsAscending,
   setSortMethod,
+  setCategorize,
+  categorize,
+  sortMethod,
+  filter,
 }: NavbarProps) => {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -23,7 +28,11 @@ const Navbar = ({
     <Wrapper>
       <h1>Sort by:</h1>
       <div className='sort-container'>
-        <select name='sort' defaultValue='byname' onChange={handleSortChange}>
+        <select
+          name='sort'
+          defaultValue={sortMethod}
+          onChange={handleSortChange}
+        >
           <optgroup>
             <option value='byname'>Name</option>
             <option value='bystate'>State</option>
@@ -39,9 +48,16 @@ const Navbar = ({
             <FaSortAmountDown size={30} />
           )}
         </div>
+        <div className='sort-style' onClick={() => setCategorize(!categorize)}>
+          {categorize ? (
+            <MdCategory size={30} />
+          ) : (
+            <MdOutlineCategory size={30} />
+          )}
+        </div>
       </div>
       <h1>Filter by:</h1>
-      <select name='state' defaultValue='all' onChange={handleFilterChange}>
+      <select name='state' defaultValue={filter} onChange={handleFilterChange}>
         <optgroup>
           <option value='all'>All</option>
           {Object.keys(states).map((key, index) => (
@@ -78,7 +94,7 @@ const Wrapper = styled.div`
     all: unset;
     display: block;
     background-color: var(--primary-color);
-    width: 1000px;
+    width: 900px;
     border-radius: 20px;
     padding: 20px;
     margin: 20px;
@@ -99,6 +115,7 @@ const Wrapper = styled.div`
     border-radius: 20px;
     background-color: var(--primary-color);
     cursor: pointer;
+    margin-left: 5px;
   }
   h1 {
     margin-left: 15px;

@@ -23,6 +23,7 @@ export type CardProps = {
 
 export type DisplayProps = {
   games: game[];
+  categorize: boolean;
 };
 
 export type NavbarProps = {
@@ -31,6 +32,10 @@ export type NavbarProps = {
   isAscending: boolean;
   setIsAscending: (isAscending: boolean) => void;
   setSortMethod: (sortMethod: string) => void;
+  setCategorize: (categorize: boolean) => void;
+  categorize: boolean;
+  sortMethod: string;
+  filter: string;
 };
 
 export type GameContextType = {

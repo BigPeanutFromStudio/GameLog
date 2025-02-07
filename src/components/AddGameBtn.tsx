@@ -28,6 +28,7 @@ export default AddGameBtn;
 const Wrapper = styled.div`
   width: 460px;
   height: 215px;
+  margin-bottom: 10px;
   .container {
     position: relative;
     width: inherit;
