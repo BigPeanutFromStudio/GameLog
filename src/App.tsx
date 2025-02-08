@@ -5,15 +5,15 @@ import { useEffect, useState } from 'react';
 import { GameContext } from './main';
 import FileSaver from 'file-saver';
 
-// TODO: Add full customizability
+// TODO: Add full customizability with a settings menu
 // TODO: Add support for custom local images
 // TODO: Better scaling cards (text, ratings, gaps, etc.)
-// TODO: Add platform selection
+// TODO: Fix display not refreshing on importing data
 
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
 const initialSettings = JSON.parse(
   localStorage.getItem('settings') ||
-    '{ "filter": "all", "sortMethod": "byname", "isAscending": true, "categorize": false, "cardScale": [460, 215]}'
+    '{ "filter": "all", "sortMethod": "byname", "isAscending": true, "categorize": false, "categorizeBy":"state", "cardScale": [460, 215]}'
 );
 function App() {
   const [games, setGames] = useState<game[]>(initialGames);
@@ -22,6 +22,9 @@ function App() {
   const [sortMethod, setSortMethod] = useState(initialSettings.sortMethod);
   const [isAscending, setIsAscending] = useState(initialSettings.isAscending);
   const [categorize, setCategorize] = useState(initialSettings.categorize);
+  const [categorizeBy, setCategorizeBy] = useState(
+    initialSettings.categorizeBy
+  );
   const [cardScale, setCardScale] = useState(initialSettings.cardScale);
 
   useEffect(() => {
@@ -31,10 +34,19 @@ function App() {
       sortMethod: sortMethod,
       isAscending: isAscending,
       categorize: categorize,
+      categorizeBy: categorizeBy,
       cardScale: cardScale,
     };
     localStorage.setItem('settings', JSON.stringify(settings));
-  }, [games, filter, sortMethod, isAscending, categorize, cardScale]);
+  }, [
+    games,
+    filter,
+    sortMethod,
+    isAscending,
+    categorize,
+    cardScale,
+    categorizeBy,
+  ]);
 
   const deleteGame = (id: string) => {
     setGames(games.filter((game) => game.id !== id));
@@ -56,6 +68,7 @@ function App() {
       sortMethod: sortMethod,
       isAscending: isAscending,
       categorize: categorize,
+      categorizeBy: categorizeBy,
       cardScale: cardScale,
     };
     const blob = new Blob(
@@ -98,18 +111,6 @@ function App() {
           ? unsortedGames.sort((a, b) => a.name.localeCompare(b.name))
           : unsortedGames.sort((a, b) => b.name.localeCompare(a.name));
       }
-      case 'bystate': {
-        const stateOrder = Object.values(states);
-        return isAscending
-          ? unsortedGames.sort(
-              (a, b) =>
-                stateOrder.indexOf(a.state) - stateOrder.indexOf(b.state)
-            )
-          : unsortedGames.sort(
-              (a, b) =>
-                stateOrder.indexOf(b.state) - stateOrder.indexOf(a.state)
-            );
-      }
       case 'byreview': {
         return isAscending
           ? unsortedGames.sort((a, b) => a.rating - b.rating)
@@ -147,6 +148,8 @@ function App() {
           setCategorize={setCategorize}
           filter={filter}
           sortMethod={sortMethod}
+          setCategorizeBy={setCategorizeBy}
+          categorizeBy={categorizeBy}
         />
       </Wrapper>
     </GameContext.Provider>

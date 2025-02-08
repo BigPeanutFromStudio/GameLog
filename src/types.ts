@@ -14,12 +14,12 @@ export type game = {
   state: states;
   image: string;
   rating: number;
+  platform: string;
 };
 
 export type CardProps = {
   game: game;
   deleteGame: (id: string) => void;
-  onClickBadge: (game: game) => void;
   size: number[];
 };
 
@@ -36,6 +36,8 @@ export type DisplayProps = {
   setCategorize: (categorize: boolean) => void;
   sortMethod: string;
   filter: string;
+  categorizeBy: string;
+  setCategorizeBy: (categorizeBy: string) => void;
 };
 
 export type NavbarProps = {

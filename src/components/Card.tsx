@@ -13,21 +13,29 @@ const stateToColor = new Map<states, string>([
   [states.Queued, 'var(--queued-color)'],
 ]);
 
-const Card = ({ game, deleteGame, onClickBadge, size }: CardProps) => {
+const Card = ({ game, deleteGame, size }: CardProps) => {
   const [showModal, setShowModal] = useState(false);
+  let fontSize = '2.5rem';
+  let badgeSize = ['80px', '15px', '15px'];
+  let deleteSize = 40;
+  if (size[0] === 230) {
+    fontSize = '1.8rem';
+    badgeSize = ['50px', '8px', '8px'];
+    deleteSize = 25;
+  }
   return (
     <Wrapper
       $badgeColor={stateToColor.get(game.state) || 'gray'}
       $cardScale={size}
+      $fontSize={fontSize}
+      $badgeSize={badgeSize}
     >
       <div className='container' onClick={() => setShowModal(!showModal)}>
         <img src={game.image} />
         <div className='delete' onClick={() => deleteGame(game.id)}>
-          <TiDelete size={40} style={{ color: 'var(--icon-color)' }} />
+          <TiDelete size={deleteSize} style={{ color: 'var(--icon-color)' }} />
         </div>
-        <div className='badge' onClick={() => onClickBadge(game)}>
-          {game.state}
-        </div>
+        <div className='badge'>{game.state}</div>
         <div className='rating'>{game.rating}</div>
         <div className='overlay'>
           <h1>{game.name}</h1>
@@ -43,7 +51,12 @@ const Card = ({ game, deleteGame, onClickBadge, size }: CardProps) => {
 };
 export default Card;
 
-const Wrapper = styled.div<{ $badgeColor: string; $cardScale: number[] }>`
+const Wrapper = styled.div<{
+  $badgeColor: string;
+  $cardScale: number[];
+  $fontSize: string;
+  $badgeSize: string[];
+}>`
   position: relative;
   width: ${(props) => props.$cardScale[0]}px;
   height: ${(props) => props.$cardScale[1]}px;
@@ -90,11 +103,11 @@ const Wrapper = styled.div<{ $badgeColor: string; $cardScale: number[] }>`
     position: absolute;
     z-index: 1000;
     right: 10px;
-    bottom: 15px;
+    bottom: ${(props) => props.$badgeSize[2]};
     background-color: ${(props) => props.$badgeColor};
     border-radius: 20px;
-    width: 80px;
-    height: 15px;
+    width: ${(props) => props.$badgeSize[0]};
+    height: ${(props) => props.$badgeSize[1]};
     padding: 5px;
     display: flex;
     justify-content: center;
@@ -133,8 +146,9 @@ const Wrapper = styled.div<{ $badgeColor: string; $cardScale: number[] }>`
     justify-content: center;
   }
   .overlay h1 {
-    font-size: 2.5rem;
+    font-size: ${(props) => props.$fontSize};
     text-align: center;
+    margin: 0;
   }
   .container:hover .overlay {
     background-color: rgba(0, 0, 0, 0.4);

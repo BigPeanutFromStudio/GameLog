@@ -43,6 +43,7 @@ const EditGameForm = ({ setShowModal, game }: EditGameFormProps) => {
       state: states[formJson.state as keyof typeof states],
       image: formJson.image.toString(),
       rating: parseFloat(formJson.rating.toString()),
+      platform: formJson.platform.toString(),
     };
     updateGame(updatedGame);
     setShowModal(false);
@@ -59,6 +60,12 @@ const EditGameForm = ({ setShowModal, game }: EditGameFormProps) => {
             required
             placeholder='Game name...'
             defaultValue={game.name}
+          />
+          <input
+            type='text'
+            name='platform'
+            placeholder='Game platform...'
+            defaultValue={game.platform}
           />
           <select name='state' defaultValue={game.state}>
             <optgroup>
@@ -79,7 +86,7 @@ const EditGameForm = ({ setShowModal, game }: EditGameFormProps) => {
             type='text'
             name='image'
             defaultValue={game.image}
-            placeholder='Image url (460x215)'
+            placeholder='Image url'
           />
           <button type='submit'>Edit game</button>
         </form>

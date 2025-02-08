@@ -44,6 +44,7 @@ const AddGameForm = ({ setShowModal }: AddGameFormProps) => {
       state: states[formJson.state as keyof typeof states],
       image: formJson.image.toString(),
       rating: parseFloat(formJson.rating.toString()),
+      platform: formJson.platform.toString(),
     };
     addGame(game);
     setShowModal(false);
@@ -55,6 +56,7 @@ const AddGameForm = ({ setShowModal }: AddGameFormProps) => {
         <h1>ADD A GAME</h1>
         <form onSubmit={handleSubmit}>
           <input type='text' name='name' required placeholder='Game name...' />
+          <input type='text' name='platform' placeholder='Game platform...' />
           <select name='state' defaultValue={states.Queued}>
             <optgroup>
               {Object.keys(states).map((key, index) => (

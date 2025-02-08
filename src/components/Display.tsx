@@ -23,26 +23,16 @@ const Display = ({
   setCategorize,
   sortMethod,
   filter,
+  categorizeBy,
+  setCategorizeBy,
 }: DisplayProps) => {
   const gameContext = useContext(GameContext);
   if (!gameContext) {
     console.log('Something went wrong with the context');
     return null;
   }
-  const { deleteGame, updateGame }: GameContextType = gameContext;
+  const { deleteGame }: GameContextType = gameContext;
 
-  const cycleStates = (game: game) => {
-    const currentStateIndex = Object.values(states).indexOf(game.state);
-    const nextStateIndex = (currentStateIndex + 1) % 5;
-
-    updateGame({
-      id: game.id,
-      name: game.name,
-      state: Object.values(states)[nextStateIndex] as states,
-      image: game.image,
-      rating: game.rating,
-    });
-  };
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
@@ -51,6 +41,63 @@ const Display = ({
   };
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSortMethod(e.target.value);
+  };
+  const handleCategorizeByChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setCategorizeBy(e.target.value);
+  };
+
+  const generateCategories = () => {
+    switch (categorizeBy) {
+      case 'state': {
+        return Object.values(states).map(
+          (state) =>
+            games.filter((game) => game.state === state).length !== 0 && (
+              <>
+                <h1 className='category'>{state}</h1>
+                <div className='games'>
+                  {games
+                    .filter((game) => game.state === state)
+                    .map((game: game) => (
+                      <Card
+                        game={game}
+                        key={game.id}
+                        deleteGame={deleteGame}
+                        size={cardScale}
+                      />
+                    ))}
+                </div>
+              </>
+            )
+        );
+      }
+      case 'platform': {
+        const platforms = [...new Set(games.map((game) => game.platform))].sort(
+          (a, b) => a.localeCompare(b)
+        );
+        return platforms.map(
+          (platform) =>
+            games.filter((game) => game.platform === platform).length !== 0 && (
+              <>
+                <h1 className='category'>{platform}</h1>
+                <div className='games'>
+                  {games
+                    .filter((game) => game.platform === platform)
+                    .map((game: game) => (
+                      <Card
+                        game={game}
+                        key={game.id}
+                        deleteGame={deleteGame}
+                        size={cardScale}
+                      />
+                    ))}
+                </div>
+              </>
+            )
+        );
+      }
+    }
   };
 
   return (
@@ -75,7 +122,6 @@ const Display = ({
                 >
                   <optgroup>
                     <option value='byname'>Name</option>
-                    <option value='bystate'>State</option>
                     <option value='byreview'>Rating</option>
                   </optgroup>
                 </select>
@@ -106,6 +152,17 @@ const Display = ({
                   </optgroup>
                 </select>
 
+                <h1>Group by:</h1>
+                <select
+                  name='categorize'
+                  defaultValue={categorizeBy}
+                  onChange={handleCategorizeByChange}
+                >
+                  <optgroup>
+                    <option value='state'>State</option>
+                    <option value='platform'>Platform</option>
+                  </optgroup>
+                </select>
                 <div
                   className='sort-style'
                   onClick={() => setCategorize(!categorize)}
@@ -128,27 +185,7 @@ const Display = ({
         </div>
       </div>
       {categorize ? (
-        Object.values(states).map(
-          (state) =>
-            games.filter((game) => game.state === state).length !== 0 && (
-              <>
-                <h1 className='category'>{state}</h1>
-                <div className='games'>
-                  {games
-                    .filter((game) => game.state === state)
-                    .map((game: game) => (
-                      <Card
-                        game={game}
-                        key={game.id}
-                        deleteGame={deleteGame}
-                        onClickBadge={cycleStates}
-                        size={cardScale}
-                      />
-                    ))}
-                </div>
-              </>
-            )
-        )
+        generateCategories()
       ) : (
         <div className='games'>
           {games.map((game: game) => (
@@ -156,7 +193,6 @@ const Display = ({
               game={game}
               key={game.id}
               deleteGame={deleteGame}
-              onClickBadge={cycleStates}
               size={cardScale}
             />
           ))}
@@ -173,7 +209,7 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
     display: grid;
     grid-template-columns: repeat(
       auto-fill,
-      minmax(${(props) => props.$cardWidth}px, 1fr)
+      minmax(${(props) => props.$cardWidth}px, auto)
     );
     gap: 10px;
   }
@@ -183,7 +219,6 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
     color: var(--primary-color);
     font-size: 4rem;
   }
-  /* Experimenting */
   .options {
     width: 100%;
     display: flex;
@@ -224,6 +259,7 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
     flex-wrap: wrap;
     flex-direction: row;
     align-items: center;
+    margin-top: 20px;
   }
   .sort-style {
     width: 32px;
@@ -238,7 +274,7 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
     margin-left: 5px;
   }
   h1 {
-    margin-left: 15px;
+    margin-left: 25px;
   }
   select {
     all: unset;
@@ -248,8 +284,8 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
     text-align: center;
     border-radius: 20px;
     padding: 20px;
-    margin: 20px;
     font-size: 1.3rem;
+    margin-left: 5px;
     cursor: pointer;
     user-select: none;
   }
