@@ -107,7 +107,8 @@ const Wrapper = styled.div`
   .form {
     background-color: var(--primary-color);
     border-radius: 10px;
-    width: 600px;
+    width: 90%;
+    min-width: 600px;
     height: 800px;
     display: flex;
     align-items: center;

@@ -71,4 +71,6 @@ export type GameContextType = {
   addGame: (game: game) => void;
   updateGame: (updatedGame: game) => void;
   getFilteredGames: (name: string | null, filter: string | states) => game[];
+  saveData: () => void;
+  loadData: (data: string) => void;
 };

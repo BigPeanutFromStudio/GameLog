@@ -3,9 +3,12 @@ import Display from './components/Display';
 import { game, states } from './types';
 import { useEffect, useState } from 'react';
 import { GameContext } from './main';
+import FileSaver from 'file-saver';
 
-// TODO: Add edit page
 // TODO: Add full customizability
+// TODO: Add support for custom local images
+// TODO: Better scaling cards (text, ratings, gaps, etc.)
+// TODO: Add platform selection
 
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
 const initialSettings = JSON.parse(
@@ -45,6 +48,32 @@ function App() {
     setGames(
       games.map((game) => (game.id === updatedGame.id ? updatedGame : game))
     );
+  };
+
+  const saveData = () => {
+    const settings = {
+      filter: filter,
+      sortMethod: sortMethod,
+      isAscending: isAscending,
+      categorize: categorize,
+      cardScale: cardScale,
+    };
+    const blob = new Blob(
+      [JSON.stringify({ settings: settings, games: games })],
+      { type: 'application/json' }
+    );
+
+    FileSaver.saveAs(blob, 'data.json');
+  };
+
+  const loadData = (data: string) => {
+    const jsonData = JSON.parse(data);
+    setGames([...jsonData.games]);
+    setFilter(jsonData.settings.filter);
+    setSortMethod(jsonData.settings.sortMethod);
+    setIsAscending(jsonData.settings.isAscending);
+    setCategorize(jsonData.settings.categorize);
+    setCardScale(jsonData.settings.cardScale);
   };
 
   const getFilteredGames = (name: string | null, filter: string | states) => {
@@ -100,6 +129,8 @@ function App() {
         addGame,
         updateGame,
         getFilteredGames,
+        saveData,
+        loadData,
       }}
     >
       <Wrapper>

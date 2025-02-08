@@ -126,7 +126,7 @@ const Wrapper = styled.div`
     display: block;
     background-color: var(--secondary-color);
     width: 100%;
-    min-width: 400px;
+    width: 400px;
     border-radius: 20px;
     padding: 20px;
     margin: 20px;

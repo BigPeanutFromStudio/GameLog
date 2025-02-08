@@ -7,6 +7,8 @@ import { DisplayProps, game, GameContextType, states } from '../types';
 import ScaleButton from './ScaleButton';
 import { FaSortAmountDownAlt, FaSortAmountDown } from 'react-icons/fa';
 import { MdCategory, MdOutlineCategory } from 'react-icons/md';
+import ExportButton from './ExportButton';
+import ImportButton from './ImportButton';
 
 const Display = ({
   games,
@@ -74,7 +76,7 @@ const Display = ({
                   <optgroup>
                     <option value='byname'>Name</option>
                     <option value='bystate'>State</option>
-                    <option value='byreview'>Review</option>
+                    <option value='byreview'>Rating</option>
                   </optgroup>
                 </select>
                 <div
@@ -119,6 +121,8 @@ const Display = ({
             <div className='buttons'>
               <AddGameBtn />
               <ScaleButton cardScale={cardScale} setCardScale={setCardScale} />
+              <ExportButton />
+              <ImportButton />
             </div>
           </div>
         </div>
@@ -197,6 +201,7 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
   .below {
     display: flex;
     flex-direction: column;
+    user-select: none;
   }
   .buttons {
     display: flex;
@@ -246,5 +251,6 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
     margin: 20px;
     font-size: 1.3rem;
     cursor: pointer;
+    user-select: none;
   }
 `;
