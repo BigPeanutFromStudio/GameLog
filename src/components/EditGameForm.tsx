@@ -90,7 +90,7 @@ const EditGameForm = ({ setShowModal, game }: EditGameFormProps) => {
 export default EditGameForm;
 
 const Wrapper = styled.div`
-  position: absolute;
+  position: fixed;
   z-index: 2000;
   top: 0;
   bottom: 0;

@@ -20,11 +20,22 @@ export type CardProps = {
   game: game;
   deleteGame: (id: string) => void;
   onClickBadge: (game: game) => void;
+  size: number[];
 };
 
 export type DisplayProps = {
   games: game[];
   categorize: boolean;
+  cardScale: number[];
+  setCardScale: (cardScale: number[]) => void;
+  setFilter: (filter: string) => void;
+  setSearch: (search: string | null) => void;
+  isAscending: boolean;
+  setIsAscending: (isAscending: boolean) => void;
+  setSortMethod: (sortMethod: string) => void;
+  setCategorize: (categorize: boolean) => void;
+  sortMethod: string;
+  filter: string;
 };
 
 export type NavbarProps = {
@@ -46,6 +57,11 @@ export type AddGameFormProps = {
 export type EditGameFormProps = {
   setShowModal: (showModal: boolean) => void;
   game: game;
+};
+
+export type ScaleButtonProps = {
+  setCardScale: (cardScale: number[]) => void;
+  cardScale: number[];
 };
 
 export type GameContextType = {

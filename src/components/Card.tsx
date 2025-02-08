@@ -13,10 +13,13 @@ const stateToColor = new Map<states, string>([
   [states.Queued, 'var(--queued-color)'],
 ]);
 
-const Card = ({ game, deleteGame, onClickBadge }: CardProps) => {
+const Card = ({ game, deleteGame, onClickBadge, size }: CardProps) => {
   const [showModal, setShowModal] = useState(false);
   return (
-    <Wrapper $badgeColor={stateToColor.get(game.state) || 'gray'}>
+    <Wrapper
+      $badgeColor={stateToColor.get(game.state) || 'gray'}
+      $cardScale={size}
+    >
       <div className='container' onClick={() => setShowModal(!showModal)}>
         <img src={game.image} />
         <div className='delete' onClick={() => deleteGame(game.id)}>
@@ -40,10 +43,11 @@ const Card = ({ game, deleteGame, onClickBadge }: CardProps) => {
 };
 export default Card;
 
-const Wrapper = styled.div<{ $badgeColor: string }>`
+const Wrapper = styled.div<{ $badgeColor: string; $cardScale: number[] }>`
   position: relative;
-  width: 460px;
-  height: 215px;
+  width: ${(props) => props.$cardScale[0]}px;
+  height: ${(props) => props.$cardScale[1]}px;
+  aspect-ratio: 2.14 / 1;
   user-select: none;
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
   border-radius: 10px;
@@ -63,6 +67,9 @@ const Wrapper = styled.div<{ $badgeColor: string }>`
   img {
     border-radius: 10px;
     user-select: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
   .delete {
     position: absolute;
@@ -102,6 +109,8 @@ const Wrapper = styled.div<{ $badgeColor: string }>`
   }
   .container {
     position: relative;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
     transform: scale(1);
     transition: transform 0.5s ease;
@@ -113,8 +122,8 @@ const Wrapper = styled.div<{ $badgeColor: string }>`
   .overlay {
     position: absolute;
     inset: 0;
-    width: 460px;
-    height: 215px;
+    width: 100%;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0);
     color: rgba(0, 0, 0, 0);
     transition: 0.5s ease;

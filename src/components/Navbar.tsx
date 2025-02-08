@@ -83,26 +83,28 @@ export default Navbar;
 const Wrapper = styled.div`
   user-select: none;
   width: 100%;
-  height: 100px;
+  min-height: 100px;
   background-color: var(--background-color);
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: left;
+  justify-content: space-between;
+  box-sizing: border-box;
   .search-bar {
-    position: relative;
+    flex: 1;
   }
   input {
     all: unset;
     display: block;
     background-color: var(--primary-color);
-    width: 900px;
+    width: 80%;
     border-radius: 20px;
     padding: 20px;
-    margin: 20px;
     font-size: 1.3rem;
   }
   .sort-container {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     align-items: center;
   }

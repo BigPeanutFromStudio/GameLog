@@ -1,29 +1,37 @@
-import { useState } from 'react';
-import { createPortal } from 'react-dom';
-import { IoIosAddCircle } from 'react-icons/io';
 import styled from 'styled-components';
-import AddGameForm from './AddGameForm';
+import { ScaleButtonProps } from '../types';
+import { useState } from 'react';
 
-const AddGameBtn = () => {
-  const [showModal, setShowModal] = useState(false);
+const ScaleButton = ({ setCardScale, cardScale }: ScaleButtonProps) => {
+  const scales = [
+    [230, 107],
+    [306, 143],
+    [460, 215],
+    [690, 322],
+    [920, 430],
+  ];
+  const scaleTexts = ['Tiny', 'Small', 'Medium', 'Large', 'Huge'];
+  const [currentScaleIndex, setCurrentScaleIndex] = useState(() => {
+    return scales.findIndex(
+      (scale) => cardScale[0] === scale[0] && cardScale[1] === scale[1]
+    );
+  });
+
+  const handleScale = () => {
+    const nextScaleIndex = (currentScaleIndex + 1) % scales.length;
+    setCardScale(scales[nextScaleIndex]);
+    setCurrentScaleIndex(nextScaleIndex);
+  };
+
   return (
     <Wrapper>
-      <div className='container' onClick={() => setShowModal(!showModal)}>
-        <IoIosAddCircle
-          size={70}
-          color='rgba(255, 255, 255, 0.4)'
-          style={{ transform: 'inherit', transition: 'inherit' }}
-        />
+      <div className='container' onClick={handleScale}>
+        <h1>{scaleTexts[currentScaleIndex]}</h1>
       </div>
-      {showModal &&
-        createPortal(
-          <AddGameForm setShowModal={setShowModal} />,
-          document.body
-        )}
     </Wrapper>
   );
 };
-export default AddGameBtn;
+export default ScaleButton;
 
 const Wrapper = styled.div`
   width: 230px;

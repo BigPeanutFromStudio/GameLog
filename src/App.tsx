@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Navbar from './components/Navbar';
 import Display from './components/Display';
 import { game, states } from './types';
 import { useEffect, useState } from 'react';
@@ -11,7 +10,7 @@ import { GameContext } from './main';
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
 const initialSettings = JSON.parse(
   localStorage.getItem('settings') ||
-    "{ filter: 'all', sortMethod: 'byname', isAscending: true, categorize: false,}"
+    '{ "filter": "all", "sortMethod": "byname", "isAscending": true, "categorize": false, "cardScale": [460, 215]}'
 );
 function App() {
   const [games, setGames] = useState<game[]>(initialGames);
@@ -20,6 +19,7 @@ function App() {
   const [sortMethod, setSortMethod] = useState(initialSettings.sortMethod);
   const [isAscending, setIsAscending] = useState(initialSettings.isAscending);
   const [categorize, setCategorize] = useState(initialSettings.categorize);
+  const [cardScale, setCardScale] = useState(initialSettings.cardScale);
 
   useEffect(() => {
     localStorage.setItem('games', JSON.stringify(games));
@@ -28,9 +28,10 @@ function App() {
       sortMethod: sortMethod,
       isAscending: isAscending,
       categorize: categorize,
+      cardScale: cardScale,
     };
     localStorage.setItem('settings', JSON.stringify(settings));
-  }, [games, filter, sortMethod, isAscending, categorize]);
+  }, [games, filter, sortMethod, isAscending, categorize, cardScale]);
 
   const deleteGame = (id: string) => {
     setGames(games.filter((game) => game.id !== id));
@@ -102,20 +103,19 @@ function App() {
       }}
     >
       <Wrapper>
-        <Navbar
+        <Display
+          categorize={categorize}
+          games={sortGames(getFilteredGames(search, filter))}
+          cardScale={cardScale}
+          setCardScale={setCardScale}
           setFilter={setFilter}
           setSearch={setSearch}
           setIsAscending={setIsAscending}
           isAscending={isAscending}
           setSortMethod={setSortMethod}
           setCategorize={setCategorize}
-          categorize={categorize}
           filter={filter}
           sortMethod={sortMethod}
-        />
-        <Display
-          categorize={categorize}
-          games={sortGames(getFilteredGames(search, filter))}
         />
       </Wrapper>
     </GameContext.Provider>
@@ -128,4 +128,5 @@ const Wrapper = styled.div`
   width: 100%;
   min-height: 100vh;
   background-color: var(--background-color);
+  box-sizing: border-box;
 `;
