@@ -39,6 +39,15 @@ export type NavbarProps = {
   filter: string;
 };
 
+export type AddGameFormProps = {
+  setShowModal: (showModal: boolean) => void;
+};
+
+export type EditGameFormProps = {
+  setShowModal: (showModal: boolean) => void;
+  game: game;
+};
+
 export type GameContextType = {
   games: game[];
   setGames: Dispatch<SetStateAction<game[]>>;

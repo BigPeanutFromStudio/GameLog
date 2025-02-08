@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import { CardProps, states } from '../types';
 import { TiDelete } from 'react-icons/ti';
+import { useState } from 'react';
+import EditGameForm from './EditGameForm';
+import { createPortal } from 'react-dom';
 
 const stateToColor = new Map<states, string>([
   [states.Abandoned, 'var(--abandoned-color)'],
@@ -11,20 +14,27 @@ const stateToColor = new Map<states, string>([
 ]);
 
 const Card = ({ game, deleteGame, onClickBadge }: CardProps) => {
+  const [showModal, setShowModal] = useState(false);
   return (
     <Wrapper $badgeColor={stateToColor.get(game.state) || 'gray'}>
-      <div className='container'>
+      <div className='container' onClick={() => setShowModal(!showModal)}>
         <img src={game.image} />
         <div className='delete' onClick={() => deleteGame(game.id)}>
-          <TiDelete size={30} style={{ color: 'var(--icon-color)' }} />
+          <TiDelete size={40} style={{ color: 'var(--icon-color)' }} />
         </div>
         <div className='badge' onClick={() => onClickBadge(game)}>
           {game.state}
         </div>
+        <div className='rating'>{game.rating}</div>
         <div className='overlay'>
           <h1>{game.name}</h1>
         </div>
       </div>
+      {showModal &&
+        createPortal(
+          <EditGameForm setShowModal={setShowModal} game={game} />,
+          document.body
+        )}
     </Wrapper>
   );
 };
@@ -37,6 +47,19 @@ const Wrapper = styled.div<{ $badgeColor: string }>`
   user-select: none;
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
   border-radius: 10px;
+  cursor: pointer;
+  .rating {
+    position: absolute;
+    z-index: 1000;
+    top: 5px;
+    left: 15px;
+    font-size: 1.6rem;
+    transform: scale(0);
+    transition: transform 0.1s ease;
+  }
+  .container:hover .rating {
+    transform: scale(1);
+  }
   img {
     border-radius: 10px;
     user-select: none;

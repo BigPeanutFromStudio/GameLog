@@ -5,7 +5,7 @@ import { game, states } from './types';
 import { useEffect, useState } from 'react';
 import { GameContext } from './main';
 
-// TODO: Add edit page, ratings
+// TODO: Add edit page
 // TODO: Add full customizability
 
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');

@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 import { useEffect, useCallback, useContext, FormEvent } from 'react';
-import { game, states, GameContextType, AddGameFormProps } from '../types';
+import { game, states, GameContextType, EditGameFormProps } from '../types';
 import { GameContext } from '../main';
-import { v6 as uuid } from 'uuid';
 import NoImageFound from '../assets/NoImage.png';
 
-const AddGameForm = ({ setShowModal }: AddGameFormProps) => {
+const EditGameForm = ({ setShowModal, game }: EditGameFormProps) => {
   const escFunction = useCallback(
     (event: { key: string }) => {
       if (event.key === 'Escape') {
@@ -28,7 +27,7 @@ const AddGameForm = ({ setShowModal }: AddGameFormProps) => {
     console.log('Something went wrong with the context');
     return null;
   }
-  const { addGame }: GameContextType = gameContext;
+  const { updateGame }: GameContextType = gameContext;
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -38,24 +37,30 @@ const AddGameForm = ({ setShowModal }: AddGameFormProps) => {
 
     formJson.image = formJson.image ? formJson.image : NoImageFound;
 
-    const game: game = {
-      id: uuid(),
+    const updatedGame: game = {
+      id: game.id,
       name: formJson.name.toString(),
       state: states[formJson.state as keyof typeof states],
       image: formJson.image.toString(),
       rating: parseFloat(formJson.rating.toString()),
     };
-    addGame(game);
+    updateGame(updatedGame);
     setShowModal(false);
   };
 
   return (
     <Wrapper>
       <div className='form'>
-        <h1>ADD A GAME</h1>
+        <h1>Edit {game.name}</h1>
         <form onSubmit={handleSubmit}>
-          <input type='text' name='name' required placeholder='Game name...' />
-          <select name='state' defaultValue={states.Queued}>
+          <input
+            type='text'
+            name='name'
+            required
+            placeholder='Game name...'
+            defaultValue={game.name}
+          />
+          <select name='state' defaultValue={game.state}>
             <optgroup>
               {Object.keys(states).map((key, index) => (
                 <option key={index} value={key}>
@@ -64,18 +69,29 @@ const AddGameForm = ({ setShowModal }: AddGameFormProps) => {
               ))}
             </optgroup>
           </select>
-          <input type='number' step='0.01' name='rating' defaultValue='0' />
-          <input type='text' name='image' placeholder='Image url (460x215)' />
-          <button type='submit'>Add game</button>
+          <input
+            type='number'
+            step='0.01'
+            name='rating'
+            defaultValue={game.rating}
+          />
+          <input
+            type='text'
+            name='image'
+            defaultValue={game.image}
+            placeholder='Image url (460x215)'
+          />
+          <button type='submit'>Edit game</button>
         </form>
       </div>
     </Wrapper>
   );
 };
-export default AddGameForm;
+export default EditGameForm;
 
 const Wrapper = styled.div`
   position: absolute;
+  z-index: 2000;
   top: 0;
   bottom: 0;
   right: 0;
