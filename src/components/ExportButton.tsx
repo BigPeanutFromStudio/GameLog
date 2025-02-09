@@ -1,16 +1,8 @@
 import styled from 'styled-components';
-import { useContext } from 'react';
-import { GameContextType } from '../types';
-import { GameContext } from '../main';
+import { useGameContext } from '../context/GameContext';
 
 const ExportButton = () => {
-  const gameContext = useContext(GameContext);
-  if (!gameContext) {
-    console.log('Something went wrong with the context');
-    return null;
-  }
-
-  const { saveData }: GameContextType = gameContext;
+  const { saveData } = useGameContext();
 
   return (
     <Wrapper>

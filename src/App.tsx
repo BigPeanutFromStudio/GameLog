@@ -2,8 +2,13 @@ import styled from 'styled-components';
 import Display from './components/Display';
 import { game, states } from './types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { GameContext } from './main';
-import FileSaver from 'file-saver';
+import { GameProvider } from './context/GameContext';
+import {
+  saveData,
+  loadData,
+  getFilteredGames as getFilteredGamesUtil,
+} from './utils/data';
+import { useSettingsContext } from './context/SettingsContext';
 
 // TODO: Add full customizability with a settings menu
 // TODO: Fix styling 💀
@@ -13,21 +18,22 @@ import FileSaver from 'file-saver';
 // TODO: Fix display not refreshing on importing data
 
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
-const initialSettings = JSON.parse(
-  localStorage.getItem('settings') ||
-    '{ "filter": "all", "sortMethod": "byname", "isAscending": true, "categorize": false, "categorizeBy":"state", "cardScale": [460, 215]}'
-);
 function App() {
   const [games, setGames] = useState<game[]>(initialGames);
-  const [filter, setFilter] = useState(initialSettings.filter);
   const [search, setSearch] = useState<string | null>(null);
-  const [sortMethod, setSortMethod] = useState(initialSettings.sortMethod);
-  const [isAscending, setIsAscending] = useState(initialSettings.isAscending);
-  const [categorize, setCategorize] = useState(initialSettings.categorize);
-  const [categorizeBy, setCategorizeBy] = useState(
-    initialSettings.categorizeBy
-  );
-  const [cardScale, setCardScale] = useState(initialSettings.cardScale);
+  const {
+    filter,
+    setFilter,
+    sortMethod,
+    setSortMethod,
+    isAscending,
+    setIsAscending,
+    categorize,
+    setCategorize,
+    categorizeBy,
+    cardScale,
+    setCardScale,
+  } = useSettingsContext();
 
   useEffect(() => {
     localStorage.setItem('games', JSON.stringify(games));
@@ -50,61 +56,58 @@ function App() {
     categorizeBy,
   ]);
 
-  const deleteGame = (id: string) => {
-    setGames(games.filter((game) => game.id !== id));
-  };
+  const deleteGame = useCallback((id: string) => {
+    setGames((prevGames) => prevGames.filter((game) => game.id !== id));
+  }, []);
 
-  const addGame = (game: game) => {
-    setGames([...games, game]);
-  };
+  const addGame = useCallback((game: game) => {
+    setGames((prevGames) => [...prevGames, game]);
+  }, []);
 
-  const updateGame = (updatedGame: game) => {
-    setGames(
-      games.map((game) => (game.id === updatedGame.id ? updatedGame : game))
+  const updateGame = useCallback((updatedGame: game) => {
+    setGames((prevGames) =>
+      prevGames.map((game) => (game.id === updatedGame.id ? updatedGame : game))
     );
-  };
+  }, []);
 
-  const saveData = () => {
-    const settings = {
-      filter: filter,
-      sortMethod: sortMethod,
-      isAscending: isAscending,
-      categorize: categorize,
-      categorizeBy: categorizeBy,
-      cardScale: cardScale,
-    };
-    const blob = new Blob(
-      [JSON.stringify({ settings: settings, games: games })],
-      { type: 'application/json' }
+  const handleSaveData = useCallback(() => {
+    saveData(
+      games,
+      filter,
+      sortMethod,
+      isAscending,
+      categorize,
+      categorizeBy,
+      cardScale
     );
+  }, [
+    games,
+    filter,
+    sortMethod,
+    isAscending,
+    categorize,
+    categorizeBy,
+    cardScale,
+  ]);
 
-    FileSaver.saveAs(blob, 'data.json');
-  };
-
-  const loadData = (data: string) => {
-    const jsonData = JSON.parse(data);
-    setGames([...jsonData.games]);
-    setFilter(jsonData.settings.filter);
-    setSortMethod(jsonData.settings.sortMethod);
-    setIsAscending(jsonData.settings.isAscending);
-    setCategorize(jsonData.settings.categorize);
-    setCardScale(jsonData.settings.cardScale);
-  };
+  const handleLoadData = useCallback(
+    (data: string) => {
+      loadData(
+        data,
+        setGames,
+        setFilter,
+        setSortMethod,
+        setIsAscending,
+        setCategorize,
+        setCardScale
+      );
+    },
+    [setCardScale, setCategorize, setFilter, setIsAscending, setSortMethod]
+  );
 
   const getFilteredGames = useCallback(
     (name: string | null, filter: string | states) => {
-      let filteredGames = [...games];
-      if (name !== null && name !== '') {
-        filteredGames = games.filter((game) =>
-          game.name.toLocaleLowerCase().startsWith(name.toLocaleLowerCase())
-        );
-      }
-      if (filter === 'all') {
-        return filteredGames;
-      } else {
-        filter = filter === 'FinishedFully' ? '100%' : filter;
-        return filteredGames.filter((game) => game.state == filter);
-      }
+      return getFilteredGamesUtil(games, name, filter);
     },
     [games]
   );
@@ -133,38 +136,35 @@ function App() {
     return sortGames(filteredGames);
   }, [filteredGames, sortMethod, isAscending]);
 
+  const gameContextValue = useMemo(
+    () => ({
+      games,
+      setGames,
+      deleteGame,
+      addGame,
+      updateGame,
+      getFilteredGames,
+      saveData: handleSaveData,
+      loadData: handleLoadData,
+    }),
+    [
+      games,
+      setGames,
+      deleteGame,
+      addGame,
+      updateGame,
+      getFilteredGames,
+      handleLoadData,
+      handleSaveData,
+    ]
+  );
+
   return (
-    <GameContext.Provider
-      value={{
-        games,
-        setGames,
-        deleteGame,
-        addGame,
-        updateGame,
-        getFilteredGames,
-        saveData,
-        loadData,
-      }}
-    >
+    <GameProvider value={gameContextValue}>
       <Wrapper>
-        <Display
-          categorize={categorize}
-          games={sortedGames}
-          cardScale={cardScale}
-          setCardScale={setCardScale}
-          setFilter={setFilter}
-          setSearch={setSearch}
-          setIsAscending={setIsAscending}
-          isAscending={isAscending}
-          setSortMethod={setSortMethod}
-          setCategorize={setCategorize}
-          filter={filter}
-          sortMethod={sortMethod}
-          setCategorizeBy={setCategorizeBy}
-          categorizeBy={categorizeBy}
-        />
+        <Display setSearch={setSearch} games={sortedGames} />
       </Wrapper>
-    </GameContext.Provider>
+    </GameProvider>
   );
 }
 

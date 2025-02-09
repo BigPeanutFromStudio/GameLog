@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { useEffect, useCallback, useContext, FormEvent } from 'react';
-import { game, states, GameContextType, AddGameFormProps } from '../types';
-import { GameContext } from '../main';
+import { useEffect, useCallback, FormEvent } from 'react';
+import { game, states, AddGameFormProps } from '../types';
 import { v6 as uuid } from 'uuid';
 import NoImageFound from '../assets/NoImage.png';
+import { useGameContext } from '../context/GameContext';
 
 const AddGameForm = ({ setShowModal }: AddGameFormProps) => {
   const escFunction = useCallback(
@@ -23,12 +23,7 @@ const AddGameForm = ({ setShowModal }: AddGameFormProps) => {
     };
   }, [escFunction]);
 
-  const gameContext = useContext(GameContext);
-  if (!gameContext) {
-    console.log('Something went wrong with the context');
-    return null;
-  }
-  const { addGame }: GameContextType = gameContext;
+  const { addGame } = useGameContext();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();

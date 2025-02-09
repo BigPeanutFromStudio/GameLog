@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { useEffect, useCallback, useContext, FormEvent } from 'react';
-import { game, states, GameContextType, EditGameFormProps } from '../types';
-import { GameContext } from '../main';
+import { useEffect, useCallback, FormEvent } from 'react';
+import { game, states, EditGameFormProps } from '../types';
 import NoImageFound from '../assets/NoImage.png';
+import { useGameContext } from '../context/GameContext';
 
 const EditGameForm = ({ setShowModal, game }: EditGameFormProps) => {
   const escFunction = useCallback(
@@ -22,12 +22,7 @@ const EditGameForm = ({ setShowModal, game }: EditGameFormProps) => {
     };
   }, [escFunction]);
 
-  const gameContext = useContext(GameContext);
-  if (!gameContext) {
-    console.log('Something went wrong with the context');
-    return null;
-  }
-  const { updateGame }: GameContextType = gameContext;
+  const { updateGame } = useGameContext();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();

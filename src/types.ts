@@ -25,19 +25,7 @@ export type CardProps = {
 
 export type DisplayProps = {
   games: game[];
-  categorize: boolean;
-  cardScale: number[];
-  setCardScale: (cardScale: number[]) => void;
-  setFilter: (filter: string) => void;
   setSearch: (search: string | null) => void;
-  isAscending: boolean;
-  setIsAscending: (isAscending: boolean) => void;
-  setSortMethod: (sortMethod: string) => void;
-  setCategorize: (categorize: boolean) => void;
-  sortMethod: string;
-  filter: string;
-  categorizeBy: string;
-  setCategorizeBy: (categorizeBy: string) => void;
 };
 
 export type NavbarProps = {

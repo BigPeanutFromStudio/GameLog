@@ -1,18 +1,11 @@
-import { useRef, useContext } from 'react';
+import { useRef } from 'react';
 import styled from 'styled-components';
-import { GameContext } from '../main';
-import { GameContextType } from '../types';
+import { useGameContext } from '../context/GameContext';
 
 const ImportButton = () => {
   const inputFile = useRef<HTMLInputElement | null>(null);
 
-  const gameContext = useContext(GameContext);
-  if (!gameContext) {
-    console.log('Something went wrong with the context');
-    return null;
-  }
-
-  const { loadData }: GameContextType = gameContext;
+  const { loadData } = useGameContext();
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     (e.target as HTMLInputElement).value = '';

@@ -1,38 +1,32 @@
 import styled from 'styled-components';
 import Card from './Card';
 import AddGameBtn from './AddGameBtn';
-import { useContext } from 'react';
-import { GameContext } from '../main';
-import { DisplayProps, game, GameContextType, states } from '../types';
+import { DisplayProps, game, states } from '../types';
 import ScaleButton from './ScaleButton';
 import { FaSortAmountDownAlt, FaSortAmountDown } from 'react-icons/fa';
 import { MdCategory, MdOutlineCategory } from 'react-icons/md';
 import ExportButton from './ExportButton';
 import ImportButton from './ImportButton';
 import { IoMdSettings } from 'react-icons/io';
+import { useGameContext } from '../context/GameContext';
+import { useSettingsContext } from '../context/SettingsContext';
 
-const Display = ({
-  games,
-  categorize,
-  cardScale,
-  setCardScale,
-  setSearch,
-  setFilter,
-  isAscending,
-  setIsAscending,
-  setSortMethod,
-  setCategorize,
-  sortMethod,
-  filter,
-  categorizeBy,
-  setCategorizeBy,
-}: DisplayProps) => {
-  const gameContext = useContext(GameContext);
-  if (!gameContext) {
-    console.log('Something went wrong with the context');
-    return null;
-  }
-  const { deleteGame }: GameContextType = gameContext;
+const Display = ({ games, setSearch }: DisplayProps) => {
+  const { deleteGame } = useGameContext();
+  const {
+    filter,
+    setFilter,
+    isAscending,
+    setIsAscending,
+    sortMethod,
+    setSortMethod,
+    categorize,
+    setCategorize,
+    categorizeBy,
+    setCategorizeBy,
+    cardScale,
+    setCardScale,
+  } = useSettingsContext();
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
