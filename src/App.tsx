@@ -12,7 +12,6 @@ import { useSettingsContext } from './context/SettingsContext';
 
 // TODO: Add full customizability with a settings menu
 // TODO: Fix styling 💀
-// TODO: Reduce prop drilling, move load and save to seperate files, refactor code
 // TODO: Add support for custom local images
 // TODO: Better scaling cards (text, ratings, gaps, etc.)
 // TODO: Fix display not refreshing on importing data

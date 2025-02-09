@@ -15,25 +15,36 @@ const stateToColor = new Map<states, string>([
 
 const Card = ({ game, deleteGame, size }: CardProps) => {
   const [showModal, setShowModal] = useState(false);
-  let fontSize = '2.5rem';
-  let badgeSize = ['80px', '15px', '15px'];
-  let deleteSize = 40;
-  if (size[0] === 230) {
-    fontSize = '1.8rem';
-    badgeSize = ['50px', '8px', '8px'];
-    deleteSize = 25;
-  }
+  const textSizes = [
+    'var(--small-font)',
+    'var(--medium-font)',
+    'var(--medium-font)',
+    'var(--large-font)',
+    'var(--xlarge-font)',
+  ];
+  const scales = [
+    [230, 107],
+    [306, 143],
+    [460, 215],
+    [690, 322],
+    [920, 430],
+  ];
+  const scaleIndex = scales.findIndex(
+    (scale) => size[0] === scale[0] && size[1] === scale[1]
+  );
   return (
     <Wrapper
       $badgeColor={stateToColor.get(game.state) || 'gray'}
       $cardScale={size}
-      $fontSize={fontSize}
-      $badgeSize={badgeSize}
+      $textSize={textSizes[scaleIndex]}
     >
       <div className='container' onClick={() => setShowModal(!showModal)}>
         <img src={game.image} />
         <div className='delete' onClick={() => deleteGame(game.id)}>
-          <TiDelete size={deleteSize} style={{ color: 'var(--icon-color)' }} />
+          <TiDelete
+            size={scaleIndex === 0 ? 25 : 40}
+            style={{ color: 'var(--icon-color)' }}
+          />
         </div>
         <div className='badge'>{game.state}</div>
         <div className='rating'>{game.rating}</div>
@@ -54,8 +65,7 @@ export default Card;
 const Wrapper = styled.div<{
   $badgeColor: string;
   $cardScale: number[];
-  $fontSize: string;
-  $badgeSize: string[];
+  $textSize: string;
 }>`
   position: relative;
   width: ${(props) => props.$cardScale[0]}px;
@@ -63,14 +73,14 @@ const Wrapper = styled.div<{
   aspect-ratio: 2.14 / 1;
   user-select: none;
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-  border-radius: 10px;
+  border-radius: var(--border-radius);
   cursor: pointer;
   .rating {
     position: absolute;
     z-index: 1000;
     top: 5px;
     left: 15px;
-    font-size: 1.6rem;
+    font-size: var(--small-font);
     transform: scale(0);
     transition: transform 0.1s ease;
   }
@@ -78,7 +88,7 @@ const Wrapper = styled.div<{
     transform: scale(1);
   }
   img {
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     user-select: none;
     width: 100%;
     height: 100%;
@@ -103,11 +113,11 @@ const Wrapper = styled.div<{
     position: absolute;
     z-index: 1000;
     right: 10px;
-    bottom: ${(props) => props.$badgeSize[2]};
+    bottom: 10px;
     background-color: ${(props) => props.$badgeColor};
-    border-radius: 20px;
-    width: ${(props) => props.$badgeSize[0]};
-    height: ${(props) => props.$badgeSize[1]};
+    border-radius: var(--border-radius);
+    width: 80px;
+    height: 15px;
     padding: 5px;
     display: flex;
     justify-content: center;
@@ -129,8 +139,9 @@ const Wrapper = styled.div<{
     transition: transform 0.5s ease;
   }
   .container:hover {
-    transform: scale(1.04);
+    transform: scale(1.05);
     transition: transform 0.5s ease;
+    z-index: 2000;
   }
   .overlay {
     position: absolute;
@@ -146,7 +157,7 @@ const Wrapper = styled.div<{
     justify-content: center;
   }
   .overlay h1 {
-    font-size: ${(props) => props.$fontSize};
+    font-size: ${(props) => props.$textSize};
     text-align: center;
     margin: 0;
   }

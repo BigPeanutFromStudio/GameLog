@@ -39,6 +39,8 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    transform: scale(1);
+    transition: transform 0.5s ease;
   }
   img {
     border-radius: 10px;
@@ -56,10 +58,6 @@ const Wrapper = styled.div`
   .delete:hover {
     transform: scale(1.2);
     transition: transform 0.1s ease;
-  }
-  .container {
-    transform: scale(1);
-    transition: transform 0.5s ease;
   }
   .container:hover {
     transform: scale(1.05);

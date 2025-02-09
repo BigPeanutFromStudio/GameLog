@@ -23,18 +23,19 @@ const Wrapper = styled.div`
     width: inherit;
     height: inherit;
     background-color: var(--primary-color);
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  .container {
     transform: scale(1);
     transition: transform 0.5s ease;
   }
   .container:hover {
     transform: scale(1.05);
     transition: transform 0.5s ease;
+  }
+  h1 {
+    font-size: var(--medium-font);
   }
 `;

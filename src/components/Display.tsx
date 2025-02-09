@@ -133,7 +133,8 @@ const Display = ({ games, setSearch }: DisplayProps) => {
                     <FaSortAmountDown size={30} />
                   )}
                 </div>
-
+              </div>
+              <div className='sort-container'>
                 <h1>Filter by:</h1>
                 <select
                   name='state'
@@ -149,7 +150,9 @@ const Display = ({ games, setSearch }: DisplayProps) => {
                     ))}
                   </optgroup>
                 </select>
+              </div>
 
+              <div className='sort-container'>
                 <h1>Group by:</h1>
                 <select
                   name='categorize'
@@ -203,17 +206,19 @@ export default Display;
 
 const Wrapper = styled.div<{ $cardWidth: number }>`
   padding: 15px;
+  user-select: none;
   .games {
     display: grid;
     grid-template-columns: repeat(
       auto-fill,
       minmax(${(props) => props.$cardWidth}px, auto)
     );
-    gap: 10px;
+    gap: 5px;
+    justify-content: start;
   }
   .search-bar {
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
     gap: 30px;
     margin-left: 25px;
@@ -229,7 +234,7 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
     margin-top: 20px;
     margin-bottom: 10px;
     color: var(--primary-color);
-    font-size: 4rem;
+    font-size: var(--xlarge-font);
   }
   .options {
     width: 100%;
@@ -255,7 +260,11 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
     margin: 20px;
     gap: 10px;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80px;
   }
+
   input {
     all: unset;
     display: block;
@@ -264,23 +273,30 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
     width: 80%;
     border-radius: 20px;
     padding: 20px;
-    font-size: 1.3rem;
+    font-size: var(--small-font);
   }
   .sort-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .sort-filters {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
+    gap: 80px;
     margin-top: 20px;
   }
   .sort-style {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     padding: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 20px;
+    border-radius: var(--border-radius);
     background-color: var(--primary-color);
     cursor: pointer;
     margin-left: 5px;
@@ -294,9 +310,9 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
     background-color: var(--primary-color);
     width: 150px;
     text-align: center;
-    border-radius: 20px;
+    border-radius: var(--border-radius);
     padding: 20px;
-    font-size: 1.3rem;
+    font-size: var(--small-font);
     margin-left: 5px;
     cursor: pointer;
     user-select: none;

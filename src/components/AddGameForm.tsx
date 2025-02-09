@@ -86,17 +86,15 @@ const Wrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.4);
   user-select: none;
   .form {
-    background-color: var(--primary-color);
-    border-radius: 10px;
+    background-color: var(--background-color);
+    border-radius: var(--border-radius);
     width: 90%;
     min-width: 600px;
-    height: 90;
-    min-height: 800px;
+    height: 800px;
     display: flex;
     align-items: center;
     flex-direction: column;
     box-shadow: 0px 8px 24px 8px #0f1014;
-    box-sizing: border-box;
   }
   .form h1 {
     margin-bottom: 30px;
@@ -107,39 +105,21 @@ const Wrapper = styled.div`
     align-items: center;
     flex-direction: column;
   }
-  input {
-    all: unset;
-    display: block;
-    background-color: var(--secondary-color);
-    width: 100%;
-    max-width: 400px;
-    border-radius: 20px;
-    padding: 20px;
-    margin: 20px;
-    font-size: 1.3rem;
-  }
-  select {
-    all: unset;
-    display: block;
-    background-color: var(--secondary-color);
-    width: 100%;
-    width: 400px;
-    border-radius: 20px;
-    padding: 20px;
-    margin: 20px;
-    font-size: 1.3rem;
-    cursor: pointer;
-  }
+  input,
+  select,
   button {
     all: unset;
-    width: 100%;
-    max-width: 400px;
-    background-color: var(--secondary-color);
+    display: block;
+    background-color: var(--primary-color);
+    width: 400px;
+    border-radius: var(--border-radius);
     padding: 20px;
-    border-radius: 20px;
-    font-size: 1.5rem;
-    text-align: center;
+    margin: 10px;
+    font-size: var(--small-font);
+  }
+  button {
     cursor: pointer;
+    text-align: center;
   }
   button:hover {
     background-color: var(--background-color);
