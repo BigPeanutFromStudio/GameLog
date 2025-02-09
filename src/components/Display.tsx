@@ -9,6 +9,7 @@ import { FaSortAmountDownAlt, FaSortAmountDown } from 'react-icons/fa';
 import { MdCategory, MdOutlineCategory } from 'react-icons/md';
 import ExportButton from './ExportButton';
 import ImportButton from './ImportButton';
+import { IoMdSettings } from 'react-icons/io';
 
 const Display = ({
   games,
@@ -110,6 +111,9 @@ const Display = ({
               placeholder='Search...'
               onChange={handleSearchChange}
             />
+            <div className='settings-icon'>
+              <IoMdSettings size={50} />
+            </div>
           </div>
           <div className='below'>
             <div className='sort-filters'>
@@ -213,6 +217,20 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
     );
     gap: 10px;
   }
+  .search-bar {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 30px;
+    margin-left: 25px;
+  }
+  .settings-icon {
+    cursor: pointer;
+    transition: transform 0.1s ease;
+  }
+  .settings-icon:hover {
+    transform: scale(1.1);
+  }
   .category {
     margin-top: 20px;
     margin-bottom: 10px;
@@ -273,7 +291,7 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
     cursor: pointer;
     margin-left: 5px;
   }
-  h1 {
+  .sort-filters h1 {
     margin-left: 25px;
   }
   select {

@@ -129,7 +129,7 @@ const Wrapper = styled.div<{
     transition: transform 0.5s ease;
   }
   .container:hover {
-    transform: scale(1.05);
+    transform: scale(1.04);
     transition: transform 0.5s ease;
   }
   .overlay {

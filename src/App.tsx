@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 import Display from './components/Display';
 import { game, states } from './types';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { GameContext } from './main';
 import FileSaver from 'file-saver';
 
 // TODO: Add full customizability with a settings menu
+// TODO: Fix styling 💀
+// TODO: Reduce prop drilling, move load and save to seperate files, refactor code
 // TODO: Add support for custom local images
 // TODO: Better scaling cards (text, ratings, gaps, etc.)
 // TODO: Fix display not refreshing on importing data
@@ -89,37 +91,47 @@ function App() {
     setCardScale(jsonData.settings.cardScale);
   };
 
-  const getFilteredGames = (name: string | null, filter: string | states) => {
-    let filteredGames = [...games];
-    if (name !== null && name !== '') {
-      filteredGames = games.filter((game) =>
-        game.name.toLocaleLowerCase().startsWith(name.toLocaleLowerCase())
-      );
-    }
-    if (filter === 'all') {
-      return filteredGames;
-    } else {
-      filter = filter === 'FinishedFully' ? '100%' : filter;
-      return filteredGames.filter((game) => game.state == filter);
-    }
-  };
+  const getFilteredGames = useCallback(
+    (name: string | null, filter: string | states) => {
+      let filteredGames = [...games];
+      if (name !== null && name !== '') {
+        filteredGames = games.filter((game) =>
+          game.name.toLocaleLowerCase().startsWith(name.toLocaleLowerCase())
+        );
+      }
+      if (filter === 'all') {
+        return filteredGames;
+      } else {
+        filter = filter === 'FinishedFully' ? '100%' : filter;
+        return filteredGames.filter((game) => game.state == filter);
+      }
+    },
+    [games]
+  );
 
-  const sortGames = (unsortedGames: game[]) => {
-    switch (sortMethod) {
-      case 'byname': {
-        return isAscending
-          ? unsortedGames.sort((a, b) => a.name.localeCompare(b.name))
-          : unsortedGames.sort((a, b) => b.name.localeCompare(a.name));
+  const filteredGames = useMemo(() => {
+    return getFilteredGames(search, filter);
+  }, [search, filter, getFilteredGames]);
+
+  const sortedGames = useMemo(() => {
+    const sortGames = (unsortedGames: game[]) => {
+      switch (sortMethod) {
+        case 'byname': {
+          return isAscending
+            ? unsortedGames.sort((a, b) => a.name.localeCompare(b.name))
+            : unsortedGames.sort((a, b) => b.name.localeCompare(a.name));
+        }
+        case 'byreview': {
+          return isAscending
+            ? unsortedGames.sort((a, b) => a.rating - b.rating)
+            : unsortedGames.sort((a, b) => b.rating - a.rating);
+        }
+        default:
+          return unsortedGames;
       }
-      case 'byreview': {
-        return isAscending
-          ? unsortedGames.sort((a, b) => a.rating - b.rating)
-          : unsortedGames.sort((a, b) => b.rating - a.rating);
-      }
-      default:
-        return unsortedGames;
-    }
-  };
+    };
+    return sortGames(filteredGames);
+  }, [filteredGames, sortMethod, isAscending]);
 
   return (
     <GameContext.Provider
@@ -137,7 +149,7 @@ function App() {
       <Wrapper>
         <Display
           categorize={categorize}
-          games={sortGames(getFilteredGames(search, filter))}
+          games={sortedGames}
           cardScale={cardScale}
           setCardScale={setCardScale}
           setFilter={setFilter}
@@ -163,4 +175,5 @@ const Wrapper = styled.div`
   min-height: 100vh;
   background-color: var(--background-color);
   box-sizing: border-box;
+  color: var(--text-color);
 `;
