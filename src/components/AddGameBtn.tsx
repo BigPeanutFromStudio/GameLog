@@ -34,33 +34,16 @@ const Wrapper = styled.div`
     width: inherit;
     height: inherit;
     background-color: var(--primary-color);
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     transform: scale(1);
-    transition: transform 0.5s ease;
-  }
-  img {
-    border-radius: 10px;
-    user-select: none;
-  }
-  .delete {
-    position: absolute;
-    z-index: 1000;
-    right: 5px;
-    top: 5px;
-    cursor: pointer;
-    transform: scale(1);
-    transition: transform 0.1s ease;
-  }
-  .delete:hover {
-    transform: scale(1.2);
     transition: transform 0.1s ease;
   }
   .container:hover {
     transform: scale(1.05);
-    transition: transform 0.5s ease;
+    transition: transform 0.1s ease;
   }
 `;

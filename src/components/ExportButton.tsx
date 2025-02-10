@@ -29,11 +29,11 @@ const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
     transform: scale(1);
-    transition: transform 0.5s ease;
+    transition: transform 0.1s ease;
   }
   .container:hover {
     transform: scale(1.05);
-    transition: transform 0.5s ease;
+    transition: transform 0.1s ease;
   }
   h1 {
     font-size: var(--medium-font);

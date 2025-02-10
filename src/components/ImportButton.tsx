@@ -52,11 +52,11 @@ const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
     transform: scale(1);
-    transition: transform 0.5s ease;
+    transition: transform 0.1s ease;
   }
   .container:hover {
     transform: scale(1.05);
-    transition: transform 0.5s ease;
+    transition: transform 0.1s ease;
   }
   input[type='file'] {
     display: none;
