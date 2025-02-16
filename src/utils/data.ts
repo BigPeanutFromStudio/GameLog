@@ -8,7 +8,8 @@ export const saveData = (
   isAscending: boolean,
   categorize: boolean,
   categorizeBy: string,
-  cardScale: number[]
+  cardScale: number[],
+  theme: string
 ) => {
   const settings = {
     filter: filter,
@@ -17,6 +18,7 @@ export const saveData = (
     categorize: categorize,
     categorizeBy: categorizeBy,
     cardScale: cardScale,
+    theme: theme,
   };
   const blob = new Blob(
     [JSON.stringify({ settings: settings, games: games })],
@@ -33,15 +35,19 @@ export const loadData = (
   setSortMethod: React.Dispatch<React.SetStateAction<string>>,
   setIsAscending: React.Dispatch<React.SetStateAction<boolean>>,
   setCategorize: React.Dispatch<React.SetStateAction<boolean>>,
-  setCardScale: React.Dispatch<React.SetStateAction<number[]>>
+  setCardScale: React.Dispatch<React.SetStateAction<number[]>>,
+  setTheme: (theme: 'default' | 'preset1' | 'preset2' | 'preset3') => void
 ) => {
   const jsonData = JSON.parse(data);
+  console.log(jsonData.settings.theme);
+
   setGames([...jsonData.games]);
   setFilter(jsonData.settings.filter);
   setSortMethod(jsonData.settings.sortMethod);
   setIsAscending(jsonData.settings.isAscending);
   setCategorize(jsonData.settings.categorize);
   setCardScale(jsonData.settings.cardScale);
+  setTheme(jsonData.settings.theme);
 };
 
 export const getFilteredGames = (

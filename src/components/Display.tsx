@@ -10,6 +10,9 @@ import ImportButton from './ImportButton';
 import { IoMdSettings } from 'react-icons/io';
 import { useGameContext } from '../context/GameContext';
 import { useSettingsContext } from '../context/SettingsContext';
+import { useState } from 'react';
+import { createPortal } from 'react-dom';
+import SettingsMenu from './SettingsMenu';
 
 const Display = ({ games, setSearch }: DisplayProps) => {
   const { deleteGame } = useGameContext();
@@ -27,6 +30,8 @@ const Display = ({ games, setSearch }: DisplayProps) => {
     cardScale,
     setCardScale,
   } = useSettingsContext();
+
+  const [showModal, setShowModal] = useState(false);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -97,6 +102,11 @@ const Display = ({ games, setSearch }: DisplayProps) => {
 
   return (
     <Wrapper $cardWidth={cardScale[0]}>
+      {showModal &&
+        createPortal(
+          <SettingsMenu setShowModal={setShowModal} />,
+          document.body
+        )}
       <div className='options'>
         <div className='form'>
           <div className='search-bar'>
@@ -105,7 +115,7 @@ const Display = ({ games, setSearch }: DisplayProps) => {
               placeholder='Search...'
               onChange={handleSearchChange}
             />
-            <div className='settings-icon'>
+            <div className='settings-icon' onClick={() => setShowModal(!showModal)}>
               <IoMdSettings size={50} />
             </div>
           </div>

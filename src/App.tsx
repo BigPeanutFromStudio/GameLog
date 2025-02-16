@@ -9,6 +9,8 @@ import {
   getFilteredGames as getFilteredGamesUtil,
 } from './utils/data';
 import { useSettingsContext } from './context/SettingsContext';
+import { GlobalStyle } from './components/GlobalStyles.tsx';
+import { themes } from './context/SettingsContext';
 
 // TODO: Add full customizability with a settings menu
 // TODO: Fix styling 💀
@@ -32,19 +34,12 @@ function App() {
     categorizeBy,
     cardScale,
     setCardScale,
+    theme,
+    setTheme,
   } = useSettingsContext();
 
   useEffect(() => {
     localStorage.setItem('games', JSON.stringify(games));
-    const settings = {
-      filter: filter,
-      sortMethod: sortMethod,
-      isAscending: isAscending,
-      categorize: categorize,
-      categorizeBy: categorizeBy,
-      cardScale: cardScale,
-    };
-    localStorage.setItem('settings', JSON.stringify(settings));
   }, [
     games,
     filter,
@@ -53,6 +48,7 @@ function App() {
     categorize,
     cardScale,
     categorizeBy,
+    theme,
   ]);
 
   const deleteGame = useCallback((id: string) => {
@@ -77,7 +73,10 @@ function App() {
       isAscending,
       categorize,
       categorizeBy,
-      cardScale
+      cardScale,
+      (Object.keys(themes) as Array<keyof typeof themes>).find(
+        (key) => themes[key] === theme
+      ) ?? 'default'
     );
   }, [
     games,
@@ -87,6 +86,7 @@ function App() {
     categorize,
     categorizeBy,
     cardScale,
+    theme,
   ]);
 
   const handleLoadData = useCallback(
@@ -98,10 +98,18 @@ function App() {
         setSortMethod,
         setIsAscending,
         setCategorize,
-        setCardScale
+        setCardScale,
+        setTheme
       );
     },
-    [setCardScale, setCategorize, setFilter, setIsAscending, setSortMethod]
+    [
+      setCardScale,
+      setCategorize,
+      setFilter,
+      setIsAscending,
+      setSortMethod,
+      setTheme,
+    ]
   );
 
   const getFilteredGames = useCallback(
@@ -160,6 +168,7 @@ function App() {
 
   return (
     <GameProvider value={gameContextValue}>
+      <GlobalStyle theme={theme} />
       <Wrapper>
         <Display setSearch={setSearch} games={sortedGames} />
       </Wrapper>

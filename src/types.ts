@@ -44,6 +44,9 @@ export type AddGameFormProps = {
   setShowModal: (showModal: boolean) => void;
 };
 
+export type SettingsMenuProps = {
+  setShowModal: (showModal: boolean) => void;
+};
 export type EditGameFormProps = {
   setShowModal: (showModal: boolean) => void;
   game: game;

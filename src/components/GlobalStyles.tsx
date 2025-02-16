@@ -1,9 +1,16 @@
 // filepath: src/components/GlobalStyles.tsx
 import { createGlobalStyle } from 'styled-components';
 import { defaultTheme } from '../theme/defaultTheme';
+import { preset1Theme } from '../theme/preset1Theme';
+import { preset2Theme } from '../theme/preset2Theme';
+import { preset3Theme } from '../theme/preset3Theme';
 
 interface Props {
-  theme: typeof defaultTheme;
+  theme:
+    | typeof defaultTheme
+    | typeof preset1Theme
+    | typeof preset2Theme
+    | typeof preset3Theme;
 }
 
 export const GlobalStyle = createGlobalStyle<Props>`
@@ -28,6 +35,6 @@ export const GlobalStyle = createGlobalStyle<Props>`
     --large-font: ${(props) => props.theme.fontSizes.large};
     --xlarge-font: ${(props) => props.theme.fontSizes.xlarge};
 
-    --border-radius: ${(props) => props.theme.borderRadius} 
+    --border-radius: ${(props) => props.theme.borderRadius};
   }
 `;

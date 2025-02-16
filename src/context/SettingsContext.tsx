@@ -1,4 +1,15 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { defaultTheme } from '../theme/defaultTheme';
+import { preset1Theme } from '../theme/preset1Theme';
+import { preset2Theme } from '../theme/preset2Theme';
+import { preset3Theme } from '../theme/preset3Theme';
+
+export const themes = {
+  default: defaultTheme,
+  preset1: preset1Theme,
+  preset2: preset2Theme,
+  preset3: preset3Theme,
+};
 
 interface SettingsContextProps {
   filter: string;
@@ -10,9 +21,11 @@ interface SettingsContextProps {
   categorize: boolean;
   setCategorize: React.Dispatch<React.SetStateAction<boolean>>;
   categorizeBy: string;
-  setCategorizeBy: (categorizeBy: string) => void;
+  setCategorizeBy: React.Dispatch<React.SetStateAction<string>>;
   cardScale: number[];
   setCardScale: React.Dispatch<React.SetStateAction<number[]>>;
+  theme: typeof defaultTheme;
+  setTheme: (theme: 'default' | 'preset1' | 'preset2' | 'preset3') => void;
 }
 
 const SettingsContext = createContext<SettingsContextProps | undefined>(
@@ -32,10 +45,20 @@ export const useSettingsContext = () => {
 export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const initialSettings = JSON.parse(
+  const initialSettings: {
+    filter: string;
+    sortMethod: string;
+    isAscending: boolean;
+    categorize: boolean;
+    categorizeBy: string;
+    cardScale: number[];
+    theme: 'default' | 'preset1' | 'preset2' | 'preset3';
+  } = JSON.parse(
     localStorage.getItem('settings') ||
-      '{ "filter": "all", "sortMethod": "byname", "isAscending": true, "categorize": false, "categorizeBy":"state", "cardScale": [460, 215]}'
+      '{ "filter": "all", "sortMethod": "byname", "isAscending": true, "categorize": false, "categorizeBy":"state", "cardScale": [460, 215], "theme": "default" }'
   );
+
+  console.log('Initial settings:', initialSettings);
 
   const [filter, setFilter] = useState(initialSettings.filter);
   const [sortMethod, setSortMethod] = useState(initialSettings.sortMethod);
@@ -45,6 +68,17 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     initialSettings.categorizeBy
   );
   const [cardScale, setCardScale] = useState(initialSettings.cardScale);
+  const [theme, setThemeState] = useState(themes[initialSettings.theme]);
+
+  console.log('Initial theme:', themes[initialSettings.theme]);
+
+  const setTheme = (theme: 'default' | 'preset1' | 'preset2' | 'preset3') => {
+    setThemeState(themes[theme]);
+    localStorage.setItem(
+      'settings',
+      JSON.stringify({ ...initialSettings, theme })
+    );
+  };
 
   useEffect(() => {
     const settings = {
@@ -54,9 +88,20 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
       categorize: categorize,
       categorizeBy: categorizeBy,
       cardScale: cardScale,
+      theme: Object.keys(themes).find(
+        (key) => themes[key as keyof typeof themes] === theme
+      ),
     };
     localStorage.setItem('settings', JSON.stringify(settings));
-  }, [filter, sortMethod, isAscending, categorize, categorizeBy, cardScale]);
+  }, [
+    filter,
+    sortMethod,
+    isAscending,
+    categorize,
+    categorizeBy,
+    cardScale,
+    theme,
+  ]);
 
   const value: SettingsContextProps = {
     filter,
@@ -71,6 +116,8 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     setCategorizeBy,
     cardScale,
     setCardScale,
+    theme,
+    setTheme,
   };
 
   return (
