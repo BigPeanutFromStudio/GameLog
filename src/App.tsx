@@ -10,10 +10,7 @@ import {
 } from './utils/data';
 import { useSettingsContext } from './context/SettingsContext';
 import { GlobalStyle } from './components/GlobalStyles.tsx';
-import { themes } from './context/SettingsContext';
 
-// TODO: Add full customizability with a settings menu
-// TODO: Fix styling 💀
 // TODO: Add support for custom local images
 // TODO: Better scaling cards (text, ratings, gaps, etc.)
 // TODO: Fix display not refreshing on importing data
@@ -74,9 +71,7 @@ function App() {
       categorize,
       categorizeBy,
       cardScale,
-      (Object.keys(themes) as Array<keyof typeof themes>).find(
-        (key) => themes[key] === theme
-      ) ?? 'default'
+      theme
     );
   }, [
     games,

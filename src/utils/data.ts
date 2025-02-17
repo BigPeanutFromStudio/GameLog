@@ -1,5 +1,6 @@
 import FileSaver from 'file-saver';
 import { game, states } from '../types';
+import { defaultTheme } from '../theme/defaultTheme';
 
 export const saveData = (
   games: game[],
@@ -9,7 +10,7 @@ export const saveData = (
   categorize: boolean,
   categorizeBy: string,
   cardScale: number[],
-  theme: string
+  theme: typeof defaultTheme
 ) => {
   const settings = {
     filter: filter,
@@ -36,7 +37,7 @@ export const loadData = (
   setIsAscending: React.Dispatch<React.SetStateAction<boolean>>,
   setCategorize: React.Dispatch<React.SetStateAction<boolean>>,
   setCardScale: React.Dispatch<React.SetStateAction<number[]>>,
-  setTheme: (theme: 'default' | 'preset1' | 'preset2' | 'preset3') => void
+  setTheme: (theme: typeof defaultTheme) => void
 ) => {
   const jsonData = JSON.parse(data);
   console.log(jsonData.settings.theme);

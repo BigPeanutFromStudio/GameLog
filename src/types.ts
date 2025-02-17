@@ -1,4 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
+import { defaultTheme } from './theme/defaultTheme';
+import { themes } from './context/SettingsContext';
 
 export enum states {
   FinishedFully = '100%',
@@ -55,6 +57,12 @@ export type EditGameFormProps = {
 export type ScaleButtonProps = {
   setCardScale: (cardScale: number[]) => void;
   cardScale: number[];
+};
+
+export type ThemeTabsProps = {
+  handleThemeChange: (theme: typeof defaultTheme) => void;
+  theme: typeof defaultTheme;
+  themes: typeof themes;
 };
 
 export type GameContextType = {

@@ -151,7 +151,7 @@ const Wrapper = styled.div<{
     background-color: rgba(0, 0, 0, 0);
     color: rgba(0, 0, 0, 0);
     transition: 0.5s ease;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     display: flex;
     align-items: center;
     justify-content: center;

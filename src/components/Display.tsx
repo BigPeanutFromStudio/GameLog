@@ -115,7 +115,10 @@ const Display = ({ games, setSearch }: DisplayProps) => {
               placeholder='Search...'
               onChange={handleSearchChange}
             />
-            <div className='settings-icon' onClick={() => setShowModal(!showModal)}>
+            <div
+              className='settings-icon'
+              onClick={() => setShowModal(!showModal)}
+            >
               <IoMdSettings size={50} />
             </div>
           </div>
@@ -281,7 +284,7 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
     background-color: var(--primary-color);
     min-width: 400px;
     width: 80%;
-    border-radius: 20px;
+    border-radius: var(--border-radius);
     padding: 20px;
     font-size: var(--small-font);
   }

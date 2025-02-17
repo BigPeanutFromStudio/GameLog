@@ -1,8 +1,10 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { defaultTheme } from '../theme/defaultTheme';
-import { preset1Theme } from '../theme/preset1Theme';
-import { preset2Theme } from '../theme/preset2Theme';
-import { preset3Theme } from '../theme/preset3Theme';
+import {
+  defaultTheme,
+  preset1Theme,
+  preset2Theme,
+  preset3Theme,
+} from '../theme/defaultTheme';
 
 export const themes = {
   default: defaultTheme,
@@ -25,7 +27,7 @@ interface SettingsContextProps {
   cardScale: number[];
   setCardScale: React.Dispatch<React.SetStateAction<number[]>>;
   theme: typeof defaultTheme;
-  setTheme: (theme: 'default' | 'preset1' | 'preset2' | 'preset3') => void;
+  setTheme: (theme: typeof defaultTheme) => void;
 }
 
 const SettingsContext = createContext<SettingsContextProps | undefined>(
@@ -52,10 +54,12 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     categorize: boolean;
     categorizeBy: string;
     cardScale: number[];
-    theme: 'default' | 'preset1' | 'preset2' | 'preset3';
+    theme: typeof defaultTheme;
   } = JSON.parse(
     localStorage.getItem('settings') ||
-      '{ "filter": "all", "sortMethod": "byname", "isAscending": true, "categorize": false, "categorizeBy":"state", "cardScale": [460, 215], "theme": "default" }'
+      `{ "filter": "all", "sortMethod": "byname", "isAscending": true, "categorize": false, "categorizeBy":"state", "cardScale": [460, 215], "theme": ${JSON.stringify(
+        defaultTheme
+      )}}`
   );
 
   console.log('Initial settings:', initialSettings);
@@ -68,12 +72,10 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     initialSettings.categorizeBy
   );
   const [cardScale, setCardScale] = useState(initialSettings.cardScale);
-  const [theme, setThemeState] = useState(themes[initialSettings.theme]);
+  const [theme, setThemeState] = useState(initialSettings.theme);
 
-  console.log('Initial theme:', themes[initialSettings.theme]);
-
-  const setTheme = (theme: 'default' | 'preset1' | 'preset2' | 'preset3') => {
-    setThemeState(themes[theme]);
+  const setTheme = (theme: typeof defaultTheme) => {
+    setThemeState(theme);
     localStorage.setItem(
       'settings',
       JSON.stringify({ ...initialSettings, theme })
@@ -88,9 +90,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
       categorize: categorize,
       categorizeBy: categorizeBy,
       cardScale: cardScale,
-      theme: Object.keys(themes).find(
-        (key) => themes[key as keyof typeof themes] === theme
-      ),
+      theme: theme,
     };
     localStorage.setItem('settings', JSON.stringify(settings));
   }, [
