@@ -11,7 +11,7 @@ const ThemeTabs = ({ handleThemeChange, themes, theme }: ThemeTabsProps) => {
           }`}
           onClick={() => handleThemeChange(themes.default)}
         >
-          Default
+          Chocolatey
         </div>
         <div
           className={`preset-tab ${
@@ -19,7 +19,7 @@ const ThemeTabs = ({ handleThemeChange, themes, theme }: ThemeTabsProps) => {
           }`}
           onClick={() => handleThemeChange(themes.preset1)}
         >
-          Preset 1
+          Midnight
         </div>
         <div
           className={`preset-tab ${
@@ -27,7 +27,7 @@ const ThemeTabs = ({ handleThemeChange, themes, theme }: ThemeTabsProps) => {
           }`}
           onClick={() => handleThemeChange(themes.preset2)}
         >
-          Preset 2
+          Light
         </div>
         <div
           className={`preset-tab ${
@@ -35,7 +35,7 @@ const ThemeTabs = ({ handleThemeChange, themes, theme }: ThemeTabsProps) => {
           }`}
           onClick={() => handleThemeChange(themes.preset3)}
         >
-          Preset 3
+          Dark
         </div>
       </div>
     </Wrapper>

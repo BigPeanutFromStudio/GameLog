@@ -34,34 +34,34 @@ export const preset1Theme = {
 
 export const preset2Theme = {
   colors: {
-    primary: '#ff0000',
-    secondary: '#00ff00',
-    background: '#0000ff',
-    text: '#ffffff',
-    accent: '#ffff00',
+    primary: '#3ca8c3',
+    secondary: '#1d9083',
+    background: '#ddd5c5',
+    text: '#2c2b2b',
+    accent: '#3e3e3c',
   },
   fontSizes: {
-    small: '25px',
-    medium: '35px',
-    large: '45px',
-    xlarge: '65px',
+    small: '28px',
+    medium: '38px',
+    large: '48px',
+    xlarge: '70px',
   },
-  borderRadius: '15px',
+  borderRadius: '10px',
 };
 
 export const preset3Theme = {
   colors: {
-    primary: '#000000',
-    secondary: '#111111',
-    background: '#222222',
-    text: '#333333',
-    accent: '#444444',
+    primary: '#383733',
+    secondary: '#2b2a27',
+    background: '#272525',
+    text: '#ad8e1f',
+    accent: '#ad8e1f',
   },
   fontSizes: {
-    small: '20px',
-    medium: '30px',
-    large: '40px',
-    xlarge: '60px',
+    small: '28px',
+    medium: '38px',
+    large: '48px',
+    xlarge: '70px',
   },
-  borderRadius: '5px',
+  borderRadius: '10px',
 };

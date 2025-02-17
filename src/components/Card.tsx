@@ -124,6 +124,7 @@ const Wrapper = styled.div<{
     align-items: center;
     box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 1);
     user-select: none;
+    color: white;
     cursor: pointer;
   }
   .badge:hover {

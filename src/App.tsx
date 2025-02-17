@@ -15,6 +15,7 @@ import { GlobalStyle } from './components/GlobalStyles.tsx';
 // TODO: Better scaling cards (text, ratings, gaps, etc.)
 // TODO: Fix display not refreshing on importing data
 // TODO: Choose to export data seperately
+// TODO: Add custom tab in themes
 
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
 function App() {
