@@ -14,6 +14,7 @@ import { GlobalStyle } from './components/GlobalStyles.tsx';
 // TODO: Add support for custom local images
 // TODO: Better scaling cards (text, ratings, gaps, etc.)
 // TODO: Fix display not refreshing on importing data
+// TODO: Choose to export data seperately
 
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
 function App() {
@@ -29,6 +30,7 @@ function App() {
     categorize,
     setCategorize,
     categorizeBy,
+    setCategorizeBy,
     cardScale,
     setCardScale,
     theme,
@@ -93,6 +95,7 @@ function App() {
         setSortMethod,
         setIsAscending,
         setCategorize,
+        setCategorizeBy,
         setCardScale,
         setTheme
       );
@@ -104,6 +107,7 @@ function App() {
       setIsAscending,
       setSortMethod,
       setTheme,
+      setCategorizeBy,
     ]
   );
 

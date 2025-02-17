@@ -4,7 +4,9 @@ import { SettingsMenuProps } from '../types';
 import { useSettingsContext } from '../context/SettingsContext';
 import { themes } from '../context/SettingsContext';
 import { defaultTheme } from '../theme/defaultTheme';
-import ThemeTabs from './ThemeTabs';
+import ThemeSettings from './ThemeSettings';
+import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
+import DataSettings from './DataSettings';
 
 const SettingsMenu = ({ setShowModal }: SettingsMenuProps) => {
   const escFunction = useCallback(
@@ -71,95 +73,48 @@ const SettingsMenu = ({ setShowModal }: SettingsMenuProps) => {
     setTheme(currentTheme);
   };
 
+  const tabs = ['Theme Settings', 'Data Settings'];
+  const tabElements = [
+    <ThemeSettings
+      themes={themes}
+      theme={theme}
+      handleThemeChange={handleThemeChange}
+      handleColorChange={handleColorChange}
+      handleFontChange={handleFontChange}
+      handleBorderRadiusChange={handleBorderRadiusChange}
+      colors={colors}
+      fonts={fonts}
+      borderRadius={borderRadius}
+      handleSubmit={handleSubmit}
+    />,
+    <DataSettings />,
+  ];
+
+  const [currentTab, setCurrentTab] = useState(0);
+
   return (
     <Wrapper>
       <div className='form'>
-        <h1>Settings</h1>
-        <ThemeTabs
-          themes={themes}
-          theme={theme}
-          handleThemeChange={handleThemeChange}
-        />
-        <div className='colors'>
-          <h1>Colors</h1>
-          <label htmlFor='primary'>Primary Color: </label>
-          <input
-            type='color'
-            name='primary'
-            value={colors.primary}
-            onChange={handleColorChange}
-          />
-          <label htmlFor='secondary'>Secondary Color: </label>
-          <input
-            type='color'
-            name='secondary'
-            value={colors.secondary}
-            onChange={handleColorChange}
-          />
-          <label htmlFor='background'>Background Color: </label>
-          <input
-            type='color'
-            name='background'
-            value={colors.background}
-            onChange={handleColorChange}
-          />
-          <label htmlFor='text'>Text Color: </label>
-          <input
-            type='color'
-            name='text'
-            value={colors.text}
-            onChange={handleColorChange}
-          />
-          <label htmlFor='accent'>Accent Color: </label>
-          <input
-            type='color'
-            name='accent'
-            value={colors.accent}
-            onChange={handleColorChange}
-          />
+        <div className='tab-switch'>
+          <div
+            className='prev'
+            onClick={() =>
+              setCurrentTab((currentTab - 1 + tabs.length) % tabs.length)
+            }
+          >
+            <MdNavigateBefore size={35} />
+          </div>
+          <h1>{tabs[currentTab]}</h1>
+          <div
+            className='next'
+            onClick={() =>
+              setCurrentTab((currentTab + 1 + tabs.length) % tabs.length)
+            }
+          >
+            <MdNavigateNext size={35} />
+          </div>
         </div>
-        <div className='fonts'>
-          <h1>Font Sizes</h1>
-          <label htmlFor='small'>Small: </label>
-          <input
-            type='text'
-            name='small'
-            value={fonts.small}
-            onChange={handleFontChange}
-          />
-          <label htmlFor='medium'>Medium: </label>
-          <input
-            type='text'
-            name='medium'
-            value={fonts.medium}
-            onChange={handleFontChange}
-          />
-          <label htmlFor='large'>Large: </label>
-          <input
-            type='text'
-            name='large'
-            value={fonts.large}
-            onChange={handleFontChange}
-          />
-          <label htmlFor='xlarge'>XLarge: </label>
-          <input
-            type='text'
-            name='xlarge'
-            value={fonts.xlarge}
-            onChange={handleFontChange}
-          />
-        </div>
-        <div className='other'>
-          <h1>Other Settings</h1>
-          <label htmlFor='borderRadius'>Border Radius: </label>
-          <input
-            type='text'
-            name='borderRadius'
-            value={borderRadius}
-            onChange={handleBorderRadiusChange}
-          />
-        </div>
-        <button onClick={handleSubmit}>Apply Changes</button>
+        {tabElements[currentTab]}
       </div>
     </Wrapper>
   );
@@ -180,6 +135,21 @@ const Wrapper = styled.div`
   align-items: center;
   background-color: rgba(0, 0, 0, 0.4);
   user-select: none;
+  .tab-switch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+  }
+  .prev,
+  .next {
+    cursor: pointer;
+    transition: transform 0.1s ease;
+  }
+  .prev:hover,
+  .next:hover {
+    transform: scale(1.3);
+  }
   .form {
     background-color: var(--background-color);
     border-radius: var(--border-radius);
@@ -191,7 +161,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     box-shadow: 0px 8px 24px 8px #0f1014;
   }
-  .form h1 {
+  .tab-switch h1 {
     margin-bottom: 30px;
     margin-top: 15px;
     font-size: var(--large-font);
@@ -201,50 +171,5 @@ const Wrapper = styled.div`
     font-size: var(--small-font);
     margin-left: 15px;
   }
-  .other h1,
-  .colors h1,
-  .fonts h1 {
-    font-size: var(--medium-font);
-    text-align: center;
-  }
-  button {
-    all: unset;
-    width: 150px;
-    margin-top: 15px;
-    background-color: var(--primary-color);
-    font-size: var(--small-font);
-    border-radius: var(--border-radius);
-    padding: 10px;
-    cursor: pointer;
-    transition: transform 0.1s ease;
-  }
-  button:hover {
-    transform: scale(1.1);
-  }
-  input {
-    all: unset;
-    margin-right: 30px;
-    background-color: var(--primary-color);
-    width: 100px;
-    border-radius: var(--border-radius);
-    padding: 10px;
-    font-size: var(--small-font);
-  }
-  input[type='color'] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    width: 70px;
-    height: 70px;
-    background-color: transparent;
-    cursor: pointer;
-  }
-  input[type='color']::-webkit-color-swatch {
-    border-radius: var(--border-radius);
-    border: 1px solid var(--accent-color);
-  }
-  input[type='color']::-moz-color-swatch {
-    border-radius: var(--border-radius);
-    border: 1px solid var(--accent-color);
-  }
+
 `;

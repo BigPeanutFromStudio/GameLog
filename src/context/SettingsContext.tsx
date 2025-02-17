@@ -62,8 +62,6 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
       )}}`
   );
 
-  console.log('Initial settings:', initialSettings);
-
   const [filter, setFilter] = useState(initialSettings.filter);
   const [sortMethod, setSortMethod] = useState(initialSettings.sortMethod);
   const [isAscending, setIsAscending] = useState(initialSettings.isAscending);

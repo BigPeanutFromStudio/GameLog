@@ -65,6 +65,19 @@ export type ThemeTabsProps = {
   themes: typeof themes;
 };
 
+export type ThemeSettingsProps = {
+  handleThemeChange: (theme: typeof defaultTheme) => void;
+  theme: typeof defaultTheme;
+  themes: typeof themes;
+  handleColorChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleFontChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleBorderRadiusChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: () => void;
+  colors: typeof defaultTheme.colors;
+  fonts: typeof defaultTheme.fontSizes;
+  borderRadius: string;
+};
+
 export type GameContextType = {
   games: game[];
   setGames: Dispatch<SetStateAction<game[]>>;

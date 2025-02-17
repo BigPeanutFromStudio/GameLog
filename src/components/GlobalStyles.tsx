@@ -1,9 +1,11 @@
 // filepath: src/components/GlobalStyles.tsx
 import { createGlobalStyle } from 'styled-components';
-import { defaultTheme } from '../theme/defaultTheme';
-import { preset1Theme } from '../theme/preset1Theme';
-import { preset2Theme } from '../theme/preset2Theme';
-import { preset3Theme } from '../theme/preset3Theme';
+import {
+  defaultTheme,
+  preset1Theme,
+  preset2Theme,
+  preset3Theme,
+} from '../theme/defaultTheme';
 
 interface Props {
   theme:

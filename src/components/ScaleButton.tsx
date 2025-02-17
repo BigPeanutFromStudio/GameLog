@@ -34,9 +34,9 @@ const ScaleButton = ({ setCardScale, cardScale }: ScaleButtonProps) => {
 export default ScaleButton;
 
 const Wrapper = styled.div`
-  width: 230px;
-  height: 107px;
-  margin-bottom: 10px;
+  margin-right: 30px;
+  width: 150px;
+  height: 70px;
   .container {
     position: relative;
     width: inherit;
@@ -55,6 +55,6 @@ const Wrapper = styled.div`
     transition: transform 0.1s ease;
   }
   h1 {
-    font-size: var(--medium-font);
+    font-size: var(--small-font);
   }
 `;

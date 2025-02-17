@@ -2,11 +2,8 @@ import styled from 'styled-components';
 import Card from './Card';
 import AddGameBtn from './AddGameBtn';
 import { DisplayProps, game, states } from '../types';
-import ScaleButton from './ScaleButton';
 import { FaSortAmountDownAlt, FaSortAmountDown } from 'react-icons/fa';
 import { MdCategory, MdOutlineCategory } from 'react-icons/md';
-import ExportButton from './ExportButton';
-import ImportButton from './ImportButton';
 import { IoMdSettings } from 'react-icons/io';
 import { useGameContext } from '../context/GameContext';
 import { useSettingsContext } from '../context/SettingsContext';
@@ -28,7 +25,6 @@ const Display = ({ games, setSearch }: DisplayProps) => {
     categorizeBy,
     setCategorizeBy,
     cardScale,
-    setCardScale,
   } = useSettingsContext();
 
   const [showModal, setShowModal] = useState(false);
@@ -191,9 +187,6 @@ const Display = ({ games, setSearch }: DisplayProps) => {
             </div>
             <div className='buttons'>
               <AddGameBtn />
-              <ScaleButton cardScale={cardScale} setCardScale={setCardScale} />
-              <ExportButton />
-              <ImportButton />
             </div>
           </div>
         </div>

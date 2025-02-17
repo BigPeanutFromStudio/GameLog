@@ -36,17 +36,18 @@ export const loadData = (
   setSortMethod: React.Dispatch<React.SetStateAction<string>>,
   setIsAscending: React.Dispatch<React.SetStateAction<boolean>>,
   setCategorize: React.Dispatch<React.SetStateAction<boolean>>,
+  setCategorizeBy: React.Dispatch<React.SetStateAction<string>>,
   setCardScale: React.Dispatch<React.SetStateAction<number[]>>,
   setTheme: (theme: typeof defaultTheme) => void
 ) => {
   const jsonData = JSON.parse(data);
-  console.log(jsonData.settings.theme);
 
   setGames([...jsonData.games]);
   setFilter(jsonData.settings.filter);
   setSortMethod(jsonData.settings.sortMethod);
   setIsAscending(jsonData.settings.isAscending);
   setCategorize(jsonData.settings.categorize);
+  setCategorizeBy(jsonData.settings.categorizeBy);
   setCardScale(jsonData.settings.cardScale);
   setTheme(jsonData.settings.theme);
 };
