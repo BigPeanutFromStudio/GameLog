@@ -7,12 +7,12 @@ export const preset3Theme = {
     accent: '#444444',
   },
   fontSizes: {
-    small: '22px',
-    medium: '32px',
-    large: '42px',
-    xlarge: '62px',
+    small: '20px',
+    medium: '30px',
+    large: '40px',
+    xlarge: '60px',
   },
-  borderRadius: '8px',
+  borderRadius: '5px',
 };
 
 export type Theme = typeof preset3Theme;
