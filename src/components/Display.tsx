@@ -106,6 +106,7 @@ const Display = ({ games, setSearch }: DisplayProps) => {
       <div className='options'>
         <div className='form'>
           <div className='search-bar'>
+            <AddGameBtn />
             <input
               type='text'
               placeholder='Search...'
@@ -185,9 +186,6 @@ const Display = ({ games, setSearch }: DisplayProps) => {
                 </div>
               </div>
             </div>
-            <div className='buttons'>
-              <AddGameBtn />
-            </div>
           </div>
         </div>
       </div>
@@ -227,7 +225,6 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
     justify-content: center;
     align-items: center;
     gap: 30px;
-    margin-left: 25px;
   }
   .settings-icon {
     cursor: pointer;

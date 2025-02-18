@@ -50,19 +50,35 @@ const AddGameForm = ({ setShowModal }: AddGameFormProps) => {
       <div className='form'>
         <h1>ADD A GAME</h1>
         <form onSubmit={handleSubmit}>
-          <input type='text' name='name' required placeholder='Game name...' />
-          <input type='text' name='platform' placeholder='Game platform...' />
-          <select name='state' defaultValue={states.Queued}>
-            <optgroup>
-              {Object.keys(states).map((key, index) => (
-                <option key={index} value={key}>
-                  {Object.values(states)[index]}
-                </option>
-              ))}
-            </optgroup>
-          </select>
-          <input type='number' step='0.01' name='rating' defaultValue='0' />
-          <input type='text' name='image' placeholder='Image url (460x215)' />
+          <div className='input-wrapper'>
+            <label htmlFor='name'>Game name: </label>
+            <input
+              type='text'
+              name='name'
+              required
+              placeholder='Enter the name...'
+            />
+            <label htmlFor='platform'>Platform name: </label>
+            <input
+              type='text'
+              name='platform'
+              placeholder='Enter the platform...'
+            />
+            <label htmlFor='state'>Game status: </label>
+            <select name='state' defaultValue={states.Queued}>
+              <optgroup>
+                {Object.keys(states).map((key, index) => (
+                  <option key={index} value={key}>
+                    {Object.values(states)[index]}
+                  </option>
+                ))}
+              </optgroup>
+            </select>
+            <label htmlFor='rating'>Game rating: </label>
+            <input type='number' step='0.01' name='rating' defaultValue='0' />
+            <label htmlFor='image'>Cover image: </label>
+            <input type='text' name='image' placeholder='Image url (460x215)' />
+          </div>
           <button type='submit'>Add game</button>
         </form>
       </div>
@@ -85,6 +101,16 @@ const Wrapper = styled.div`
   align-items: center;
   background-color: rgba(0, 0, 0, 0.4);
   user-select: none;
+  .input-wrapper {
+    display: grid;
+    grid-template-columns: auto 1fr;
+  }
+  .input-wrapper label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--small-font);
+  }
   .form {
     background-color: var(--background-color);
     border-radius: var(--border-radius);
@@ -99,6 +125,8 @@ const Wrapper = styled.div`
   .form h1 {
     margin-bottom: 30px;
     margin-top: 15px;
+    font-size: var(--large-font);
+    border-bottom: solid 1px var(--accent-color);
   }
   form {
     display: flex;
@@ -122,6 +150,6 @@ const Wrapper = styled.div`
     text-align: center;
   }
   button:hover {
-    background-color: var(--background-color);
+    background-color: var(--secondary-color);
   }
 `;

@@ -10,7 +10,7 @@ const AddGameBtn = () => {
     <Wrapper>
       <div className='container' onClick={() => setShowModal(!showModal)}>
         <IoIosAddCircle
-          size={70}
+          size={50}
           color='rgba(255, 255, 255, 0.4)'
           style={{ transform: 'inherit', transition: 'inherit' }}
         />
@@ -26,9 +26,8 @@ const AddGameBtn = () => {
 export default AddGameBtn;
 
 const Wrapper = styled.div`
-  width: 230px;
-  height: 107px;
-  margin-bottom: 10px;
+  width: 82px;
+  height: 82px;
   .container {
     position: relative;
     width: inherit;

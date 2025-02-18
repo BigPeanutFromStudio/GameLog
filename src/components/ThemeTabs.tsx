@@ -13,7 +13,7 @@ const ThemeTabs = ({ handleThemeChange, themes, theme }: ThemeTabsProps) => {
           }`}
           onClick={() => handleThemeChange(themes.default)}
         >
-          Chocolatey
+          Choco
         </div>
         <div
           className={`preset-tab ${
