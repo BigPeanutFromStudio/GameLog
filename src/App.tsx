@@ -65,8 +65,21 @@ function App() {
     );
   }, []);
 
-  const handleSaveData = useCallback(() => {
-    saveData(
+  const handleSaveData = useCallback(
+    (saveMode: number) => {
+      saveData(
+        games,
+        filter,
+        sortMethod,
+        isAscending,
+        categorize,
+        categorizeBy,
+        cardScale,
+        theme,
+        saveMode
+      );
+    },
+    [
       games,
       filter,
       sortMethod,
@@ -74,18 +87,9 @@ function App() {
       categorize,
       categorizeBy,
       cardScale,
-      theme
-    );
-  }, [
-    games,
-    filter,
-    sortMethod,
-    isAscending,
-    categorize,
-    categorizeBy,
-    cardScale,
-    theme,
-  ]);
+      theme,
+    ]
+  );
 
   const handleLoadData = useCallback(
     (data: string) => {

@@ -10,7 +10,8 @@ export const saveData = (
   categorize: boolean,
   categorizeBy: string,
   cardScale: number[],
-  theme: typeof defaultTheme
+  theme: typeof defaultTheme,
+  saveMode: number // 0 - all, 1 - theme, 2 - settings, 3 - games
 ) => {
   const settings = {
     filter: filter,
@@ -19,12 +20,29 @@ export const saveData = (
     categorize: categorize,
     categorizeBy: categorizeBy,
     cardScale: cardScale,
-    theme: theme,
   };
-  const blob = new Blob(
-    [JSON.stringify({ settings: settings, games: games })],
-    { type: 'application/json' }
-  );
+
+  let dataToSave: string = '';
+
+  switch (saveMode) {
+    case 0:
+      dataToSave = JSON.stringify({
+        theme: theme,
+        settings: settings,
+        games: games,
+      });
+      break;
+    case 1:
+      dataToSave = JSON.stringify({ theme: theme });
+      break;
+    case 2:
+      dataToSave = JSON.stringify({ settings: settings });
+      break;
+    case 3:
+      dataToSave = JSON.stringify({ games: games });
+  }
+
+  const blob = new Blob([dataToSave], { type: 'application/json' });
 
   FileSaver.saveAs(blob, 'data.json');
 };
@@ -42,14 +60,20 @@ export const loadData = (
 ) => {
   const jsonData = JSON.parse(data);
 
-  setGames([...jsonData.games]);
-  setFilter(jsonData.settings.filter);
-  setSortMethod(jsonData.settings.sortMethod);
-  setIsAscending(jsonData.settings.isAscending);
-  setCategorize(jsonData.settings.categorize);
-  setCategorizeBy(jsonData.settings.categorizeBy);
-  setCardScale(jsonData.settings.cardScale);
-  setTheme(jsonData.settings.theme);
+  if (jsonData.games) {
+    setGames([...jsonData.games]);
+  }
+  if (jsonData.settings) {
+    setFilter(jsonData.settings.filter);
+    setSortMethod(jsonData.settings.sortMethod);
+    setIsAscending(jsonData.settings.isAscending);
+    setCategorize(jsonData.settings.categorize);
+    setCategorizeBy(jsonData.settings.categorizeBy);
+    setCardScale(jsonData.settings.cardScale);
+  }
+  if (jsonData.theme) {
+    setTheme(jsonData.theme);
+  }
 };
 
 export const getFilteredGames = (

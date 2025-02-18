@@ -144,6 +144,7 @@ const Wrapper = styled.div`
     padding: 10px;
     cursor: pointer;
     transition: transform 0.1s ease;
+    margin-right: 100px;
   }
   button:hover {
     transform: scale(1.1);

@@ -1,13 +1,16 @@
 import styled from 'styled-components';
 import { useGameContext } from '../context/GameContext';
+import { ExportButtonProps } from '../types';
 
-const ExportButton = () => {
+const ExportButton = ({ saveMode }: ExportButtonProps) => {
   const { saveData } = useGameContext();
+
+  const modes = ['All', 'Theme', 'Preferences', 'Games'];
 
   return (
     <Wrapper>
-      <div className='container' onClick={saveData}>
-        <h1>Export data</h1>
+      <div className='container' onClick={() => saveData(saveMode)}>
+        <h1>Export {modes[saveMode]}</h1>
       </div>
     </Wrapper>
   );
@@ -18,6 +21,7 @@ const Wrapper = styled.div`
   width: 230px;
   height: 107px;
   margin-bottom: 10px;
+  text-align: center;
   .container {
     position: relative;
     width: inherit;

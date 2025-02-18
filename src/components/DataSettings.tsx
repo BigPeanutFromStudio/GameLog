@@ -5,16 +5,12 @@ import ImportButton from './ImportButton';
 const DataSettings = () => {
   return (
     <Wrapper>
-      <ImportButton />
-      <ExportButton />
       <h1 className='section-h1'>Data Export Options</h1>
-      <div className='checkboxes'>
-        <label htmlFor='games'>Games: </label>
-        <input type='checkbox' name='games' />
-        <label htmlFor='settings'>Preferences: </label>
-        <input type='checkbox' name='settings' />
-        <label htmlFor='theme'>Theme: </label>
-        <input type='checkbox' name='theme' />
+      <ImportButton />
+      <div className='export-buttons'>
+        <ExportButton saveMode={0} />
+        <ExportButton saveMode={1} />
+        <ExportButton saveMode={3} />
       </div>
     </Wrapper>
   );
@@ -26,21 +22,14 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  .export-buttons {
+    display: flex;
+    gap: 15px;
+  }
   h1 {
     all: unset;
     border-bottom: none;
     font-size: var(--medium-font);
-  }
-  input[type='checkbox'] {
-    all: unset;
-    border: 1px solid var(--accent-color);
-    width: 50px;
-    height: 50px;
-    background-color: var(--secondary-color);
-    cursor: pointer;
-  }
-  input[type='checkbox']:checked {
-    background-color: var(--accent-color);
   }
   .section-h1 {
     font-size: var(--medium-font);

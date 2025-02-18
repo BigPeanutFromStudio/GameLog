@@ -59,6 +59,10 @@ export type ScaleButtonProps = {
   cardScale: number[];
 };
 
+export type ExportButtonProps = {
+  saveMode: number;
+};
+
 export type ThemeTabsProps = {
   handleThemeChange: (theme: typeof defaultTheme) => void;
   theme: typeof defaultTheme;
@@ -85,6 +89,6 @@ export type GameContextType = {
   addGame: (game: game) => void;
   updateGame: (updatedGame: game) => void;
   getFilteredGames: (name: string | null, filter: string | states) => game[];
-  saveData: () => void;
+  saveData: (saveMode: number) => void;
   loadData: (data: string) => void;
 };
