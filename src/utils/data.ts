@@ -11,6 +11,7 @@ export const saveData = (
   categorizeBy: string,
   cardScale: number[],
   theme: typeof defaultTheme,
+  savedTheme: typeof defaultTheme,
   saveMode: number // 0 - all, 1 - theme, 2 - settings, 3 - games
 ) => {
   const settings = {
@@ -30,10 +31,11 @@ export const saveData = (
         theme: theme,
         settings: settings,
         games: games,
+        savedTheme: savedTheme,
       });
       break;
     case 1:
-      dataToSave = JSON.stringify({ theme: theme });
+      dataToSave = JSON.stringify({ theme: theme, savedTheme: savedTheme });
       break;
     case 2:
       dataToSave = JSON.stringify({ settings: settings });
@@ -56,7 +58,8 @@ export const loadData = (
   setCategorize: React.Dispatch<React.SetStateAction<boolean>>,
   setCategorizeBy: React.Dispatch<React.SetStateAction<string>>,
   setCardScale: React.Dispatch<React.SetStateAction<number[]>>,
-  setTheme: (theme: typeof defaultTheme) => void
+  setTheme: (theme: typeof defaultTheme) => void,
+  saveTheme: (themeToSave: typeof defaultTheme) => void
 ) => {
   const jsonData = JSON.parse(data);
 
@@ -73,6 +76,9 @@ export const loadData = (
   }
   if (jsonData.theme) {
     setTheme(jsonData.theme);
+    console.log(jsonData.savedTheme);
+
+    saveTheme(jsonData.savedTheme);
   }
 };
 

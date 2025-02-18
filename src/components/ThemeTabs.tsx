@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import { ThemeTabsProps } from '../types';
+import { useSettingsContext } from '../context/SettingsContext';
 
 const ThemeTabs = ({ handleThemeChange, themes, theme }: ThemeTabsProps) => {
+  const { savedTheme } = useSettingsContext();
   return (
     <Wrapper>
       <div className='preset-tabs'>
@@ -36,6 +38,12 @@ const ThemeTabs = ({ handleThemeChange, themes, theme }: ThemeTabsProps) => {
           onClick={() => handleThemeChange(themes.preset3)}
         >
           Dark
+        </div>
+        <div
+          className={`preset-tab ${theme === savedTheme ? 'selected-tab' : ''}`}
+          onClick={() => handleThemeChange(savedTheme)}
+        >
+          Custom
         </div>
       </div>
     </Wrapper>

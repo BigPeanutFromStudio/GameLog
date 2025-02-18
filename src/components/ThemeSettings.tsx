@@ -15,6 +15,7 @@ const ThemeSettings = ({
   colors,
   fonts,
   borderRadius,
+  handleSaveTheme,
 }: ThemeSettingsProps) => {
   const { cardScale, setCardScale } = useSettingsContext();
   return (
@@ -106,6 +107,7 @@ const ThemeSettings = ({
           <label>Card Size: </label>
           <ScaleButton cardScale={cardScale} setCardScale={setCardScale} />
           <button onClick={handleSubmit}>Apply Changes</button>
+          <button onClick={handleSaveTheme}>Save Custom Theme</button>
         </div>
       </div>
     </Wrapper>
@@ -144,7 +146,8 @@ const Wrapper = styled.div`
     padding: 10px;
     cursor: pointer;
     transition: transform 0.1s ease;
-    margin-right: 100px;
+    margin-right: 15px;
+    text-align: center;
   }
   button:hover {
     transform: scale(1.1);

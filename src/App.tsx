@@ -36,6 +36,8 @@ function App() {
     setCardScale,
     theme,
     setTheme,
+    savedTheme,
+    saveTheme,
   } = useSettingsContext();
 
   useEffect(() => {
@@ -76,6 +78,7 @@ function App() {
         categorizeBy,
         cardScale,
         theme,
+        savedTheme,
         saveMode
       );
     },
@@ -88,6 +91,7 @@ function App() {
       categorizeBy,
       cardScale,
       theme,
+      savedTheme,
     ]
   );
 
@@ -102,7 +106,8 @@ function App() {
         setCategorize,
         setCategorizeBy,
         setCardScale,
-        setTheme
+        setTheme,
+        saveTheme
       );
     },
     [
@@ -113,6 +118,7 @@ function App() {
       setSortMethod,
       setTheme,
       setCategorizeBy,
+      saveTheme,
     ]
   );
 

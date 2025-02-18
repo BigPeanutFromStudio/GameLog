@@ -80,6 +80,7 @@ export type ThemeSettingsProps = {
   colors: typeof defaultTheme.colors;
   fonts: typeof defaultTheme.fontSizes;
   borderRadius: string;
+  handleSaveTheme: () => void;
 };
 
 export type GameContextType = {

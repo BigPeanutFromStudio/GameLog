@@ -28,6 +28,8 @@ interface SettingsContextProps {
   setCardScale: React.Dispatch<React.SetStateAction<number[]>>;
   theme: typeof defaultTheme;
   setTheme: (theme: typeof defaultTheme) => void;
+  savedTheme: typeof defaultTheme;
+  saveTheme: (themeToSave: typeof defaultTheme) => void;
 }
 
 const SettingsContext = createContext<SettingsContextProps | undefined>(
@@ -55,11 +57,12 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     categorizeBy: string;
     cardScale: number[];
     theme: typeof defaultTheme;
+    savedTheme: typeof defaultTheme;
   } = JSON.parse(
     localStorage.getItem('settings') ||
       `{ "filter": "all", "sortMethod": "byname", "isAscending": true, "categorize": false, "categorizeBy":"state", "cardScale": [460, 215], "theme": ${JSON.stringify(
         defaultTheme
-      )}}`
+      )}, "savedTheme": ${JSON.stringify(defaultTheme)}}`
   );
 
   const [filter, setFilter] = useState(initialSettings.filter);
@@ -71,12 +74,21 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
   );
   const [cardScale, setCardScale] = useState(initialSettings.cardScale);
   const [theme, setThemeState] = useState(initialSettings.theme);
+  const [savedTheme, setSavedTheme] = useState(initialSettings.savedTheme);
 
   const setTheme = (theme: typeof defaultTheme) => {
     setThemeState(theme);
     localStorage.setItem(
       'settings',
       JSON.stringify({ ...initialSettings, theme })
+    );
+  };
+
+  const saveTheme = (themeToSave: typeof defaultTheme) => {
+    setSavedTheme(themeToSave);
+    localStorage.setItem(
+      'settings',
+      JSON.stringify({ ...initialSettings, themeToSave })
     );
   };
 
@@ -89,6 +101,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
       categorizeBy: categorizeBy,
       cardScale: cardScale,
       theme: theme,
+      savedTheme: savedTheme,
     };
     localStorage.setItem('settings', JSON.stringify(settings));
   }, [
@@ -99,6 +112,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     categorizeBy,
     cardScale,
     theme,
+    savedTheme,
   ]);
 
   const value: SettingsContextProps = {
@@ -116,6 +130,8 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     setCardScale,
     theme,
     setTheme,
+    savedTheme,
+    saveTheme,
   };
 
   return (

@@ -26,7 +26,7 @@ const SettingsMenu = ({ setShowModal }: SettingsMenuProps) => {
     };
   }, [escFunction]);
 
-  const { theme, setTheme } = useSettingsContext();
+  const { theme, setTheme, saveTheme } = useSettingsContext();
 
   const [colors, setColors] = useState(theme.colors);
   const [fonts, setFonts] = useState(theme.fontSizes);
@@ -73,6 +73,16 @@ const SettingsMenu = ({ setShowModal }: SettingsMenuProps) => {
     setTheme(currentTheme);
   };
 
+  const handleSaveTheme = () => {
+    const currentTheme = {
+      ...theme,
+      colors: colors,
+      fontSizes: fonts,
+      borderRadius: borderRadius,
+    };
+    saveTheme(currentTheme);
+  };
+
   const tabs = ['Theme Settings', 'Data Settings'];
   const tabElements = [
     <ThemeSettings
@@ -86,6 +96,7 @@ const SettingsMenu = ({ setShowModal }: SettingsMenuProps) => {
       fonts={fonts}
       borderRadius={borderRadius}
       handleSubmit={handleSubmit}
+      handleSaveTheme={handleSaveTheme}
     />,
     <DataSettings />,
   ];
@@ -171,5 +182,4 @@ const Wrapper = styled.div`
     font-size: var(--small-font);
     margin-left: 15px;
   }
-
 `;
