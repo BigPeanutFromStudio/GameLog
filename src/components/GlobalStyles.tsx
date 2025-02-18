@@ -17,7 +17,7 @@ interface Props {
 
 export const GlobalStyle = createGlobalStyle<Props>`
   body {
-    font-family: sans-serif;
+    font-family: ${(props) => props.theme.font}, serif;
     background-color: ${(props) => props.theme.colors.background};
     color: ${(props) => props.theme.colors.text};
     margin: 0;

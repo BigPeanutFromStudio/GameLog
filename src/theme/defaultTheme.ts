@@ -13,6 +13,7 @@ export const defaultTheme = {
     xlarge: '70px',
   },
   borderRadius: '10px',
+  font: 'Lexend',
 };
 
 export const preset1Theme = {
@@ -30,6 +31,7 @@ export const preset1Theme = {
     xlarge: '70px',
   },
   borderRadius: '10px',
+  font: 'Lexend',
 };
 
 export const preset2Theme = {
@@ -47,6 +49,7 @@ export const preset2Theme = {
     xlarge: '70px',
   },
   borderRadius: '10px',
+  font: 'Lexend',
 };
 
 export const preset3Theme = {
@@ -64,4 +67,5 @@ export const preset3Theme = {
     xlarge: '70px',
   },
   borderRadius: '10px',
+  font: 'Lexend',
 };

@@ -16,8 +16,18 @@ const ThemeSettings = ({
   fonts,
   borderRadius,
   handleSaveTheme,
+  handleFontFamilyChange,
+  font,
 }: ThemeSettingsProps) => {
   const { cardScale, setCardScale } = useSettingsContext();
+  const fontFamilies = [
+    'Lexend',
+    'Oswald',
+    'Roboto',
+    'Roboto Mono',
+    'Inter',
+    'Funnel Display',
+  ];
   return (
     <Wrapper>
       <ThemeTabs
@@ -64,7 +74,15 @@ const ThemeSettings = ({
         />
       </div>
       <div className='fonts'>
-        <h1>Font Sizes</h1>
+        <h1>Font</h1>
+        <label htmlFor='family'>Font Family: </label>
+        <select name='family' value={font} onChange={handleFontFamilyChange}>
+          {fontFamilies.map((fontFamily) => (
+            <option value={fontFamily} key={fontFamily}>
+              {fontFamily}
+            </option>
+          ))}
+        </select>
         <label htmlFor='small'>Small: </label>
         <input
           type='text'
@@ -152,7 +170,8 @@ const Wrapper = styled.div`
   button:hover {
     transform: scale(1.1);
   }
-  input {
+  input,
+  select {
     all: unset;
     margin-right: 30px;
     background-color: var(--primary-color);
@@ -160,6 +179,10 @@ const Wrapper = styled.div`
     border-radius: var(--border-radius);
     padding: 10px;
     font-size: var(--small-font);
+  }
+  select {
+    width: 120px;
+    text-align: center;
   }
   input[type='color'] {
     -webkit-appearance: none;

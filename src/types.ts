@@ -81,6 +81,8 @@ export type ThemeSettingsProps = {
   fonts: typeof defaultTheme.fontSizes;
   borderRadius: string;
   handleSaveTheme: () => void;
+  handleFontFamilyChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  font: string;
 };
 
 export type GameContextType = {

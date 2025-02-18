@@ -30,16 +30,23 @@ const SettingsMenu = ({ setShowModal }: SettingsMenuProps) => {
 
   const [colors, setColors] = useState(theme.colors);
   const [fonts, setFonts] = useState(theme.fontSizes);
+  const [font, setFont] = useState(theme.font);
   const [borderRadius, setBorderRadius] = useState(theme.borderRadius);
 
   useEffect(() => {
     setColors(theme.colors);
     setFonts(theme.fontSizes);
     setBorderRadius(theme.borderRadius);
+    setFont(theme.font);
   }, [theme]);
 
   const handleThemeChange = (theme: typeof defaultTheme) => {
     setTheme(theme);
+  };
+
+  const handleFontFamilyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.target;
+    setFont(value);
   };
 
   const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,6 +76,7 @@ const SettingsMenu = ({ setShowModal }: SettingsMenuProps) => {
       colors: colors,
       fontSizes: fonts,
       borderRadius: borderRadius,
+      font: font,
     };
     setTheme(currentTheme);
   };
@@ -79,6 +87,7 @@ const SettingsMenu = ({ setShowModal }: SettingsMenuProps) => {
       colors: colors,
       fontSizes: fonts,
       borderRadius: borderRadius,
+      font: font,
     };
     saveTheme(currentTheme);
   };
@@ -97,6 +106,8 @@ const SettingsMenu = ({ setShowModal }: SettingsMenuProps) => {
       borderRadius={borderRadius}
       handleSubmit={handleSubmit}
       handleSaveTheme={handleSaveTheme}
+      handleFontFamilyChange={handleFontFamilyChange}
+      font={font}
     />,
     <DataSettings />,
   ];
