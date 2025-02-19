@@ -126,3 +126,8 @@ export type SelectProps = {
   minWidth?: string;
   options: Option[];
 };
+
+export type RandomGamePopupProps = {
+  setShowModal: (showModal: boolean) => void;
+  game: game | null;
+};

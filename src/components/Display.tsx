@@ -13,6 +13,8 @@ import AddGameForm from './AddGameForm';
 import Button from './UI/Button';
 import Input from './UI/Input';
 import Select from './UI/Select';
+import { ImDice } from 'react-icons/im';
+import RandomGamePopup from './RandomGamePopup';
 
 const Display = ({ games, setSearch, search }: DisplayProps) => {
   const { deleteGame } = useGameContext();
@@ -32,6 +34,18 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
 
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [showAddGameFormModal, setShowAddGameFormModal] = useState(false);
+  const [showRandomGameModal, setShowRandomGameModal] = useState(false);
+  const [randomizedGame, setRandomizedGame] = useState<game | null>(null);
+
+  const handleRandomGame = () => {
+    const gamesToRandomize = games.filter(
+      (game) => game.state === states.Playing || game.state === states.Queued
+    );
+    const randomGame =
+      gamesToRandomize[Math.floor(Math.random() * gamesToRandomize.length)];
+    setRandomizedGame(randomGame);
+    setShowRandomGameModal(true);
+  };
 
   const handleShowAddGameFormModal = () => {
     setShowAddGameFormModal(!showAddGameFormModal);
@@ -116,6 +130,14 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
           <SettingsMenu setShowModal={setShowSettingsModal} />,
           document.body
         )}
+      {showRandomGameModal &&
+        createPortal(
+          <RandomGamePopup
+            setShowModal={setShowRandomGameModal}
+            game={randomizedGame}
+          />,
+          document.body
+        )}
       <div className='options'>
         <div className='form'>
           <div className='search-bar'>
@@ -180,6 +202,7 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
                   ) ?? []
                 }
               />
+              <Button icon={<ImDice size={30} />} onClick={handleRandomGame} />
             </div>
 
             <div className='sort-container'>

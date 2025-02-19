@@ -11,7 +11,7 @@ import {
 import { useSettingsContext } from './context/SettingsContext';
 import { GlobalStyle } from './components/GlobalStyles.tsx';
 
-// TODO: Add a random game button that selects a random game from the list of games which are not completed
+// TODO: Allow the user to choose which category to randomize from
 
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
 function App() {
