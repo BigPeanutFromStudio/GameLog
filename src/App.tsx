@@ -12,6 +12,8 @@ import { useSettingsContext } from './context/SettingsContext';
 import { GlobalStyle } from './components/GlobalStyles.tsx';
 
 // TODO: Allow the user to choose which category to randomize from
+// TODO: Maybe add ko-fi and credits/other stuff
+// TODO: Improve data settings tab
 
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
 function App() {
