@@ -4,8 +4,6 @@ import { game, states, AddGameFormProps } from '../types';
 import { v6 as uuid } from 'uuid';
 import NoImageFound from '../assets/NoImage.png';
 import { useGameContext } from '../context/GameContext';
-import Input from './UI/Input';
-import Select from './UI/Select';
 
 const AddGameForm = ({ setShowModal }: AddGameFormProps) => {
   const escFunction = useCallback(
@@ -76,26 +74,28 @@ const AddGameForm = ({ setShowModal }: AddGameFormProps) => {
         <form onSubmit={handleSubmit}>
           <div className='input-wrapper'>
             <label htmlFor='name'>Game name: </label>
-            <Input
+            <input
               type='text'
               name='name'
               required
               placeholder='Enter the name...'
             />
             <label htmlFor='platform'>Platform name: </label>
-            <Input
+            <input
               type='text'
               name='platform'
               placeholder='Enter the platform...'
             />
             <label htmlFor='state'>Game status: </label>
-            <Select
-              name='state'
-              options={Object.keys(states).map((key, index) => ({
-                value: key,
-                label: Object.values(states)[index],
-              }))}
-            />
+            <select name='state' defaultValue={states.Queued}>
+              <optgroup>
+                {Object.keys(states).map((key, index) => (
+                  <option key={index} value={key}>
+                    {Object.values(states)[index]}
+                  </option>
+                ))}
+              </optgroup>
+            </select>
             <label htmlFor='rating'>Game rating: </label>
             <input type='number' step='0.01' name='rating' defaultValue='0' />
             <label htmlFor='imagefile'>Local image: </label>
@@ -110,7 +110,7 @@ const AddGameForm = ({ setShowModal }: AddGameFormProps) => {
               />
             </div>
             <label htmlFor='image'>Cover image: </label>
-            <Input
+            <input
               type='text'
               name='image'
               placeholder='Image url (optional)'
