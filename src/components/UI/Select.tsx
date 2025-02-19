@@ -21,6 +21,7 @@ export default Select;
 const Wrapper = styled.div<{ min_width?: string }>`
   min-height: 50px;
   min-width: ${(props) => props.min_width ?? '100px'};
+  user-select: none;
   select {
     all: unset;
     background-color: var(--primary-color);
@@ -31,7 +32,7 @@ const Wrapper = styled.div<{ min_width?: string }>`
     padding: 10px;
     font-size: var(--small-font);
     cursor: pointer;
-    user-select: none;
+    line-height: 2.2;
   }
   select:hover {
     transform: scale(1.02);

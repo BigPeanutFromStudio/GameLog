@@ -157,6 +157,7 @@ const Wrapper = styled.div`
   align-items: center;
   background-color: rgba(0, 0, 0, 0.4);
   user-select: none;
+  overflow-y: auto;
   .tab-switch {
     display: flex;
     justify-content: center;
@@ -177,9 +178,12 @@ const Wrapper = styled.div`
     border-radius: var(--border-radius);
     width: 90%;
     min-width: 600px;
-    height: 900px;
+    min-height: 900px;
+    padding: 30px;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    overflow-y: auto;
     flex-direction: column;
     box-shadow: 0px 8px 24px 8px #0f1014;
   }

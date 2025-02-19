@@ -28,6 +28,7 @@ const Wrapper = styled.div`
     align-items: center;
     transform: scale(1);
     transition: transform 0.1s ease;
+    text-align: center;
   }
   .container:hover {
     transform: scale(1.05);

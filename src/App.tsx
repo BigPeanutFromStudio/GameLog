@@ -13,7 +13,7 @@ import { GlobalStyle } from './components/GlobalStyles.tsx';
 
 // TODO: Better scaling cards (text, ratings, gaps, etc.)
 // TODO: Add vertical scaling for cards
-// TODO: Make it look better for the love of god please sometimes it's an eyesore mate, can you just put a little time into making it consistent bro? (fonts, inputs etc.). Maybe try to make every form element into its own. Vertical not horizontal. Add responsivness.
+// TODO: Add a random game button that selects a random game from the list of games which are not completed
 
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
 function App() {

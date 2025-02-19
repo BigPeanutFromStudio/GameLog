@@ -31,6 +31,7 @@ const Wrapper = styled.div<{ min_width?: string }>`
     background-color: var(--primary-color);
     min-height: inherit;
     min-width: inherit;
+    width: ${(props) => props.min_width ?? '200px'};
     padding: 10px;
     border-radius: var(--border-radius);
     font-size: var(--small-font);

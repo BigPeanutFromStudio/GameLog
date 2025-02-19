@@ -142,69 +142,67 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
               onClick={() => setShowSettingsModal(!showSettingsModal)}
             />
           </div>
-          <div className='below'>
-            <div className='sort-filters'>
-              <div className='sort-container'>
-                <h1>Sort by:</h1>
-                <Select
-                  name='sort'
-                  value={sortMethod}
-                  onChange={handleSortChange}
-                  options={[
-                    { value: 'byname', label: 'Name' },
-                    { value: 'byreview', label: 'Rating' },
-                  ]}
-                />
-                <Button
-                  icon={
-                    isAscending ? (
-                      <FaSortAmountDownAlt size={30} />
-                    ) : (
-                      <FaSortAmountDown size={30} />
-                    )
-                  }
-                  onClick={() => setIsAscending(!isAscending)}
-                />
-              </div>
-              <div className='sort-container'>
-                <h1>Filter by:</h1>
-                <Select
-                  name='state'
-                  value={filter}
-                  onChange={handleFilterChange}
-                  options={
-                    [{ value: 'all', label: 'All' }].concat(
-                      Object.keys(states).map((key, index) => ({
-                        value: key,
-                        label: Object.values(states)[index],
-                      }))
-                    ) ?? []
-                  }
-                />
-              </div>
+          <div className='sort-filters'>
+            <div className='sort-container'>
+              <h1>Sort by:</h1>
+              <Select
+                name='sort'
+                value={sortMethod}
+                onChange={handleSortChange}
+                options={[
+                  { value: 'byname', label: 'Name' },
+                  { value: 'byreview', label: 'Rating' },
+                ]}
+              />
+              <Button
+                icon={
+                  isAscending ? (
+                    <FaSortAmountDownAlt size={30} />
+                  ) : (
+                    <FaSortAmountDown size={30} />
+                  )
+                }
+                onClick={() => setIsAscending(!isAscending)}
+              />
+            </div>
+            <div className='sort-container'>
+              <h1>Filter by:</h1>
+              <Select
+                name='state'
+                value={filter}
+                onChange={handleFilterChange}
+                options={
+                  [{ value: 'all', label: 'All' }].concat(
+                    Object.keys(states).map((key, index) => ({
+                      value: key,
+                      label: Object.values(states)[index],
+                    }))
+                  ) ?? []
+                }
+              />
+            </div>
 
-              <div className='sort-container'>
-                <h1>Group by:</h1>
-                <Select
-                  name='categorize'
-                  value={categorizeBy}
-                  onChange={handleCategorizeByChange}
-                  options={[
-                    { value: 'state', label: 'State' },
-                    { value: 'platform', label: 'Platform' },
-                  ]}
-                />
-                <Button
-                  icon={
-                    categorize ? (
-                      <MdCategory size={30} />
-                    ) : (
-                      <MdOutlineCategory size={30} />
-                    )
-                  }
-                  onClick={() => setCategorize(!categorize)}
-                />
-              </div>
+            <div className='sort-container'>
+              <h1>Group by:</h1>
+              <Select
+                name='categorize'
+                value={categorizeBy}
+                onChange={handleCategorizeByChange}
+                options={[
+                  { value: 'state', label: 'State' },
+                  { value: 'platform', label: 'Platform' },
+                ]}
+              />
+              <Button
+                icon={
+                  categorize ? (
+                    <MdCategory size={30} />
+                  ) : (
+                    <MdOutlineCategory size={30} />
+                  )
+                }
+                onClick={() => setCategorize(!categorize)}
+              />
             </div>
           </div>
         </div>
@@ -246,13 +244,6 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
     align-items: center;
     gap: 30px;
   }
-  .settings-icon {
-    cursor: pointer;
-    transition: transform 0.1s ease;
-  }
-  .settings-icon:hover {
-    transform: scale(1.1);
-  }
   .category {
     margin-top: 20px;
     margin-bottom: 10px;
@@ -274,25 +265,11 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
     align-items: left;
     justify-content: center;
   }
-  .below {
-    display: flex;
-    flex-direction: column;
-    user-select: none;
-  }
-  .buttons {
-    display: flex;
-    margin: 20px;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    margin-top: 80px;
-  }
-
   .sort-container {
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: 10px;
   }
   .sort-filters {
     display: flex;
@@ -302,20 +279,5 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
     justify-content: center;
     gap: 80px;
     margin-top: 20px;
-  }
-  .sort-style {
-    width: 40px;
-    height: 40px;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--border-radius);
-    background-color: var(--primary-color);
-    cursor: pointer;
-    margin-left: 5px;
-  }
-  .sort-filters h1 {
-    margin-left: 25px;
   }
 `;

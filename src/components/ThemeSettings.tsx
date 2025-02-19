@@ -4,6 +4,8 @@ import { ThemeSettingsProps } from '../types';
 import ScaleButton from './ScaleButton';
 import ThemeTabs from './ThemeTabs';
 import Button from './UI/Button';
+import Select from './UI/Select';
+import Input from './UI/Input';
 
 const ThemeSettings = ({
   themes,
@@ -25,7 +27,6 @@ const ThemeSettings = ({
     'Lexend',
     'Oswald',
     'Roboto',
-    'Roboto Mono',
     'Inter',
     'Funnel Display',
   ];
@@ -36,98 +37,113 @@ const ThemeSettings = ({
         theme={theme}
         handleThemeChange={handleThemeChange}
       />
-      <div className='colors'>
-        <h1>Colors</h1>
-        <label htmlFor='primary'>Primary Color: </label>
-        <input
-          type='color'
-          name='primary'
-          value={colors.primary}
-          onChange={handleColorChange}
-        />
-        <label htmlFor='secondary'>Secondary Color: </label>
-        <input
-          type='color'
-          name='secondary'
-          value={colors.secondary}
-          onChange={handleColorChange}
-        />
-        <label htmlFor='background'>Background Color: </label>
-        <input
-          type='color'
-          name='background'
-          value={colors.background}
-          onChange={handleColorChange}
-        />
-        <label htmlFor='text'>Text Color: </label>
-        <input
-          type='color'
-          name='text'
-          value={colors.text}
-          onChange={handleColorChange}
-        />
-        <label htmlFor='accent'>Accent Color: </label>
-        <input
-          type='color'
-          name='accent'
-          value={colors.accent}
-          onChange={handleColorChange}
-        />
-      </div>
-      <div className='fonts'>
-        <h1>Font</h1>
-        <label htmlFor='family'>Font Family: </label>
-        <select name='family' value={font} onChange={handleFontFamilyChange}>
-          {fontFamilies.map((fontFamily) => (
-            <option value={fontFamily} key={fontFamily}>
-              {fontFamily}
-            </option>
-          ))}
-        </select>
-        <label htmlFor='small'>Small: </label>
-        <input
-          type='text'
-          name='small'
-          value={fonts.small}
-          onChange={handleFontChange}
-        />
-        <label htmlFor='medium'>Medium: </label>
-        <input
-          type='text'
-          name='medium'
-          value={fonts.medium}
-          onChange={handleFontChange}
-        />
-        <label htmlFor='large'>Large: </label>
-        <input
-          type='text'
-          name='large'
-          value={fonts.large}
-          onChange={handleFontChange}
-        />
-        <label htmlFor='xlarge'>XLarge: </label>
-        <input
-          type='text'
-          name='xlarge'
-          value={fonts.xlarge}
-          onChange={handleFontChange}
-        />
-      </div>
-      <div className='other'>
-        <h1>Other Settings</h1>
-        <div className='other-options'>
-          <label htmlFor='borderRadius'>Border Radius: </label>
-          <input
-            type='text'
-            name='borderRadius'
-            value={borderRadius}
-            onChange={handleBorderRadiusChange}
-          />
-          <label>Card Size: </label>
-          <ScaleButton cardScale={cardScale} setCardScale={setCardScale} />
-          <Button icon={<h1>Apply Changes</h1>} onClick={handleSubmit} />
-          <Button icon={<h1>Save Custom Theme</h1>} onClick={handleSaveTheme} />
+      <div className='settings'>
+        <div className='colors'>
+          <h1>Colors</h1>
+          <div className='color-settings'>
+            <label htmlFor='primary'>Primary Color: </label>
+            <input
+              type='color'
+              name='primary'
+              value={colors.primary}
+              onChange={handleColorChange}
+            />
+            <label htmlFor='secondary'>Secondary Color: </label>
+            <input
+              type='color'
+              name='secondary'
+              value={colors.secondary}
+              onChange={handleColorChange}
+            />
+            <label htmlFor='background'>Background Color: </label>
+            <input
+              type='color'
+              name='background'
+              value={colors.background}
+              onChange={handleColorChange}
+            />
+            <label htmlFor='text'>Text Color: </label>
+            <input
+              type='color'
+              name='text'
+              value={colors.text}
+              onChange={handleColorChange}
+            />
+            <label htmlFor='accent'>Accent Color: </label>
+            <input
+              type='color'
+              name='accent'
+              value={colors.accent}
+              onChange={handleColorChange}
+            />
+          </div>
         </div>
+        <div className='fonts'>
+          <h1>Font</h1>
+          <div className='font-settings'>
+            <label htmlFor='family'>Font Family: </label>
+            <Select
+              name='family'
+              value={font}
+              onChange={handleFontFamilyChange}
+              options={fontFamilies.map((fontFamily) => ({
+                value: fontFamily,
+                label: fontFamily,
+              }))}
+            />
+            <label htmlFor='small'>Small: </label>
+            <Input
+              type='text'
+              name='small'
+              value={fonts.small}
+              onChange={handleFontChange}
+              minWidth='100px'
+            />
+            <label htmlFor='medium'>Medium: </label>
+            <Input
+              type='text'
+              name='medium'
+              value={fonts.medium}
+              onChange={handleFontChange}
+              minWidth='100px'
+            />
+            <label htmlFor='large'>Large: </label>
+            <Input
+              type='text'
+              name='large'
+              value={fonts.large}
+              onChange={handleFontChange}
+              minWidth='100px'
+            />
+            <label htmlFor='xlarge'>XLarge: </label>
+            <Input
+              type='text'
+              name='xlarge'
+              value={fonts.xlarge}
+              onChange={handleFontChange}
+              minWidth='100px'
+            />
+          </div>
+        </div>
+        <div className='other'>
+          <h1>Other Settings</h1>
+          <div className='other-options'>
+            <label htmlFor='borderRadius'>Border Radius: </label>
+            <Input
+              type='text'
+              name='borderRadius'
+              value={borderRadius}
+              onChange={handleBorderRadiusChange}
+              minWidth='100px'
+            />
+            <label>Card Size: </label>
+            <ScaleButton cardScale={cardScale} setCardScale={setCardScale} />
+          </div>
+        </div>
+      </div>
+      <div className='buttons'>
+        <Button icon={<h1>Apply Changes</h1>} onClick={handleSubmit} />
+        <Button icon={<h1>Save Custom Theme</h1>} onClick={handleSaveTheme} />
       </div>
     </Wrapper>
   );
@@ -135,6 +151,32 @@ const ThemeSettings = ({
 export default ThemeSettings;
 
 const Wrapper = styled.div`
+  height: 100%;
+  width: 90%;
+  .buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+  }
+  .settings {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    flex-wrap: wrap;
+  }
+  .buttons {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .color-settings,
+  .font-settings,
+  .other-options {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+  }
   .other h1,
   .colors h1,
   .fonts h1 {
@@ -144,62 +186,36 @@ const Wrapper = styled.div`
     margin-bottom: 30px;
     margin-top: 15px;
   }
-  .other-options label {
-    margin-right: 5px;
-  }
-  .other-options {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-  }
   .other-options h1 {
     all: unset;
     font-size: var(--small-font);
   }
-  button {
-    all: unset;
-    width: 150px;
-    background-color: var(--primary-color);
-    font-size: var(--small-font);
-    border-radius: var(--border-radius);
-    padding: 10px;
-    cursor: pointer;
-    transition: transform 0.1s ease;
-    margin-right: 15px;
-    text-align: center;
-  }
-  button:hover {
-    transform: scale(1.1);
-  }
-  input,
-  select {
-    all: unset;
-    margin-right: 30px;
-    background-color: var(--primary-color);
-    width: 100px;
-    border-radius: var(--border-radius);
-    padding: 10px;
-    font-size: var(--small-font);
-  }
-  select {
-    width: 120px;
-    text-align: center;
+  label {
+    line-height: 2.2;
   }
   input[type='color'] {
     -webkit-appearance: none;
     -moz-appearance: none;
+    border: none;
     appearance: none;
     width: 70px;
     height: 70px;
     background-color: transparent;
+    transition: transform 0.1s ease;
     cursor: pointer;
   }
   input[type='color']::-webkit-color-swatch {
     border-radius: var(--border-radius);
     border: 1px solid var(--accent-color);
   }
+  input[type='color']::-webkit-color-swatch:hover {
+    transform: scale(1.05);
+  }
   input[type='color']::-moz-color-swatch {
     border-radius: var(--border-radius);
     border: 1px solid var(--accent-color);
+  }
+  input[type='color']::-moz-color-swatch:hover {
+    transform: scale(1.05);
   }
 `;
