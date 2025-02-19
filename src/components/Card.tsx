@@ -70,7 +70,6 @@ const Wrapper = styled.div<{
   position: relative;
   width: ${(props) => props.$cardScale[0]}px;
   height: ${(props) => props.$cardScale[1]}px;
-  aspect-ratio: 2.14 / 1;
   user-select: none;
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
   border-radius: var(--border-radius);
@@ -137,11 +136,11 @@ const Wrapper = styled.div<{
     height: 100%;
     overflow: hidden;
     transform: scale(1);
-    transition: transform 0.5s ease;
+    transition: transform 0.1s ease;
   }
   .container:hover {
-    transform: scale(1.05);
-    transition: transform 0.5s ease;
+    transform: scale(1.015);
+    transition: transform 0.1s ease;
     z-index: 2000;
   }
   .overlay {

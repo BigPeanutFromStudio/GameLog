@@ -3,6 +3,7 @@ import { useSettingsContext } from '../context/SettingsContext';
 import { ThemeSettingsProps } from '../types';
 import ScaleButton from './ScaleButton';
 import ThemeTabs from './ThemeTabs';
+import Button from './UI/Button';
 
 const ThemeSettings = ({
   themes,
@@ -124,8 +125,8 @@ const ThemeSettings = ({
           />
           <label>Card Size: </label>
           <ScaleButton cardScale={cardScale} setCardScale={setCardScale} />
-          <button onClick={handleSubmit}>Apply Changes</button>
-          <button onClick={handleSaveTheme}>Save Custom Theme</button>
+          <Button icon={<h1>Apply Changes</h1>} onClick={handleSubmit} />
+          <Button icon={<h1>Save Custom Theme</h1>} onClick={handleSaveTheme} />
         </div>
       </div>
     </Wrapper>

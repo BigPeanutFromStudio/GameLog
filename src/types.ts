@@ -28,6 +28,7 @@ export type CardProps = {
 export type DisplayProps = {
   games: game[];
   setSearch: (search: string | null) => void;
+  search: string | null;
 };
 
 export type NavbarProps = {
@@ -94,4 +95,32 @@ export type GameContextType = {
   getFilteredGames: (name: string | null, filter: string | states) => game[];
   saveData: (saveMode: number) => void;
   loadData: (data: string) => void;
+};
+
+export type ButtonProps = {
+  icon: JSX.Element;
+  onClick: () => void;
+};
+
+export type InputProps = {
+  type: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void | null;
+  value?: string;
+  name: string;
+  placeholder?: string;
+  minWidth?: string;
+};
+
+export type Option = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: any;
+  label: string;
+};
+
+export type SelectProps = {
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void | null;
+  value?: string;
+  name: string;
+  minWidth?: string;
+  options: Option[];
 };

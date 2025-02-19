@@ -1,17 +1,20 @@
 import styled from 'styled-components';
 import Card from './Card';
-import AddGameBtn from './AddGameBtn';
 import { DisplayProps, game, states } from '../types';
 import { FaSortAmountDownAlt, FaSortAmountDown } from 'react-icons/fa';
 import { MdCategory, MdOutlineCategory } from 'react-icons/md';
-import { IoMdSettings } from 'react-icons/io';
+import { IoIosAddCircle, IoMdSettings } from 'react-icons/io';
 import { useGameContext } from '../context/GameContext';
 import { useSettingsContext } from '../context/SettingsContext';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import SettingsMenu from './SettingsMenu';
+import AddGameForm from './AddGameForm';
+import Button from './UI/Button';
+import Input from './UI/Input';
+import Select from './UI/Select';
 
-const Display = ({ games, setSearch }: DisplayProps) => {
+const Display = ({ games, setSearch, search }: DisplayProps) => {
   const { deleteGame } = useGameContext();
   const {
     filter,
@@ -27,7 +30,12 @@ const Display = ({ games, setSearch }: DisplayProps) => {
     cardScale,
   } = useSettingsContext();
 
-  const [showModal, setShowModal] = useState(false);
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [showAddGameFormModal, setShowAddGameFormModal] = useState(false);
+
+  const handleShowAddGameFormModal = () => {
+    setShowAddGameFormModal(!showAddGameFormModal);
+  };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -98,92 +106,104 @@ const Display = ({ games, setSearch }: DisplayProps) => {
 
   return (
     <Wrapper $cardWidth={cardScale[0]}>
-      {showModal &&
+      {showAddGameFormModal &&
         createPortal(
-          <SettingsMenu setShowModal={setShowModal} />,
+          <AddGameForm setShowModal={setShowAddGameFormModal} />,
+          document.body
+        )}
+      {showSettingsModal &&
+        createPortal(
+          <SettingsMenu setShowModal={setShowSettingsModal} />,
           document.body
         )}
       <div className='options'>
         <div className='form'>
           <div className='search-bar'>
-            <AddGameBtn />
-            <input
-              type='text'
-              placeholder='Search...'
-              onChange={handleSearchChange}
+            <Button
+              icon={
+                <IoIosAddCircle
+                  size={50}
+                  color='rgba(255, 255, 255, 0.4)'
+                  style={{ transform: 'inherit', transition: 'inherit' }}
+                />
+              }
+              onClick={handleShowAddGameFormModal}
             />
-            <div
-              className='settings-icon'
-              onClick={() => setShowModal(!showModal)}
-            >
-              <IoMdSettings size={50} />
-            </div>
+            <Input
+              type='text'
+              placeholder='Search'
+              onChange={handleSearchChange}
+              name='search'
+              value={search ?? ''}
+              minWidth='1000px'
+            />
+            <Button
+              icon={<IoMdSettings size={50} />}
+              onClick={() => setShowSettingsModal(!showSettingsModal)}
+            />
           </div>
           <div className='below'>
             <div className='sort-filters'>
               <div className='sort-container'>
                 <h1>Sort by:</h1>
-                <select
+                <Select
                   name='sort'
-                  defaultValue={sortMethod}
+                  value={sortMethod}
                   onChange={handleSortChange}
-                >
-                  <optgroup>
-                    <option value='byname'>Name</option>
-                    <option value='byreview'>Rating</option>
-                  </optgroup>
-                </select>
-                <div
-                  className='sort-style'
+                  options={[
+                    { value: 'byname', label: 'Name' },
+                    { value: 'byreview', label: 'Rating' },
+                  ]}
+                />
+                <Button
+                  icon={
+                    isAscending ? (
+                      <FaSortAmountDownAlt size={30} />
+                    ) : (
+                      <FaSortAmountDown size={30} />
+                    )
+                  }
                   onClick={() => setIsAscending(!isAscending)}
-                >
-                  {isAscending ? (
-                    <FaSortAmountDownAlt size={30} />
-                  ) : (
-                    <FaSortAmountDown size={30} />
-                  )}
-                </div>
+                />
               </div>
               <div className='sort-container'>
                 <h1>Filter by:</h1>
-                <select
+                <Select
                   name='state'
-                  defaultValue={filter}
+                  value={filter}
                   onChange={handleFilterChange}
-                >
-                  <optgroup>
-                    <option value='all'>All</option>
-                    {Object.keys(states).map((key, index) => (
-                      <option key={index} value={key}>
-                        {Object.values(states)[index]}
-                      </option>
-                    ))}
-                  </optgroup>
-                </select>
+                  options={
+                    [{ value: 'all', label: 'All' }].concat(
+                      Object.keys(states).map((key, index) => ({
+                        value: key,
+                        label: Object.values(states)[index],
+                      }))
+                    ) ?? []
+                  }
+                />
               </div>
 
               <div className='sort-container'>
                 <h1>Group by:</h1>
-                <select
+                <Select
                   name='categorize'
-                  defaultValue={categorizeBy}
+                  value={categorizeBy}
                   onChange={handleCategorizeByChange}
-                >
-                  <optgroup>
-                    <option value='state'>State</option>
-                    <option value='platform'>Platform</option>
-                  </optgroup>
-                </select>
-                <div
-                  className='sort-style'
+                  options={[
+                    { value: 'state', label: 'State' },
+                    { value: 'platform', label: 'Platform' },
+                  ]}
+                />
+                <Button
+                  icon={
+                    categorize ? (
+                      <MdCategory size={30} />
+                    ) : (
+                      <MdOutlineCategory size={30} />
+                    )
+                  }
                   onClick={() => setCategorize(!categorize)}
-                >
-                  {categorize ? (
-                    <MdCategory size={30} />
-                  ) : (
-                    <MdOutlineCategory size={30} />
-                  )}
-                </div>
+                />
               </div>
             </div>
           </div>
@@ -245,6 +265,7 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    margin-bottom: 40px;
   }
   .form {
     width: 100%;
@@ -268,16 +289,6 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
     margin-top: 80px;
   }
 
-  input {
-    all: unset;
-    display: block;
-    background-color: var(--primary-color);
-    min-width: 400px;
-    width: 80%;
-    border-radius: var(--border-radius);
-    padding: 20px;
-    font-size: var(--small-font);
-  }
   .sort-container {
     display: flex;
     flex-direction: row;
@@ -306,18 +317,5 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
   }
   .sort-filters h1 {
     margin-left: 25px;
-  }
-  select {
-    all: unset;
-    display: block;
-    background-color: var(--primary-color);
-    width: 150px;
-    text-align: center;
-    border-radius: var(--border-radius);
-    padding: 20px;
-    font-size: var(--small-font);
-    margin-left: 5px;
-    cursor: pointer;
-    user-select: none;
   }
 `;

@@ -145,6 +145,7 @@ const Wrapper = styled.div`
     position: relative;
     width: 400px;
     height: inherit;
+    margin: 10px;
     background-color: var(--primary-color);
     border-radius: var(--border-radius);
     cursor: pointer;
