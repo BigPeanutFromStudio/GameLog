@@ -109,6 +109,8 @@ export type InputProps = {
   name: string;
   placeholder?: string;
   minWidth?: string;
+  required?: boolean;
+  defaultValue?: string;
 };
 
 export type Option = {

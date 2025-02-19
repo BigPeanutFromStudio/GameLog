@@ -114,7 +114,7 @@ const EditGameForm = ({ setShowModal, game }: EditGameFormProps) => {
             <input
               type='text'
               name='image'
-              placeholder='Image url (460x215)'
+              placeholder='Image url (optional)'
               onChange={(e) => setImageUrl(e.target.value)}
             />
           </div>
@@ -205,6 +205,13 @@ const Wrapper = styled.div`
     padding: 20px;
     margin: 10px;
     font-size: var(--small-font);
+    transition: transform 0.1s ease;
+  }
+  input:hover,
+  input:focus,
+  select:hover,
+  select:focus {
+    transform: scale(1.02);
   }
   button {
     cursor: pointer;

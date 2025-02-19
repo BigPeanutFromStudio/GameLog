@@ -1,16 +1,10 @@
 import styled from 'styled-components';
 import { ScaleButtonProps } from '../types';
 import { useState } from 'react';
+import { scales } from '../utils/constants';
 
 const ScaleButton = ({ setCardScale, cardScale }: ScaleButtonProps) => {
-  const scales = [
-    [230, 107],
-    [306, 143],
-    [460, 215],
-    [690, 322],
-    [920, 430],
-  ];
-  const scaleTexts = ['Tiny', 'Small', 'Medium', 'Large', 'Huge'];
+  const scaleTexts = ['Tiny', 'Small', 'Medium', 'Large', 'Huge', 'Vertical'];
   const [currentScaleIndex, setCurrentScaleIndex] = useState(() => {
     return scales.findIndex(
       (scale) => cardScale[0] === scale[0] && cardScale[1] === scale[1]

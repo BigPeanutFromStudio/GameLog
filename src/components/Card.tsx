@@ -4,6 +4,7 @@ import { TiDelete } from 'react-icons/ti';
 import { useState } from 'react';
 import EditGameForm from './EditGameForm';
 import { createPortal } from 'react-dom';
+import { scales } from '../utils/constants';
 
 const stateToColor = new Map<states, string>([
   [states.Abandoned, 'var(--abandoned-color)'],
@@ -21,13 +22,7 @@ const Card = ({ game, deleteGame, size }: CardProps) => {
     'var(--medium-font)',
     'var(--large-font)',
     'var(--xlarge-font)',
-  ];
-  const scales = [
-    [230, 107],
-    [306, 143],
-    [460, 215],
-    [690, 322],
-    [920, 430],
+    'var(--medium-font)',
   ];
   const scaleIndex = scales.findIndex(
     (scale) => size[0] === scale[0] && size[1] === scale[1]

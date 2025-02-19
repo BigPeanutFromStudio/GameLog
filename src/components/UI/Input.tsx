@@ -8,6 +8,7 @@ const Input = ({
   onChange,
   name,
   minWidth,
+  required,
 }: InputProps) => {
   return (
     <Wrapper min_width={minWidth}>
@@ -17,6 +18,7 @@ const Input = ({
         placeholder={placeholder ?? ''}
         value={value ?? ''}
         onChange={onChange}
+        required={required ?? false}
       />
     </Wrapper>
   );

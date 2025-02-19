@@ -11,8 +11,6 @@ import {
 import { useSettingsContext } from './context/SettingsContext';
 import { GlobalStyle } from './components/GlobalStyles.tsx';
 
-// TODO: Better scaling cards (text, ratings, gaps, etc.)
-// TODO: Add vertical scaling for cards
 // TODO: Add a random game button that selects a random game from the list of games which are not completed
 
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
