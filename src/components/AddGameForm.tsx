@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useEffect, useCallback, FormEvent } from 'react';
+import { useEffect, useCallback, FormEvent, useState, useRef } from 'react';
 import { game, states, AddGameFormProps } from '../types';
 import { v6 as uuid } from 'uuid';
 import NoImageFound from '../assets/NoImage.png';
@@ -25,19 +25,41 @@ const AddGameForm = ({ setShowModal }: AddGameFormProps) => {
 
   const { addGame } = useGameContext();
 
+  const [image, setImage] = useState<string>(NoImageFound);
+  const [imageUrl, setImageUrl] = useState<string>('');
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const inputFile = useRef<HTMLInputElement | null>(null);
+
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    (e.target as HTMLInputElement).value = '';
+    inputFile.current?.click();
+  };
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     const formData = new FormData(e.target as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
 
-    formJson.image = formJson.image ? formJson.image : NoImageFound;
+    const imageToUse =
+      image !== NoImageFound ? image : imageUrl ? imageUrl : NoImageFound;
 
     const game: game = {
       id: uuid(),
       name: formJson.name.toString(),
       state: states[formJson.state as keyof typeof states],
-      image: formJson.image.toString(),
+      image: imageToUse,
       rating: parseFloat(formJson.rating.toString()),
       platform: formJson.platform.toString(),
     };
@@ -76,8 +98,24 @@ const AddGameForm = ({ setShowModal }: AddGameFormProps) => {
             </select>
             <label htmlFor='rating'>Game rating: </label>
             <input type='number' step='0.01' name='rating' defaultValue='0' />
+            <label htmlFor='imagefile'>Local image: </label>
+            <div className='container' onClick={handleClick}>
+              <h2>Choose local image</h2>
+              <input
+                type='file'
+                name='imagefile'
+                accept='image/*'
+                onChange={handleFileChange}
+                ref={inputFile}
+              />
+            </div>
             <label htmlFor='image'>Cover image: </label>
-            <input type='text' name='image' placeholder='Image url (460x215)' />
+            <input
+              type='text'
+              name='image'
+              placeholder='Image url (460x215)'
+              onChange={(e) => setImageUrl(e.target.value)}
+            />
           </div>
           <button type='submit'>Add game</button>
         </form>
@@ -101,6 +139,26 @@ const Wrapper = styled.div`
   align-items: center;
   background-color: rgba(0, 0, 0, 0.4);
   user-select: none;
+  .container {
+    position: relative;
+    width: 400px;
+    height: inherit;
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: scale(1);
+    transition: transform 0.1s ease;
+  }
+  .container:hover {
+    transform: scale(1.05);
+    transition: transform 0.1s ease;
+  }
+  input[type='file'] {
+    display: none;
+  }
   .input-wrapper {
     display: grid;
     grid-template-columns: auto 1fr;

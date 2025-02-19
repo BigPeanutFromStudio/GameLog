@@ -13,7 +13,7 @@ import { GlobalStyle } from './components/GlobalStyles.tsx';
 
 // TODO: Add support for custom local images
 // TODO: Better scaling cards (text, ratings, gaps, etc.)
-// TODO: Make it look better for the love of god please sometimes it's an eyesore mate, can you just put a little time into making it consistent bro? (fonts, inputs etc.) Maybe try to make every form element into its own 
+// TODO: Make it look better for the love of god please sometimes it's an eyesore mate, can you just put a little time into making it consistent bro? (fonts, inputs etc.). Maybe try to make every form element into its own. Vertical not horizontal. Add responsivness.
 // TODO: Fix display not refreshing on importing data
 
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
