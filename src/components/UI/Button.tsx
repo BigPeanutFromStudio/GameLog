@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 import { ButtonProps } from '../../types';
 
-const Button = ({ icon, onClick }: ButtonProps) => {
+const Button = ({ icon, onClick, className }: ButtonProps) => {
   return (
     <Wrapper>
-      <div className='container' onClick={onClick}>
+      <div
+        className={className ? `${className} container` : 'container'}
+        onClick={onClick}
+      >
         {icon}
       </div>
     </Wrapper>

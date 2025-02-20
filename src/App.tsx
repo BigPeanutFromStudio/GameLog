@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import Display from './components/Display';
+import Display from './pages/Display.tsx';
 import { game, states } from './types';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { GameProvider } from './context/GameContext';
 import {
@@ -10,10 +11,15 @@ import {
 } from './utils/data';
 import { useSettingsContext } from './context/SettingsContext';
 import { GlobalStyle } from './components/GlobalStyles.tsx';
+import SettingsMenu from './pages/SettingsMenu.tsx';
 
 // TODO: Allow the user to choose which category to randomize from
 // TODO: Maybe add ko-fi and credits/other stuff
 // TODO: Improve data settings tab
+// TODO: Improve scaling on different devices
+// TODO: Allow to make background into an image
+// TODO: Add X button
+// TODO: Rework the settings tab to be a seperate page
 
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
 function App() {
@@ -177,9 +183,22 @@ function App() {
   return (
     <GameProvider value={gameContextValue}>
       <GlobalStyle theme={theme} />
-      <Wrapper>
-        <Display search={search} setSearch={setSearch} games={sortedGames} />
-      </Wrapper>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path='/'
+            element={
+              <Display
+                search={search}
+                setSearch={setSearch}
+                games={sortedGames}
+              />
+            }
+          />
+          <Route path='/settings' element={<SettingsMenu />} />
+        </Routes>
+      </BrowserRouter>
+      <Wrapper></Wrapper>
     </GameProvider>
   );
 }
@@ -192,4 +211,5 @@ const Wrapper = styled.div`
   background-color: var(--background-color);
   box-sizing: border-box;
   color: var(--text-color);
+
 `;

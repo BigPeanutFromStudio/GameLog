@@ -32,12 +32,15 @@ const ThemeSettings = ({
   ];
   return (
     <Wrapper>
-      <ThemeTabs
-        themes={themes}
-        theme={theme}
-        handleThemeChange={handleThemeChange}
-      />
       <div className='settings'>
+        <div className='themes'>
+          <h1>Themes</h1>
+          <ThemeTabs
+            themes={themes}
+            theme={theme}
+            handleThemeChange={handleThemeChange}
+          />
+        </div>
         <div className='colors'>
           <h1>Colors</h1>
           <div className='color-settings'>
@@ -161,8 +164,8 @@ const Wrapper = styled.div`
     margin-top: 30px;
   }
   .settings {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
   }
   .buttons {
@@ -177,6 +180,8 @@ const Wrapper = styled.div`
     grid-template-columns: auto 1fr;
     gap: 10px;
   }
+
+  .themes h1,
   .other h1,
   .colors h1,
   .fonts h1 {

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Card from './Card';
+import Card from '../components/Card';
 import { DisplayProps, game, states } from '../types';
 import { FaSortAmountDownAlt, FaSortAmountDown } from 'react-icons/fa';
 import { MdCategory, MdOutlineCategory } from 'react-icons/md';
@@ -8,13 +8,13 @@ import { useGameContext } from '../context/GameContext';
 import { useSettingsContext } from '../context/SettingsContext';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import SettingsMenu from './SettingsMenu';
-import AddGameForm from './AddGameForm';
-import Button from './UI/Button';
-import Input from './UI/Input';
-import Select from './UI/Select';
+import AddGameForm from '../components/AddGameForm';
+import Button from '../components/UI/Button';
+import Input from '../components/UI/Input';
+import Select from '../components/UI/Select';
 import { ImDice } from 'react-icons/im';
-import RandomGamePopup from './RandomGamePopup';
+import RandomGamePopup from '../components/RandomGamePopup';
+import { Link } from 'react-router-dom';
 
 const Display = ({ games, setSearch, search }: DisplayProps) => {
   const { deleteGame } = useGameContext();
@@ -32,7 +32,6 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
     cardScale,
   } = useSettingsContext();
 
-  const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [showAddGameFormModal, setShowAddGameFormModal] = useState(false);
   const [showRandomGameModal, setShowRandomGameModal] = useState(false);
   const [randomizedGame, setRandomizedGame] = useState<game | null>(null);
@@ -125,11 +124,6 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
           <AddGameForm setShowModal={setShowAddGameFormModal} />,
           document.body
         )}
-      {showSettingsModal &&
-        createPortal(
-          <SettingsMenu setShowModal={setShowSettingsModal} />,
-          document.body
-        )}
       {showRandomGameModal &&
         createPortal(
           <RandomGamePopup
@@ -159,10 +153,9 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
               value={search ?? ''}
               minWidth='1000px'
             />
-            <Button
-              icon={<IoMdSettings size={50} />}
-              onClick={() => setShowSettingsModal(!showSettingsModal)}
-            />
+            <Link className='link' to='/settings'>
+              <Button icon={<IoMdSettings size={50} />} onClick={() => null} />
+            </Link>
           </div>
           <div className='sort-filters'>
             <div className='sort-container'>
@@ -259,7 +252,7 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
       minmax(${(props) => props.$cardWidth}px, auto)
     );
     gap: 5px;
-    justify-content: start;
+    justify-content: center;
   }
   .search-bar {
     display: flex;
@@ -302,5 +295,9 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
     justify-content: center;
     gap: 80px;
     margin-top: 20px;
+  }
+  .link {
+    text-decoration: none;
+    color: var(--text-color);
   }
 `;

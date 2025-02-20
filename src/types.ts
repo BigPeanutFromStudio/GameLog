@@ -47,9 +47,6 @@ export type AddGameFormProps = {
   setShowModal: (showModal: boolean) => void;
 };
 
-export type SettingsMenuProps = {
-  setShowModal: (showModal: boolean) => void;
-};
 export type EditGameFormProps = {
   setShowModal: (showModal: boolean) => void;
   game: game;
@@ -100,6 +97,7 @@ export type GameContextType = {
 export type ButtonProps = {
   icon: JSX.Element;
   onClick: () => void;
+  className?: string;
 };
 
 export type InputProps = {
