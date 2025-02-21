@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ButtonProps } from '../../types';
 
-const Button = ({ icon, onClick, className }: ButtonProps) => {
+const Button = ({ icon, onClick, className, children }: ButtonProps) => {
   return (
     <Wrapper>
       <div
@@ -10,6 +10,7 @@ const Button = ({ icon, onClick, className }: ButtonProps) => {
       >
         {icon}
       </div>
+      {children ? children : null}
     </Wrapper>
   );
 };

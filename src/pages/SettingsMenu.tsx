@@ -125,6 +125,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   user-select: none;
+  margin-bottom: 50px;
   label {
     font-size: var(--small-font);
   }

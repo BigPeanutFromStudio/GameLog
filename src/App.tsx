@@ -183,22 +183,23 @@ function App() {
   return (
     <GameProvider value={gameContextValue}>
       <GlobalStyle theme={theme} />
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path='/'
-            element={
-              <Display
-                search={search}
-                setSearch={setSearch}
-                games={sortedGames}
-              />
-            }
-          />
-          <Route path='/settings' element={<SettingsMenu />} />
-        </Routes>
-      </BrowserRouter>
-      <Wrapper></Wrapper>
+      <Wrapper>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path='/'
+              element={
+                <Display
+                  search={search}
+                  setSearch={setSearch}
+                  games={sortedGames}
+                />
+              }
+            />
+            <Route path='/settings' element={<SettingsMenu />} />
+          </Routes>
+        </BrowserRouter>
+      </Wrapper>
     </GameProvider>
   );
 }
@@ -211,5 +212,4 @@ const Wrapper = styled.div`
   background-color: var(--background-color);
   box-sizing: border-box;
   color: var(--text-color);
-
 `;

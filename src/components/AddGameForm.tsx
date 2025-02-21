@@ -4,6 +4,8 @@ import { game, states, AddGameFormProps } from '../types';
 import { v6 as uuid } from 'uuid';
 import NoImageFound from '../assets/NoImage.png';
 import { useGameContext } from '../context/GameContext';
+import Button from './UI/Button';
+import { FaFolderOpen } from 'react-icons/fa';
 
 const AddGameForm = ({ setShowModal }: AddGameFormProps) => {
   const escFunction = useCallback(
@@ -60,7 +62,7 @@ const AddGameForm = ({ setShowModal }: AddGameFormProps) => {
       name: formJson.name.toString(),
       state: states[formJson.state as keyof typeof states],
       image: imageToUse,
-      rating: parseFloat(formJson.rating.toString()),
+      rating: parseFloat(formJson.rating.toString()) || 0,
       platform: formJson.platform.toString(),
     };
     addGame(game);
@@ -70,52 +72,63 @@ const AddGameForm = ({ setShowModal }: AddGameFormProps) => {
   return (
     <Wrapper>
       <div className='form'>
-        <h1>ADD A GAME</h1>
+        <h1>Add a game</h1>
         <form onSubmit={handleSubmit}>
           <div className='input-wrapper'>
             <label htmlFor='name'>Game name: </label>
-            <input
-              type='text'
-              name='name'
-              required
-              placeholder='Enter the name...'
-            />
-            <label htmlFor='platform'>Platform name: </label>
-            <input
-              type='text'
-              name='platform'
-              placeholder='Enter the platform...'
-            />
-            <label htmlFor='state'>Game status: </label>
-            <select name='state' defaultValue={states.Queued}>
-              <optgroup>
-                {Object.keys(states).map((key, index) => (
-                  <option key={index} value={key}>
-                    {Object.values(states)[index]}
-                  </option>
-                ))}
-              </optgroup>
-            </select>
-            <label htmlFor='rating'>Game rating: </label>
-            <input type='number' step='0.01' name='rating' defaultValue='0' />
-            <label htmlFor='imagefile'>Local image: </label>
-            <div className='container' onClick={handleClick}>
-              <h2>Choose local image</h2>
+            <div className='input-group'>
               <input
-                type='file'
-                name='imagefile'
-                accept='image/*'
-                onChange={handleFileChange}
-                ref={inputFile}
+                type='text'
+                name='name'
+                required
+                placeholder='Enter the name...'
               />
             </div>
-            <label htmlFor='image'>Cover image: </label>
-            <input
-              type='text'
-              name='image'
-              placeholder='Image url (optional)'
-              onChange={(e) => setImageUrl(e.target.value)}
-            />
+            <label htmlFor='platform'>Platform name: </label>
+            <div className='input-group'>
+              <input
+                type='text'
+                name='platform'
+                placeholder='Enter the platform...'
+                required
+              />
+            </div>
+            <label htmlFor='state'>Game details: </label>
+            <div className='input-group'>
+              <select name='state' defaultValue={states.Queued} required>
+                <optgroup>
+                  {Object.keys(states).map((key, index) => (
+                    <option key={index} value={key}>
+                      {Object.values(states)[index]}
+                    </option>
+                  ))}
+                </optgroup>
+              </select>
+              <input
+                type='number'
+                step='0.01'
+                name='rating'
+                placeholder='Rating...'
+              />
+            </div>
+            <label htmlFor='image'>Image: </label>
+            <div className='input-group'>
+              <input
+                type='text'
+                name='image'
+                placeholder='Image url...'
+                onChange={(e) => setImageUrl(e.target.value)}
+              />
+              <Button onClick={handleClick} icon={<FaFolderOpen size={30} />}>
+                <input
+                  type='file'
+                  name='imagefile'
+                  accept='image/*'
+                  onChange={handleFileChange}
+                  ref={inputFile}
+                />
+              </Button>
+            </div>
           </div>
           <button type='submit'>Add game</button>
         </form>
@@ -139,43 +152,39 @@ const Wrapper = styled.div`
   align-items: center;
   background-color: rgba(0, 0, 0, 0.4);
   user-select: none;
-  .container {
-    position: relative;
-    width: 400px;
-    height: inherit;
-    margin: 10px;
-    background-color: var(--primary-color);
-    border-radius: var(--border-radius);
-    cursor: pointer;
+  .input-group {
     display: flex;
-    justify-content: center;
     align-items: center;
-    transform: scale(1);
-    transition: transform 0.1s ease;
+    gap: 10px;
+    width: 100%;
   }
-  .container:hover {
-    transform: scale(1.05);
-    transition: transform 0.1s ease;
+  .input-group input,
+  .input-group select {
+    flex: 1;
+    width: 100%;
   }
   input[type='file'] {
     display: none;
   }
   .input-wrapper {
     display: grid;
-    grid-template-columns: auto 1fr;
-  }
-  .input-wrapper label {
-    display: flex;
-    justify-content: center;
+    grid-template-columns: auto 500px;
     align-items: center;
+    justify-content: center;
+    gap: 10px;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+  label {
+    line-height: 2.2;
     font-size: var(--small-font);
   }
   .form {
     background-color: var(--background-color);
     border-radius: var(--border-radius);
-    width: 90%;
-    min-width: 600px;
-    height: 800px;
+    min-width: 850px;
+    padding: 20px;
+    min-height: 500px;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -196,13 +205,17 @@ const Wrapper = styled.div`
   select,
   button {
     all: unset;
-    display: block;
     background-color: var(--primary-color);
-    width: 400px;
     border-radius: var(--border-radius);
     padding: 20px;
-    margin: 10px;
     font-size: var(--small-font);
+    transition: transform 0.1s ease;
+  }
+  input:hover,
+  input:focus,
+  select:hover,
+  select:focus {
+    transform: scale(1.02);
   }
   button {
     cursor: pointer;

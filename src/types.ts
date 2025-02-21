@@ -96,8 +96,9 @@ export type GameContextType = {
 
 export type ButtonProps = {
   icon: JSX.Element;
-  onClick: () => void;
+  onClick: (() => void) | ((e: React.MouseEvent<HTMLDivElement>) => void);
   className?: string;
+  children?: JSX.Element | string;
 };
 
 export type InputProps = {
