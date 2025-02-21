@@ -10,7 +10,7 @@ const ExportButton = ({ saveMode }: ExportButtonProps) => {
   return (
     <Wrapper>
       <div className='container' onClick={() => saveData(saveMode)}>
-        <h1>Export {modes[saveMode]}</h1>
+        <h4>Export {modes[saveMode]}</h4>
       </div>
     </Wrapper>
   );
@@ -39,7 +39,7 @@ const Wrapper = styled.div`
     transform: scale(1.05);
     transition: transform 0.1s ease;
   }
-  h1 {
+  h4 {
     font-size: var(--medium-font);
   }
 `;

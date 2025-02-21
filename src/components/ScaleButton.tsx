@@ -20,7 +20,7 @@ const ScaleButton = ({ setCardScale, cardScale }: ScaleButtonProps) => {
   return (
     <Wrapper>
       <div className='container' onClick={handleScale}>
-        <h1>{scaleTexts[currentScaleIndex]}</h1>
+        <h4>{scaleTexts[currentScaleIndex]}</h4>
       </div>
     </Wrapper>
   );
@@ -48,7 +48,7 @@ const Wrapper = styled.div`
     transform: scale(1.05);
     transition: transform 0.1s ease;
   }
-  h1 {
+  h4 {
     font-size: var(--small-font);
   }
 `;

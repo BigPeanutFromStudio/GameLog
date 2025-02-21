@@ -53,6 +53,8 @@ export default ThemeTabs;
 
 const Wrapper = styled.div`
   .preset-tabs {
+    max-width: 100%;
+    flex-wrap: wrap;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -68,6 +70,7 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     transition: transform 0.1s ease;
     cursor: pointer;
   }

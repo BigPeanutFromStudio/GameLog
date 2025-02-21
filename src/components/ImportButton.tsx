@@ -29,7 +29,7 @@ const ImportButton = () => {
   return (
     <Wrapper>
       <div className='container' onClick={handleClick}>
-        <h1>Import data</h1>
+        <h4>Import data</h4>
         <input type='file' ref={inputFile} onChange={handleChange} />
       </div>
     </Wrapper>
@@ -61,7 +61,8 @@ const Wrapper = styled.div`
   input[type='file'] {
     display: none;
   }
-  h1 {
+  h4 {
     font-size: var(--medium-font);
+    text-align: center;
   }
 `;

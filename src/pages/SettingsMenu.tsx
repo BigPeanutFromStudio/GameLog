@@ -100,10 +100,10 @@ const SettingsMenu = () => {
 
   return (
     <Wrapper>
-      <Link className='link' to='/'>
-        <Button icon={<MdNavigateBefore size={35} />} onClick={() => {}} />
-      </Link>
       <div className='tab-switch'>
+        <Link className='link' to='/'>
+          <Button icon={<MdNavigateBefore size={35} />} onClick={() => {}} />
+        </Link>
         {tabs.map((tab, index) => (
           <Button
             key={tab}
@@ -124,6 +124,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  user-select: none;
   label {
     font-size: var(--small-font);
   }
@@ -148,9 +149,6 @@ const Wrapper = styled.div`
     background-color: var(--secondary-color);
   }
   .link {
-    position: absolute;
-    top: 15px;
-    left: 15px;
     text-decoration: none;
     color: var(--text-color);
   }

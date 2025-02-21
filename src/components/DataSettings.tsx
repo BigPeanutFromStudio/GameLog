@@ -22,20 +22,17 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 90%;
   .export-buttons {
     display: flex;
     gap: 15px;
   }
-  h1 {
-    all: unset;
-    border-bottom: none;
-    font-size: var(--medium-font);
-  }
   .section-h1 {
-    font-size: var(--medium-font);
+    font-size: var(--large-font);
     text-align: center;
     border-bottom: solid 1px var(--accent-color);
     margin-bottom: 30px;
     margin-top: 15px;
+    width: 100%;
   }
 `;
