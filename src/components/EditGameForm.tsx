@@ -5,6 +5,7 @@ import NoImageFound from '../assets/NoImage.png';
 import { useGameContext } from '../context/GameContext';
 import Button from './UI/Button';
 import { FaFolderOpen } from 'react-icons/fa';
+import { TiDelete } from 'react-icons/ti';
 
 const EditGameForm = ({ setShowModal, game }: EditGameFormProps) => {
   const escFunction = useCallback(
@@ -66,6 +67,9 @@ const EditGameForm = ({ setShowModal, game }: EditGameFormProps) => {
   return (
     <Wrapper>
       <div className='form'>
+        <div className='close-button' onClick={() => setShowModal(false)}>
+          <TiDelete size={40} />
+        </div>
         <h1>Edit {game.name}</h1>
         <form onSubmit={handleSubmit}>
           <div className='input-wrapper'>
@@ -178,6 +182,7 @@ const Wrapper = styled.div`
     font-size: var(--small-font);
   }
   .form {
+    position: relative;
     background-color: var(--background-color);
     border-radius: var(--border-radius);
     min-width: 850px;
@@ -221,5 +226,15 @@ const Wrapper = styled.div`
   }
   button:hover {
     background-color: var(--secondary-color);
+  }
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+  }
+  .close-button:hover {
+    transform: scale(1.1);
   }
 `;

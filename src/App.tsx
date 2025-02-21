@@ -18,8 +18,6 @@ import SettingsMenu from './pages/SettingsMenu.tsx';
 // TODO: Improve data settings tab
 // TODO: Improve scaling on different devices
 // TODO: Allow to make background into an image
-// TODO: Add X button
-// TODO: Rework the settings tab to be a seperate page
 
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
 function App() {
