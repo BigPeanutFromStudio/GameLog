@@ -12,14 +12,14 @@ import {
 import { useSettingsContext } from './context/SettingsContext';
 import { GlobalStyle } from './components/GlobalStyles.tsx';
 import SettingsMenu from './pages/SettingsMenu.tsx';
+import Footer from './components/Footer.tsx';
 
 // TODO: Allow the user to choose which category to randomize from
-// TODO: Maybe add ko-fi (footer maybe) and credits/other stuff in the settings menu
 // TODO: Legal stuff and shit (privacy policy etc.)
 // TODO: Improve data settings tab
 // TODO: Improve scaling on mobile
 // TODO: Allow to make background into an image
-// TODO: FIX: Inconsistent UI (buttons and selects in add/edit game form)
+// TODO: Add shadow color option (?)
 
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
 function App() {
@@ -190,6 +190,7 @@ function App() {
             <Route path='/settings' element={<SettingsMenu />} />
           </Routes>
         </BrowserRouter>
+        <Footer />
       </Wrapper>
     </GameProvider>
   );
@@ -200,6 +201,8 @@ export default App;
 const Wrapper = styled.div`
   width: 100%;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background-color: var(--background-color);
   box-sizing: border-box;
   color: var(--text-color);
