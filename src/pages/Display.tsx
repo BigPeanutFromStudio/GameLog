@@ -29,7 +29,7 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
     setCategorize,
     categorizeBy,
     setCategorizeBy,
-    cardScale,
+    cardsPerRow,
   } = useSettingsContext();
 
   const [showAddGameFormModal, setShowAddGameFormModal] = useState(false);
@@ -77,12 +77,7 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
                   {games
                     .filter((game) => game.state === state)
                     .map((game: game) => (
-                      <Card
-                        game={game}
-                        key={game.id}
-                        deleteGame={deleteGame}
-                        size={cardScale}
-                      />
+                      <Card game={game} key={game.id} deleteGame={deleteGame} />
                     ))}
                 </div>
               </>
@@ -102,12 +97,7 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
                   {games
                     .filter((game) => game.platform === platform)
                     .map((game: game) => (
-                      <Card
-                        game={game}
-                        key={game.id}
-                        deleteGame={deleteGame}
-                        size={cardScale}
-                      />
+                      <Card game={game} key={game.id} deleteGame={deleteGame} />
                     ))}
                 </div>
               </>
@@ -118,7 +108,7 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
   };
 
   return (
-    <Wrapper $cardWidth={cardScale[0]}>
+    <Wrapper $cardsPerRow={cardsPerRow}>
       {showAddGameFormModal &&
         createPortal(
           <AddGameForm setShowModal={setShowAddGameFormModal} />,
@@ -228,12 +218,7 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
       ) : (
         <div className='games'>
           {games.map((game: game) => (
-            <Card
-              game={game}
-              key={game.id}
-              deleteGame={deleteGame}
-              size={cardScale}
-            />
+            <Card game={game} key={game.id} deleteGame={deleteGame} />
           ))}
         </div>
       )}
@@ -242,15 +227,12 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
 };
 export default Display;
 
-const Wrapper = styled.div<{ $cardWidth: number }>`
+const Wrapper = styled.div<{ $cardsPerRow: number }>`
   padding: 15px;
   user-select: none;
   .games {
     display: grid;
-    grid-template-columns: repeat(
-      auto-fill,
-      minmax(${(props) => props.$cardWidth}px, auto)
-    );
+    grid-template-columns: repeat(${(props) => props.$cardsPerRow}, 1fr);
     gap: 5px;
     justify-content: start;
   }

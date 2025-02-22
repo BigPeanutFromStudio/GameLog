@@ -214,6 +214,10 @@ const Wrapper = styled.div`
     font-size: var(--small-font);
     transition: transform 0.1s ease;
   }
+  select {
+    cursor: pointer;
+    text-align: center;
+  }
   input:hover,
   input:focus,
   select:hover,
@@ -223,9 +227,10 @@ const Wrapper = styled.div`
   button {
     cursor: pointer;
     text-align: center;
+    transition: transform 0.1s ease;
   }
   button:hover {
-    background-color: var(--secondary-color);
+    transform: scale(1.1);
   }
   .close-button {
     position: absolute;

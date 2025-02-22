@@ -9,7 +9,7 @@ export const saveData = (
   isAscending: boolean,
   categorize: boolean,
   categorizeBy: string,
-  cardScale: number[],
+  cardsPerRow: number,
   theme: typeof defaultTheme,
   savedTheme: typeof defaultTheme,
   saveMode: number // 0 - all, 1 - theme, 2 - settings, 3 - games
@@ -20,7 +20,7 @@ export const saveData = (
     isAscending: isAscending,
     categorize: categorize,
     categorizeBy: categorizeBy,
-    cardScale: cardScale,
+    cardsPerRow: cardsPerRow,
   };
 
   let dataToSave: string = '';
@@ -57,7 +57,7 @@ export const loadData = (
   setIsAscending: React.Dispatch<React.SetStateAction<boolean>>,
   setCategorize: React.Dispatch<React.SetStateAction<boolean>>,
   setCategorizeBy: React.Dispatch<React.SetStateAction<string>>,
-  setCardScale: React.Dispatch<React.SetStateAction<number[]>>,
+  setCardsPerRow: React.Dispatch<React.SetStateAction<number>>,
   setTheme: (theme: typeof defaultTheme) => void,
   saveTheme: (themeToSave: typeof defaultTheme) => void
 ) => {
@@ -72,7 +72,7 @@ export const loadData = (
     setIsAscending(jsonData.settings.isAscending);
     setCategorize(jsonData.settings.categorize);
     setCategorizeBy(jsonData.settings.categorizeBy);
-    setCardScale(jsonData.settings.cardScale);
+    setCardsPerRow(jsonData.settings.cardsPerRow);
   }
   if (jsonData.theme) {
     setTheme(jsonData.theme);
