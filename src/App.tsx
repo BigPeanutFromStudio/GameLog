@@ -14,10 +14,14 @@ import { GlobalStyle } from './components/GlobalStyles.tsx';
 import SettingsMenu from './pages/SettingsMenu.tsx';
 
 // TODO: Allow the user to choose which category to randomize from
-// TODO: Maybe add ko-fi and credits/other stuff
+// TODO: Maybe add ko-fi (footer maybe) and credits/other stuff in the settings menu
+// TODO: Legal stuff and shit (privacy policy etc.)
 // TODO: Improve data settings tab
 // TODO: Improve scaling on different devices
 // TODO: Allow to make background into an image
+// TODO: FIX: Tiny tiles when categorized are offset (Only while categorized by state wth)
+// TODO: Make cards ✨dynamically sized✨
+// TODO: FIX: Inconsistent UI (buttons and selects in add/edit game form)
 
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
 function App() {

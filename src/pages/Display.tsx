@@ -252,7 +252,7 @@ const Wrapper = styled.div<{ $cardWidth: number }>`
       minmax(${(props) => props.$cardWidth}px, auto)
     );
     gap: 5px;
-    justify-content: center;
+    justify-content: start;
   }
   .search-bar {
     display: flex;
