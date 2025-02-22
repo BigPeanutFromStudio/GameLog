@@ -17,10 +17,8 @@ import SettingsMenu from './pages/SettingsMenu.tsx';
 // TODO: Maybe add ko-fi (footer maybe) and credits/other stuff in the settings menu
 // TODO: Legal stuff and shit (privacy policy etc.)
 // TODO: Improve data settings tab
-// TODO: Improve scaling on different devices
+// TODO: Improve scaling on mobile
 // TODO: Allow to make background into an image
-// TODO: FIX: Tiny tiles when categorized are offset (Only while categorized by state wth)
-// TODO: Make cards ✨dynamically sized✨
 // TODO: FIX: Inconsistent UI (buttons and selects in add/edit game form)
 
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
@@ -38,8 +36,8 @@ function App() {
     setCategorize,
     categorizeBy,
     setCategorizeBy,
-    cardScale,
-    setCardScale,
+    cardsPerRow,
+    setCardsPerRow,
     theme,
     setTheme,
     savedTheme,
@@ -48,16 +46,7 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem('games', JSON.stringify(games));
-  }, [
-    games,
-    filter,
-    sortMethod,
-    isAscending,
-    categorize,
-    cardScale,
-    categorizeBy,
-    theme,
-  ]);
+  }, [games]);
 
   const deleteGame = useCallback((id: string) => {
     setGames((prevGames) => prevGames.filter((game) => game.id !== id));
@@ -82,7 +71,7 @@ function App() {
         isAscending,
         categorize,
         categorizeBy,
-        cardScale,
+        cardsPerRow,
         theme,
         savedTheme,
         saveMode
@@ -95,7 +84,7 @@ function App() {
       isAscending,
       categorize,
       categorizeBy,
-      cardScale,
+      cardsPerRow,
       theme,
       savedTheme,
     ]
@@ -111,13 +100,13 @@ function App() {
         setIsAscending,
         setCategorize,
         setCategorizeBy,
-        setCardScale,
+        setCardsPerRow,
         setTheme,
         saveTheme
       );
     },
     [
-      setCardScale,
+      setCardsPerRow,
       setCategorize,
       setFilter,
       setIsAscending,

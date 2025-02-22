@@ -24,8 +24,8 @@ interface SettingsContextProps {
   setCategorize: React.Dispatch<React.SetStateAction<boolean>>;
   categorizeBy: string;
   setCategorizeBy: React.Dispatch<React.SetStateAction<string>>;
-  cardScale: number[];
-  setCardScale: React.Dispatch<React.SetStateAction<number[]>>;
+  cardsPerRow: number;
+  setCardsPerRow: React.Dispatch<React.SetStateAction<number>>;
   theme: typeof defaultTheme;
   setTheme: (theme: typeof defaultTheme) => void;
   savedTheme: typeof defaultTheme;
@@ -55,12 +55,12 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     isAscending: boolean;
     categorize: boolean;
     categorizeBy: string;
-    cardScale: number[];
+    cardsPerRow: number;
     theme: typeof defaultTheme;
     savedTheme: typeof defaultTheme;
   } = JSON.parse(
     localStorage.getItem('settings') ||
-      `{ "filter": "all", "sortMethod": "byname", "isAscending": true, "categorize": false, "categorizeBy":"state", "cardScale": [460, 215], "theme": ${JSON.stringify(
+      `{ "filter": "all", "sortMethod": "byname", "isAscending": true, "categorize": false, "categorizeBy":"state",  "cardsPerRow": "6" "theme": ${JSON.stringify(
         defaultTheme
       )}, "savedTheme": ${JSON.stringify(defaultTheme)}}`
   );
@@ -72,7 +72,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
   const [categorizeBy, setCategorizeBy] = useState(
     initialSettings.categorizeBy
   );
-  const [cardScale, setCardScale] = useState(initialSettings.cardScale);
+  const [cardsPerRow, setCardsPerRow] = useState(initialSettings.cardsPerRow);
   const [theme, setThemeState] = useState(initialSettings.theme);
   const [savedTheme, setSavedTheme] = useState(initialSettings.savedTheme);
 
@@ -99,7 +99,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
       isAscending: isAscending,
       categorize: categorize,
       categorizeBy: categorizeBy,
-      cardScale: cardScale,
+      cardsPerRow: cardsPerRow,
       theme: theme,
       savedTheme: savedTheme,
     };
@@ -110,7 +110,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     isAscending,
     categorize,
     categorizeBy,
-    cardScale,
+    cardsPerRow,
     theme,
     savedTheme,
   ]);
@@ -126,8 +126,8 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     setCategorize,
     categorizeBy,
     setCategorizeBy,
-    cardScale,
-    setCardScale,
+    cardsPerRow,
+    setCardsPerRow,
     theme,
     setTheme,
     savedTheme,

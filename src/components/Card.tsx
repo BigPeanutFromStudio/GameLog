@@ -4,7 +4,6 @@ import { TiDelete } from 'react-icons/ti';
 import { useState } from 'react';
 import EditGameForm from './EditGameForm';
 import { createPortal } from 'react-dom';
-import { scales } from '../utils/constants';
 
 const stateToColor = new Map<states, string>([
   [states.Abandoned, 'var(--abandoned-color)'],
@@ -14,32 +13,14 @@ const stateToColor = new Map<states, string>([
   [states.Queued, 'var(--queued-color)'],
 ]);
 
-const Card = ({ game, deleteGame, size }: CardProps) => {
+const Card = ({ game, deleteGame }: CardProps) => {
   const [showModal, setShowModal] = useState(false);
-  const textSizes = [
-    'var(--small-font)',
-    'var(--medium-font)',
-    'var(--medium-font)',
-    'var(--large-font)',
-    'var(--xlarge-font)',
-    'var(--medium-font)',
-  ];
-  const scaleIndex = scales.findIndex(
-    (scale) => size[0] === scale[0] && size[1] === scale[1]
-  );
   return (
-    <Wrapper
-      $badgeColor={stateToColor.get(game.state) || 'gray'}
-      $cardScale={size}
-      $textSize={textSizes[scaleIndex]}
-    >
+    <Wrapper $badgeColor={stateToColor.get(game.state) || 'gray'}>
       <div className='container' onClick={() => setShowModal(!showModal)}>
         <img src={game.image} />
         <div className='delete' onClick={() => deleteGame(game.id)}>
-          <TiDelete
-            size={scaleIndex === 0 ? 25 : 40}
-            style={{ color: 'var(--icon-color)' }}
-          />
+          <TiDelete size={40} style={{ color: 'var(--icon-color)' }} />
         </div>
         <div className='badge'>{game.state}</div>
         <div className='rating'>{game.rating}</div>
@@ -59,12 +40,11 @@ export default Card;
 
 const Wrapper = styled.div<{
   $badgeColor: string;
-  $cardScale: number[];
-  $textSize: string;
 }>`
   position: relative;
-  width: ${(props) => props.$cardScale[0]}px;
-  height: ${(props) => props.$cardScale[1]}px;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 2.14 / 1;
   user-select: none;
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
   border-radius: var(--border-radius);
@@ -152,7 +132,7 @@ const Wrapper = styled.div<{
     justify-content: center;
   }
   .overlay h1 {
-    font-size: ${(props) => props.$textSize};
+    font-size: 2em;
     text-align: center;
     margin: 0;
   }

@@ -22,7 +22,6 @@ export type game = {
 export type CardProps = {
   game: game;
   deleteGame: (id: string) => void;
-  size: number[];
 };
 
 export type DisplayProps = {
@@ -65,22 +64,6 @@ export type ThemeTabsProps = {
   handleThemeChange: (theme: typeof defaultTheme) => void;
   theme: typeof defaultTheme;
   themes: typeof themes;
-};
-
-export type ThemeSettingsProps = {
-  handleThemeChange: (theme: typeof defaultTheme) => void;
-  theme: typeof defaultTheme;
-  themes: typeof themes;
-  handleColorChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleFontChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleBorderRadiusChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSubmit: () => void;
-  colors: typeof defaultTheme.colors;
-  fonts: typeof defaultTheme.fontSizes;
-  borderRadius: string;
-  handleSaveTheme: () => void;
-  handleFontFamilyChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  font: string;
 };
 
 export type GameContextType = {
