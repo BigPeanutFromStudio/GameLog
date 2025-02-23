@@ -5,7 +5,7 @@ import ImportButton from './ImportButton';
 const DataSettings = () => {
   return (
     <Wrapper>
-      <h1 className='section-h1'>Data Export Options</h1>
+      <h1 className='section-h1'>Data Options</h1>
       <ImportButton />
       <div className='export-buttons'>
         <ExportButton saveMode={0} />
@@ -23,9 +23,13 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 90%;
+
   .export-buttons {
     display: flex;
     gap: 15px;
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
   }
   .section-h1 {
     font-size: var(--large-font);

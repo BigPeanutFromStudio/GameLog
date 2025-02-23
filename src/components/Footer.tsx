@@ -30,4 +30,7 @@ const Wrapper = styled.div`
   margin-top: auto;
   padding: 20px;
   background-color: var(--primary-color);
+  @media (max-width: 768px) {
+    gap: 10px;
+  }
 `;

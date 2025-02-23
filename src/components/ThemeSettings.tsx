@@ -163,7 +163,7 @@ const ThemeSettings = () => {
                 name='small'
                 value={fonts.small}
                 onChange={handleFontChange}
-                minWidth='100px'
+                minWidth='120px'
               />
               <label htmlFor='medium'>Medium: </label>
               <Input
@@ -171,7 +171,7 @@ const ThemeSettings = () => {
                 name='medium'
                 value={fonts.medium}
                 onChange={handleFontChange}
-                minWidth='100px'
+                minWidth='120px'
               />
               <label htmlFor='large'>Large: </label>
               <Input
@@ -179,7 +179,7 @@ const ThemeSettings = () => {
                 name='large'
                 value={fonts.large}
                 onChange={handleFontChange}
-                minWidth='100px'
+                minWidth='120px'
               />
               <label htmlFor='xlarge'>XLarge: </label>
               <Input
@@ -187,7 +187,7 @@ const ThemeSettings = () => {
                 name='xlarge'
                 value={fonts.xlarge}
                 onChange={handleFontChange}
-                minWidth='100px'
+                minWidth='120px'
               />
             </div>
           </div>

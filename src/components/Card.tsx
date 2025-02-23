@@ -49,6 +49,9 @@ const Wrapper = styled.div<{
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
   border-radius: var(--border-radius);
   cursor: pointer;
+  @media (max-width: 768px) {
+    aspect-ratio: 1 / 1;
+  }
   .rating {
     position: absolute;
     z-index: 1000;

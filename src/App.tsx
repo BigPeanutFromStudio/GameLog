@@ -207,4 +207,6 @@ const Wrapper = styled.div`
   background-color: var(--background-color);
   box-sizing: border-box;
   color: var(--text-color);
+  @media (max-width: 768px) {
+  }
 `;

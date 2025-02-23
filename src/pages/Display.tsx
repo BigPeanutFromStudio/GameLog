@@ -234,6 +234,13 @@ const Wrapper = styled.div<{ $cardsPerRow: number }>`
     grid-template-columns: repeat(${(props) => props.$cardsPerRow}, 1fr);
     gap: 5px;
     justify-content: start;
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
   }
   .search-bar {
     display: flex;
@@ -241,12 +248,19 @@ const Wrapper = styled.div<{ $cardsPerRow: number }>`
     align-items: center;
     flex-wrap: wrap;
     gap: 30px;
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 10px;
+    }
   }
   .category {
     margin-top: 20px;
     margin-bottom: 10px;
     color: var(--primary-color);
     font-size: var(--xlarge-font);
+    @media (max-width: 768px) {
+      font-size: var(--large-font);
+    }
   }
   .options {
     width: 100%;
@@ -255,6 +269,10 @@ const Wrapper = styled.div<{ $cardsPerRow: number }>`
     align-items: center;
     justify-content: center;
     margin-bottom: 40px;
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 20px;
+    }
   }
   .form {
     width: 100%;
@@ -268,6 +286,10 @@ const Wrapper = styled.div<{ $cardsPerRow: number }>`
     flex-direction: row;
     align-items: center;
     gap: 10px;
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 5px;
+    }
   }
   .sort-filters {
     display: flex;
@@ -277,6 +299,9 @@ const Wrapper = styled.div<{ $cardsPerRow: number }>`
     justify-content: center;
     gap: 80px;
     margin-top: 20px;
+    @media (max-width: 768px) {
+      gap: 20px;
+    }
   }
   .link {
     text-decoration: none;

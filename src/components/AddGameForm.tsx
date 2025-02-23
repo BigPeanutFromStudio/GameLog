@@ -178,6 +178,9 @@ const Wrapper = styled.div`
     gap: 10px;
     max-width: 100%;
     margin-bottom: 20px;
+    @media (max-width: 768px) {
+      grid-template-columns: auto 1fr;
+    }
   }
   label {
     line-height: 2.2;
@@ -194,12 +197,19 @@ const Wrapper = styled.div`
     align-items: center;
     flex-direction: column;
     box-shadow: 0px 8px 24px 8px #0f1014;
+    @media (max-width: 768px) {
+      min-width: 90%;
+      padding: 10px;
+    }
   }
   .form h1 {
     margin-bottom: 30px;
     margin-top: 15px;
     font-size: var(--large-font);
     border-bottom: solid 1px var(--accent-color);
+    @media (max-width: 768px) {
+      font-size: var(--medium-font);
+    }
   }
   form {
     display: flex;

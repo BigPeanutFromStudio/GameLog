@@ -50,6 +50,10 @@ const Wrapper = styled.div`
     padding: 30px;
     margin-bottom: 50px;
     gap: 50px;
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 20px;
+    }
   }
   .tab {
     cursor: pointer;
