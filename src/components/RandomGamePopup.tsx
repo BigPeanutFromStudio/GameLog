@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useEffect, useCallback } from 'react';
 import { RandomGamePopupProps } from '../types';
+import { TiDelete } from 'react-icons/ti';
 
 const RandomGamePopup = ({ setShowModal, game }: RandomGamePopupProps) => {
   const escFunction = useCallback(
@@ -23,6 +24,9 @@ const RandomGamePopup = ({ setShowModal, game }: RandomGamePopupProps) => {
   return (
     <Wrapper>
       <div className='form'>
+        <div className='close-button' onClick={() => setShowModal(false)}>
+          <TiDelete size={40} />
+        </div>
         <h1>{game ? game.name : 'No games to randomize from'}</h1>
         <img src={game?.image} />
       </div>
@@ -53,6 +57,7 @@ const Wrapper = styled.div`
     object-fit: cover;
   }
   .form {
+    position: relative;
     background-color: var(--background-color);
     border-radius: var(--border-radius);
     min-width: 300px;
@@ -69,5 +74,15 @@ const Wrapper = styled.div`
     margin-top: 15px;
     font-size: var(--large-font);
     text-align: center;
+  }
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+  }
+  .close-button:hover {
+    transform: scale(1.1);
   }
 `;

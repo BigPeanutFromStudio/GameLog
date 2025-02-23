@@ -18,7 +18,7 @@ import Footer from './components/Footer.tsx';
 // TODO: Add tooltips to buttons
 // TODO: Legal stuff and shit (privacy policy etc.)
 // TODO: Improve data settings tab
-// TODO: Improve scaling on mobile
+// TODO: Improve scaling on mobile (maybe more)
 // TODO: Allow to make background into an image
 // TODO: Add shadow color option (?)
 
@@ -207,6 +207,4 @@ const Wrapper = styled.div`
   background-color: var(--background-color);
   box-sizing: border-box;
   color: var(--text-color);
-  @media (max-width: 768px) {
-  }
 `;
