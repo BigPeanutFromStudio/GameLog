@@ -27,11 +27,11 @@
   --text-color: #fff0d1;
   */
 
-  --finished-color: green;
-  --finished-fully-color: #c88c32;
-  --playing-color: dodgerblue;
-  --queued-color: purple;
-  --abandoned-color: red;
+  --finished-color: rgb(0, 128, 0);
+  --finished-fully-color: rgb(200, 140, 50);
+  --playing-color: rgb(30, 144, 255);
+  --queued-color: rgb(128, 0, 128);
+  --abandoned-color: rgb(255, 0, 0);
 
   --icon-color: red;
 

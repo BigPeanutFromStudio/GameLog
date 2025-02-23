@@ -6,12 +6,6 @@ export const defaultTheme = {
     text: '#fff0d1',
     accent: '#fff0d1',
   },
-  fontSizes: {
-    small: '1.75rem',
-    medium: '2.375rem',
-    large: '3rem',
-    xlarge: '4.375rem',
-  },
   borderRadius: '10px',
   font: 'Lexend',
 };
@@ -23,12 +17,6 @@ export const preset1Theme = {
     background: '#5c5470',
     text: '#dbd8e3',
     accent: '#dbd8e3',
-  },
-  fontSizes: {
-    small: '1.75rem',
-    medium: '2.375rem',
-    large: '3rem',
-    xlarge: '4.375rem',
   },
   borderRadius: '10px',
   font: 'Lexend',
@@ -42,12 +30,6 @@ export const preset2Theme = {
     text: '#2c2b2b',
     accent: '#3e3e3c',
   },
-  fontSizes: {
-    small: '1.75rem',
-    medium: '2.375rem',
-    large: '3rem',
-    xlarge: '4.375rem',
-  },
   borderRadius: '10px',
   font: 'Lexend',
 };
@@ -59,12 +41,6 @@ export const preset3Theme = {
     background: '#272525',
     text: '#ad8e1f',
     accent: '#ad8e1f',
-  },
-  fontSizes: {
-    small: '1.75rem',
-    medium: '2.375rem',
-    large: '3rem',
-    xlarge: '4.375rem',
   },
   borderRadius: '10px',
   font: 'Lexend',

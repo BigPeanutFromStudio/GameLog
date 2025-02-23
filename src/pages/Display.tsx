@@ -19,8 +19,6 @@ import { Link } from 'react-router-dom';
 const Display = ({ games, setSearch, search }: DisplayProps) => {
   const { deleteGame } = useGameContext();
   const {
-    filter,
-    setFilter,
     isAscending,
     setIsAscending,
     sortMethod,
@@ -52,9 +50,6 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-  };
-  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFilter(e.target.value);
   };
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSortMethod(e.target.value);
@@ -171,19 +166,6 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
             </div>
             <div className='sort-container'>
               <h1>Filter by:</h1>
-              <Select
-                name='state'
-                value={filter}
-                onChange={handleFilterChange}
-                options={
-                  [{ value: 'all', label: 'All' }].concat(
-                    Object.keys(states).map((key, index) => ({
-                      value: key,
-                      label: Object.values(states)[index],
-                    }))
-                  ) ?? []
-                }
-              />
               <Button icon={<ImDice size={30} />} onClick={handleRandomGame} />
             </div>
 

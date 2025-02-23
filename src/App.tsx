@@ -12,7 +12,7 @@ import {
 import { useSettingsContext } from './context/SettingsContext';
 import { GlobalStyle } from './components/GlobalStyles.tsx';
 import SettingsMenu from './pages/SettingsMenu.tsx';
-import Footer from './components/Footer.tsx';
+import Navbar from './components/Navbar.tsx';
 
 // TODO: Allow the user to choose which category to randomize from
 // TODO: Add tooltips to buttons
@@ -119,7 +119,7 @@ function App() {
   );
 
   const getFilteredGames = useCallback(
-    (name: string | null, filter: string | states) => {
+    (name: string | null, filter: string[] | states) => {
       return getFilteredGamesUtil(games, name, filter);
     },
     [games]
@@ -176,6 +176,7 @@ function App() {
     <GameProvider value={gameContextValue}>
       <GlobalStyle theme={theme} />
       <Wrapper>
+        <Navbar />
         <BrowserRouter>
           <Routes>
             <Route
@@ -191,7 +192,6 @@ function App() {
             <Route path='/settings' element={<SettingsMenu />} />
           </Routes>
         </BrowserRouter>
-        <Footer />
       </Wrapper>
     </GameProvider>
   );
@@ -201,10 +201,9 @@ export default App;
 
 const Wrapper = styled.div`
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   background-color: var(--background-color);
-  box-sizing: border-box;
   color: var(--text-color);
 `;

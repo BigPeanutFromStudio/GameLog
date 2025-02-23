@@ -20,13 +20,11 @@ const ThemeSettings = () => {
   ];
 
   const [colors, setColors] = useState(theme.colors);
-  const [fonts, setFonts] = useState(theme.fontSizes);
   const [font, setFont] = useState(theme.font);
   const [borderRadius, setBorderRadius] = useState(theme.borderRadius);
 
   useEffect(() => {
     setColors(theme.colors);
-    setFonts(theme.fontSizes);
     setBorderRadius(theme.borderRadius);
     setFont(theme.font);
   }, [theme]);
@@ -48,14 +46,6 @@ const ThemeSettings = () => {
     }));
   };
 
-  const handleFontChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFonts((prevFonts) => ({
-      ...prevFonts,
-      [name]: value,
-    }));
-  };
-
   const handleBorderRadiusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setBorderRadius(value);
@@ -65,7 +55,6 @@ const ThemeSettings = () => {
     const currentTheme = {
       ...theme,
       colors: colors,
-      fontSizes: fonts,
       borderRadius: borderRadius,
       font: font,
     };
@@ -76,7 +65,6 @@ const ThemeSettings = () => {
     const currentTheme = {
       ...theme,
       colors: colors,
-      fontSizes: fonts,
       borderRadius: borderRadius,
       font: font,
     };
@@ -154,40 +142,6 @@ const ThemeSettings = () => {
                   value: fontFamily,
                   label: fontFamily,
                 }))}
-              />
-            </div>
-            <div className='group'>
-              <label htmlFor='small'>Small: </label>
-              <Input
-                type='text'
-                name='small'
-                value={fonts.small}
-                onChange={handleFontChange}
-                minWidth='120px'
-              />
-              <label htmlFor='medium'>Medium: </label>
-              <Input
-                type='text'
-                name='medium'
-                value={fonts.medium}
-                onChange={handleFontChange}
-                minWidth='120px'
-              />
-              <label htmlFor='large'>Large: </label>
-              <Input
-                type='text'
-                name='large'
-                value={fonts.large}
-                onChange={handleFontChange}
-                minWidth='120px'
-              />
-              <label htmlFor='xlarge'>XLarge: </label>
-              <Input
-                type='text'
-                name='xlarge'
-                value={fonts.xlarge}
-                onChange={handleFontChange}
-                minWidth='120px'
               />
             </div>
           </div>
