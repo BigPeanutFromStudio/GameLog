@@ -60,7 +60,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     savedTheme: typeof defaultTheme;
   } = JSON.parse(
     localStorage.getItem('settings') ||
-      `{ "filter": "all", "sortMethod": "byname", "isAscending": true, "categorize": false, "categorizeBy":"state",  "cardsPerRow": "6" "theme": ${JSON.stringify(
+      `{ "filter": "all", "sortMethod": "byname", "isAscending": true, "categorize": false, "categorizeBy":"state",  "cardsPerRow": "6", "theme": ${JSON.stringify(
         defaultTheme
       )}, "savedTheme": ${JSON.stringify(defaultTheme)}}`
   );

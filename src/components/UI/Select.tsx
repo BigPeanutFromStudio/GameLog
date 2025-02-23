@@ -34,7 +34,8 @@ const Wrapper = styled.div<{ min_width?: string }>`
     cursor: pointer;
     line-height: 2.2;
   }
-  select:hover {
+  select:hover,
+  select:focus {
     transform: scale(1.02);
   }
 `;

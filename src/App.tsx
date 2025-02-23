@@ -15,6 +15,7 @@ import SettingsMenu from './pages/SettingsMenu.tsx';
 import Footer from './components/Footer.tsx';
 
 // TODO: Allow the user to choose which category to randomize from
+// TODO: Add tooltips to buttons
 // TODO: Legal stuff and shit (privacy policy etc.)
 // TODO: Improve data settings tab
 // TODO: Improve scaling on mobile
