@@ -141,7 +141,6 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
               onChange={handleSearchChange}
               name='search'
               value={search ?? ''}
-              minWidth='1000px'
             />
             <Link className='link' to='/settings'>
               <Button icon={<IoMdSettings size={50} />} onClick={() => null} />
@@ -240,6 +239,7 @@ const Wrapper = styled.div<{ $cardsPerRow: number }>`
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     gap: 30px;
   }
   .category {

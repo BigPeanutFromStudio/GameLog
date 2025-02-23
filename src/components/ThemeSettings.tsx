@@ -255,6 +255,8 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
   }
   .group {
     display: grid;

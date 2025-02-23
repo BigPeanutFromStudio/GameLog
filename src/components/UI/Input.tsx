@@ -28,11 +28,13 @@ export default Input;
 const Wrapper = styled.div<{ min_width?: string }>`
   min-height: 50px;
   min-width: ${(props) => props.min_width ?? '200px'};
+  max-width: 50%;
+  flex-grow: 1;
   input {
     all: unset;
     background-color: var(--primary-color);
     min-height: inherit;
-    min-width: inherit;
+    min-width: 100%;
     width: ${(props) => props.min_width ?? '200px'};
     padding: 10px;
     border-radius: var(--border-radius);
