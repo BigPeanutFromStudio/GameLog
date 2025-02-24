@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { IoMdClose, IoMdMenu } from 'react-icons/io';
 import styled from 'styled-components';
-import Select, { MultiValue, StylesConfig } from 'react-select';
+import Select, { MultiValue, SingleValue, StylesConfig } from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { useSettingsContext } from '../context/SettingsContext';
+import { FaSortAmountDown, FaSortAmountUp } from 'react-icons/fa';
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -14,17 +15,39 @@ const Navbar = () => {
     readonly isFixed?: boolean;
     readonly isDisabled?: boolean;
   }
-  const filterOptions: filterOption[] = [
-    { value: '100%', label: '100%', color: 'var(--finished-fully-color)' },
-    { value: 'Finished', label: 'Finished', color: 'var(--finished-color)' },
-    { value: 'Playing', label: 'Playing', color: 'var(--playing-color)' },
-    { value: 'Queued', label: 'Queued', color: 'var(--queued-color)' },
-    { value: 'Abandoned', label: 'Abandoned', color: 'var(--abandoned-color)' },
-  ];
+  interface sortOption {
+    readonly value: string;
+    readonly label: string;
+    readonly color?: string;
+    readonly isFixed?: boolean;
+    readonly isDisabled?: boolean;
+  }
+
+  const filterOptions: filterOption[] = useMemo(
+    () => [
+      { value: '100%', label: '100%', color: 'var(--finished-fully-color)' },
+      { value: 'Finished', label: 'Finished', color: 'var(--finished-color)' },
+      { value: 'Playing', label: 'Playing', color: 'var(--playing-color)' },
+      { value: 'Queued', label: 'Queued', color: 'var(--queued-color)' },
+      {
+        value: 'Abandoned',
+        label: 'Abandoned',
+        color: 'var(--abandoned-color)',
+      },
+    ],
+    []
+  );
+  const sortOptions: sortOption[] = useMemo(
+    () => [
+      { value: 'byname', label: 'Name' },
+      { value: 'byreview', label: 'Rating' },
+    ],
+    []
+  );
 
   const animatedComponents = makeAnimated();
 
-  const colourStyles: StylesConfig<filterOption, true> = {
+  const filterStyles: StylesConfig<filterOption, true> = {
     control: (styles) => ({
       ...styles,
       backgroundColor: 'var(--primary-color)',
@@ -58,12 +81,48 @@ const Navbar = () => {
       },
     }),
   };
+  const sortStyles: StylesConfig<sortOption, true> = {
+    control: (styles) => ({
+      ...styles,
+      backgroundColor: 'var(--primary-color)',
+      borderRadius: 'var(--border-radius)',
+      border: 'none',
+    }),
+    option: (styles, { isFocused }) => {
+      return {
+        ...styles,
+        backgroundColor: isFocused
+          ? 'var(--secondary-color)'
+          : 'var(--primary-color)',
+        color: 'var(--text-color)',
+        borderRadius: 'var(--border-radius)',
+      };
+    },
+    singleValue: (styles) => {
+      return {
+        ...styles,
+        borderRadius: 'var(--border-radius)',
+        color: 'var(--text-color)',
+      };
+    },
+  };
 
-  const { filter, setFilter } = useSettingsContext();
+  const {
+    filter,
+    setFilter,
+    sortMethod,
+    setSortMethod,
+    isAscending,
+    setIsAscending,
+  } = useSettingsContext();
 
   const [currentFilters, setCurrentFilters] = useState<
     MultiValue<filterOption>
   >([]);
+
+  const [currentSortOption, setCurrentSortOption] = useState<sortOption | null>(
+    null
+  );
 
   useEffect(() => {
     const mappedFilters = filter.map(
@@ -75,11 +134,25 @@ const Navbar = () => {
         }
     );
     setCurrentFilters(mappedFilters);
-  }, [filter]);
+
+    const mappedSortMethod = sortOptions.filter(
+      (s) => s.value === sortMethod
+    )[0];
+    setCurrentSortOption(mappedSortMethod);
+  }, [filter, sortOptions, sortMethod, filterOptions]);
 
   const handleFilterChange = (multiValue: MultiValue<filterOption>) => {
     setCurrentFilters(multiValue);
     setFilter(multiValue.map((option) => option.value));
+  };
+
+  const handleChangeSort = (
+    newValue: SingleValue<sortOption> | MultiValue<sortOption>
+  ) => {
+    if (!Array.isArray(newValue)) {
+      setCurrentSortOption(newValue as sortOption | null);
+      setSortMethod((newValue as sortOption)?.value ?? sortMethod);
+    }
   };
 
   return (
@@ -102,18 +175,44 @@ const Navbar = () => {
           <div className='middle-part'>
             <section>
               <h1 className='title'>Filter</h1>
-              <div className='content'>
-                <div className='filter-options'>
-                  <div className='filter-option'>
+              <div className='options'>
+                <div className='option'>
+                  <label htmlFor='filterselect'>Game status:</label>
+                  <Select
+                    components={animatedComponents}
+                    styles={filterStyles}
+                    options={filterOptions}
+                    isMulti={true}
+                    closeMenuOnSelect={false}
+                    value={currentFilters}
+                    name='filterselect'
+                    onChange={handleFilterChange}
+                    className='select'
+                    theme={(theme) => ({
+                      ...theme,
+                      borderRadius: 0,
+                      colors: {
+                        ...theme.colors,
+                        primary25: 'var(--secondary-color)',
+                        neutral0: 'var(--primary-color)',
+                      },
+                    })}
+                  />
+                </div>
+              </div>
+            </section>
+            <section>
+              <h1 className='title'>Sort</h1>
+              <div className='options'>
+                <div className='option'>
+                  <label htmlFor='sortby'>Sort by:</label>
+                  <div className='group'>
                     <Select
-                      components={animatedComponents}
-                      styles={colourStyles}
-                      options={filterOptions}
-                      isMulti={true}
-                      closeMenuOnSelect={false}
-                      value={currentFilters}
-                      onChange={handleFilterChange}
-                      className='filter-select'
+                      styles={sortStyles}
+                      value={currentSortOption}
+                      onChange={handleChangeSort}
+                      options={sortOptions}
+                      className='select'
                       theme={(theme) => ({
                         ...theme,
                         borderRadius: 0,
@@ -124,6 +223,19 @@ const Navbar = () => {
                         },
                       })}
                     />
+                    {isAscending ? (
+                      <FaSortAmountUp
+                        onClick={() => setIsAscending(false)}
+                        className='icon icon-button'
+                        size={25}
+                      />
+                    ) : (
+                      <FaSortAmountDown
+                        onClick={() => setIsAscending(true)}
+                        className='icon icon-button'
+                        size={25}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
@@ -138,7 +250,7 @@ const Navbar = () => {
 export default Navbar;
 
 const Wrapper = styled.div<{ isSidebarOpen: boolean }>`
-  height: 8%;
+  height: 8vh;
   background-color: var(--primary-color);
   display: flex;
   align-items: center;
@@ -174,8 +286,26 @@ const Sidebar = styled.div<{ isOpen: boolean }>`
   transition: transform 0.3s ease-in-out;
   z-index: 1000;
 
-  .filter-select {
+  .select {
     background-color: var(--primary-color);
+    border-radius: var(--border-radius);
+  }
+  .option {
+    padding: 10px;
+  }
+
+  .group {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .group .select {
+    flex-grow: 1;
+  }
+
+  .icon {
+    padding: 10px;
   }
 
   .sidebar-content {
@@ -192,6 +322,5 @@ const Sidebar = styled.div<{ isOpen: boolean }>`
   }
   label {
     font-size: var(--small-font);
-    padding: 10px;
   }
 `;

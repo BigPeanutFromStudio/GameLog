@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import Card from '../components/Card';
 import { DisplayProps, game, states } from '../types';
-import { FaSortAmountDownAlt, FaSortAmountDown } from 'react-icons/fa';
 import { MdCategory, MdOutlineCategory } from 'react-icons/md';
 import { IoIosAddCircle, IoMdSettings } from 'react-icons/io';
 import { useGameContext } from '../context/GameContext';
@@ -19,10 +18,6 @@ import { Link } from 'react-router-dom';
 const Display = ({ games, setSearch, search }: DisplayProps) => {
   const { deleteGame } = useGameContext();
   const {
-    isAscending,
-    setIsAscending,
-    sortMethod,
-    setSortMethod,
     categorize,
     setCategorize,
     categorizeBy,
@@ -50,9 +45,6 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-  };
-  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortMethod(e.target.value);
   };
   const handleCategorizeByChange = (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -142,28 +134,6 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
             </Link>
           </div>
           <div className='sort-filters'>
-            <div className='sort-container'>
-              <h1>Sort by:</h1>
-              <Select
-                name='sort'
-                value={sortMethod}
-                onChange={handleSortChange}
-                options={[
-                  { value: 'byname', label: 'Name' },
-                  { value: 'byreview', label: 'Rating' },
-                ]}
-              />
-              <Button
-                icon={
-                  isAscending ? (
-                    <FaSortAmountDownAlt size={30} />
-                  ) : (
-                    <FaSortAmountDown size={30} />
-                  )
-                }
-                onClick={() => setIsAscending(!isAscending)}
-              />
-            </div>
             <div className='sort-container'>
               <h1>Filter by:</h1>
               <Button icon={<ImDice size={30} />} onClick={handleRandomGame} />

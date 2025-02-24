@@ -20,7 +20,7 @@ import Navbar from './components/Navbar.tsx';
 // TODO: Improve data settings tab
 // TODO: Improve scaling on mobile (maybe more)
 // TODO: Allow to make background into an image
-// TODO: Add shadow color option (?)
+// TODO: FIX Navbar inconsistent size
 
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
 function App() {
@@ -201,7 +201,7 @@ export default App;
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   background-color: var(--background-color);

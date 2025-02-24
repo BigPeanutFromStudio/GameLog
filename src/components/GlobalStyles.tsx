@@ -22,7 +22,6 @@ export const GlobalStyle = createGlobalStyle<Props>`
     color: ${(props) => props.theme.colors.text};
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
   }
 
   h1{
