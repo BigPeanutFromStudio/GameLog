@@ -5,6 +5,7 @@ import Select, { MultiValue, SingleValue, StylesConfig } from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { useSettingsContext } from '../context/SettingsContext';
 import { FaSortAmountDown, FaSortAmountUp } from 'react-icons/fa';
+import ReactSlider from 'react-slider';
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -16,6 +17,13 @@ const Navbar = () => {
     readonly isDisabled?: boolean;
   }
   interface sortOption {
+    readonly value: string;
+    readonly label: string;
+    readonly color?: string;
+    readonly isFixed?: boolean;
+    readonly isDisabled?: boolean;
+  }
+  interface categorizeOption {
     readonly value: string;
     readonly label: string;
     readonly color?: string;
@@ -41,6 +49,14 @@ const Navbar = () => {
     () => [
       { value: 'byname', label: 'Name' },
       { value: 'byreview', label: 'Rating' },
+    ],
+    []
+  );
+  const categorizeOptions: categorizeOption[] = useMemo(
+    () => [
+      { value: 'none', label: 'None' },
+      { value: 'state', label: 'State' },
+      { value: 'platform', label: 'Platform' },
     ],
     []
   );
@@ -114,6 +130,11 @@ const Navbar = () => {
     setSortMethod,
     isAscending,
     setIsAscending,
+    categorizeBy,
+    setCategorizeBy,
+    setCategorize,
+    cardsPerRow,
+    setCardsPerRow,
   } = useSettingsContext();
 
   const [currentFilters, setCurrentFilters] = useState<
@@ -123,6 +144,9 @@ const Navbar = () => {
   const [currentSortOption, setCurrentSortOption] = useState<sortOption | null>(
     null
   );
+
+  const [currentCategorizeOption, setCurrentCategorizeOption] =
+    useState<categorizeOption | null>(null);
 
   useEffect(() => {
     const mappedFilters = filter.map(
@@ -139,7 +163,26 @@ const Navbar = () => {
       (s) => s.value === sortMethod
     )[0];
     setCurrentSortOption(mappedSortMethod);
-  }, [filter, sortOptions, sortMethod, filterOptions]);
+
+    const mappedCategorizeBy = categorizeOptions.filter(
+      (c) => c.value === categorizeBy
+    )[0];
+    if (mappedCategorizeBy.value === 'none') {
+      setCategorize(false);
+      setCurrentCategorizeOption(categorizeOptions[0]);
+    } else {
+      setCategorize(true);
+      setCurrentCategorizeOption(mappedCategorizeBy);
+    }
+  }, [
+    filter,
+    sortOptions,
+    sortMethod,
+    filterOptions,
+    categorizeOptions,
+    categorizeBy,
+    setCategorize,
+  ]);
 
   const handleFilterChange = (multiValue: MultiValue<filterOption>) => {
     setCurrentFilters(multiValue);
@@ -152,6 +195,20 @@ const Navbar = () => {
     if (!Array.isArray(newValue)) {
       setCurrentSortOption(newValue as sortOption | null);
       setSortMethod((newValue as sortOption)?.value ?? sortMethod);
+    }
+  };
+
+  const handleChangeCategorizeBy = (
+    newValue: SingleValue<sortOption> | MultiValue<sortOption>
+  ) => {
+    if (!Array.isArray(newValue)) {
+      setCurrentCategorizeOption(newValue as sortOption | null);
+      if ((newValue as sortOption)?.value === 'none') {
+        setCategorize(false);
+      } else {
+        setCategorize(true);
+        setCategorizeBy((newValue as sortOption)?.value ?? sortMethod);
+      }
     }
   };
 
@@ -174,41 +231,26 @@ const Navbar = () => {
           </div>
           <div className='middle-part'>
             <section>
-              <h1 className='title'>Filter</h1>
-              <div className='options'>
-                <div className='option'>
-                  <label htmlFor='filterselect'>Game status:</label>
-                  <Select
-                    components={animatedComponents}
-                    styles={filterStyles}
-                    options={filterOptions}
-                    isMulti={true}
-                    closeMenuOnSelect={false}
-                    value={currentFilters}
-                    name='filterselect'
-                    onChange={handleFilterChange}
-                    className='select'
-                    theme={(theme) => ({
-                      ...theme,
-                      borderRadius: 0,
-                      colors: {
-                        ...theme.colors,
-                        primary25: 'var(--secondary-color)',
-                        neutral0: 'var(--primary-color)',
-                      },
-                    })}
-                  />
-                </div>
-              </div>
-            </section>
-            <section>
               <h1 className='title'>Sort</h1>
               <div className='options'>
                 <div className='option'>
+                  <label>Card Per Row: </label>
+                  <StyledSlider
+                    value={cardsPerRow}
+                    min={3}
+                    max={8}
+                    step={1}
+                    onChange={(value) =>
+                      setCardsPerRow(Array.isArray(value) ? value[0] : value)
+                    }
+                    renderTrack={Track}
+                    renderThumb={Thumb}
+                  />
                   <label htmlFor='sortby'>Sort by:</label>
                   <div className='group'>
                     <Select
                       styles={sortStyles}
+                      name='sortby'
                       value={currentSortOption}
                       onChange={handleChangeSort}
                       options={sortOptions}
@@ -237,6 +279,52 @@ const Navbar = () => {
                       />
                     )}
                   </div>
+                  <label htmlFor='categorizeby'>Group by:</label>
+                  <Select
+                    styles={sortStyles}
+                    value={currentCategorizeOption}
+                    name='categorizeby'
+                    onChange={handleChangeCategorizeBy}
+                    options={categorizeOptions}
+                    className='select'
+                    theme={(theme) => ({
+                      ...theme,
+                      borderRadius: 0,
+                      colors: {
+                        ...theme.colors,
+                        primary25: 'var(--secondary-color)',
+                        neutral0: 'var(--primary-color)',
+                      },
+                    })}
+                  />
+                </div>
+              </div>
+            </section>
+            <section>
+              <h1 className='title'>Filter</h1>
+              <div className='options'>
+                <div className='option'>
+                  <label htmlFor='filterselect'>Game status:</label>
+                  <Select
+                    components={animatedComponents}
+                    styles={filterStyles}
+                    options={filterOptions}
+                    isMulti={true}
+                    closeMenuOnSelect={false}
+                    value={currentFilters}
+                    name='filterselect'
+                    onChange={handleFilterChange}
+                    className='select'
+                    theme={(theme) => ({
+                      ...theme,
+                      borderRadius: 0,
+                      colors: {
+                        ...theme.colors,
+                        primary25: 'var(--secondary-color)',
+                        neutral0: 'var(--primary-color)',
+                      },
+                    })}
+                  />
                 </div>
               </div>
             </section>
@@ -324,3 +412,40 @@ const Sidebar = styled.div<{ isOpen: boolean }>`
     font-size: var(--small-font);
   }
 `;
+const StyledSlider = styled(ReactSlider)`
+  width: 200px;
+  height: 25px;
+`;
+
+const StyledThumb = styled.div`
+  height: 25px;
+  line-height: 25px;
+  width: 25px;
+  text-align: center;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border-radius: 50%;
+  cursor: grab;
+`;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const Thumb = (props: any, state: any) => (
+  <StyledThumb {...props}>{state.valueNow}</StyledThumb>
+);
+
+const StyledTrack = styled.div<{ index: number }>`
+  top: 0;
+  bottom: 0;
+  background: ${(props) =>
+    props.index === 2
+      ? '#f00'
+      : props.index === 1
+      ? 'var(--primary-color)'
+      : 'var(--accent-color)'};
+  border-radius: 999px;
+`;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const Track = (props: any, state: any) => (
+  <StyledTrack {...props} index={state.index} />
+);

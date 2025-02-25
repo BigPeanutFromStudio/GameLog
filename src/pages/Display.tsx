@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import Card from '../components/Card';
 import { DisplayProps, game, states } from '../types';
-import { MdCategory, MdOutlineCategory } from 'react-icons/md';
 import { IoIosAddCircle, IoMdSettings } from 'react-icons/io';
 import { useGameContext } from '../context/GameContext';
 import { useSettingsContext } from '../context/SettingsContext';
@@ -10,20 +9,13 @@ import { createPortal } from 'react-dom';
 import AddGameForm from '../components/AddGameForm';
 import Button from '../components/UI/Button';
 import Input from '../components/UI/Input';
-import Select from '../components/UI/Select';
 import { ImDice } from 'react-icons/im';
 import RandomGamePopup from '../components/RandomGamePopup';
 import { Link } from 'react-router-dom';
 
 const Display = ({ games, setSearch, search }: DisplayProps) => {
   const { deleteGame } = useGameContext();
-  const {
-    categorize,
-    setCategorize,
-    categorizeBy,
-    setCategorizeBy,
-    cardsPerRow,
-  } = useSettingsContext();
+  const { categorize, categorizeBy, cardsPerRow } = useSettingsContext();
 
   const [showAddGameFormModal, setShowAddGameFormModal] = useState(false);
   const [showRandomGameModal, setShowRandomGameModal] = useState(false);
@@ -45,11 +37,6 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-  };
-  const handleCategorizeByChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setCategorizeBy(e.target.value);
   };
 
   const generateCategories = () => {
@@ -122,6 +109,7 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
               }
               onClick={handleShowAddGameFormModal}
             />
+            <Button icon={<ImDice size={30} />} onClick={handleRandomGame} />
             <Input
               type='text'
               placeholder='Search'
@@ -132,35 +120,6 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
             <Link className='link' to='/settings'>
               <Button icon={<IoMdSettings size={50} />} onClick={() => null} />
             </Link>
-          </div>
-          <div className='sort-filters'>
-            <div className='sort-container'>
-              <h1>Filter by:</h1>
-              <Button icon={<ImDice size={30} />} onClick={handleRandomGame} />
-            </div>
-
-            <div className='sort-container'>
-              <h1>Group by:</h1>
-              <Select
-                name='categorize'
-                value={categorizeBy}
-                onChange={handleCategorizeByChange}
-                options={[
-                  { value: 'state', label: 'State' },
-                  { value: 'platform', label: 'Platform' },
-                ]}
-              />
-              <Button
-                icon={
-                  categorize ? (
-                    <MdCategory size={30} />
-                  ) : (
-                    <MdOutlineCategory size={30} />
-                  )
-                }
-                onClick={() => setCategorize(!categorize)}
-              />
-            </div>
           </div>
         </div>
       </div>

@@ -21,6 +21,7 @@ import Navbar from './components/Navbar.tsx';
 // TODO: Improve scaling on mobile (maybe more)
 // TODO: Allow to make background into an image
 // TODO: FIX Navbar inconsistent size
+// TODO: Change sort to view or something
 
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
 function App() {
