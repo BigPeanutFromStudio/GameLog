@@ -108,7 +108,6 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
               }
               onClick={handleShowAddGameFormModal}
             />
-            <Button icon={<ImDice size={30} />} onClick={handleRandomGame} />
             <Input
               type='text'
               placeholder='Search'
@@ -116,6 +115,7 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
               name='search'
               value={search ?? ''}
             />
+            <Button icon={<ImDice size={30} />} onClick={handleRandomGame} />
           </div>
         </div>
       </div>
@@ -156,7 +156,6 @@ const Wrapper = styled.div<{ $cardsPerRow: number }>`
     flex-wrap: wrap;
     gap: 30px;
     @media (max-width: 768px) {
-      flex-direction: column;
       gap: 10px;
     }
   }
