@@ -19,6 +19,35 @@ export type game = {
   platform: string;
 };
 
+export interface filterOption {
+  readonly value: string;
+  readonly label: string;
+  readonly color: string;
+  readonly isFixed?: boolean;
+  readonly isDisabled?: boolean;
+}
+export interface sortOption {
+  readonly value: string;
+  readonly label: string;
+  readonly color?: string;
+  readonly isFixed?: boolean;
+  readonly isDisabled?: boolean;
+}
+export interface categorizeOption {
+  readonly value: string;
+  readonly label: string;
+  readonly color?: string;
+  readonly isfixed?: boolean;
+  readonly isdisabled?: boolean;
+}
+export interface themeOption {
+  readonly value: string;
+  readonly label: string;
+  readonly color?: string;
+  readonly isfixed?: boolean;
+  readonly isdisabled?: boolean;
+}
+
 export type CardProps = {
   game: game;
   deleteGame: (id: string) => void;

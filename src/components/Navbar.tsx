@@ -3,34 +3,19 @@ import { IoMdClose, IoMdHome, IoMdMenu, IoMdSettings } from 'react-icons/io';
 import styled from 'styled-components';
 import Select, { MultiValue, SingleValue, StylesConfig } from 'react-select';
 import makeAnimated from 'react-select/animated';
-import { useSettingsContext } from '../context/SettingsContext';
+import { themes, useSettingsContext } from '../context/SettingsContext';
 import { FaSortAmountDown, FaSortAmountUp } from 'react-icons/fa';
 import ReactSlider from 'react-slider';
 import { Link } from 'react-router-dom';
+import {
+  filterOption,
+  sortOption,
+  categorizeOption,
+  themeOption,
+} from '../types';
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  interface filterOption {
-    readonly value: string;
-    readonly label: string;
-    readonly color: string;
-    readonly isFixed?: boolean;
-    readonly isDisabled?: boolean;
-  }
-  interface sortOption {
-    readonly value: string;
-    readonly label: string;
-    readonly color?: string;
-    readonly isFixed?: boolean;
-    readonly isDisabled?: boolean;
-  }
-  interface categorizeOption {
-    readonly value: string;
-    readonly label: string;
-    readonly color?: string;
-    readonly isFixed?: boolean;
-    readonly isDisabled?: boolean;
-  }
 
   const filterOptions: filterOption[] = useMemo(
     () => [
@@ -58,6 +43,16 @@ const Navbar = () => {
       { value: 'none', label: 'None' },
       { value: 'state', label: 'State' },
       { value: 'platform', label: 'Platform' },
+    ],
+    []
+  );
+  const themeOptions: themeOption[] = useMemo(
+    () => [
+      { value: 'default', label: 'Chocolatey' },
+      { value: 'preset1', label: 'Midnight' },
+      { value: 'preset2', label: 'Light' },
+      { value: 'preset3', label: 'Dark' },
+      { value: 'custom', label: 'Custom' },
     ],
     []
   );
@@ -98,7 +93,7 @@ const Navbar = () => {
       },
     }),
   };
-  const sortStyles: StylesConfig<sortOption, true> = {
+  const singleStyles: StylesConfig<sortOption, true> = {
     control: (styles) => ({
       ...styles,
       backgroundColor: 'var(--primary-color)',
@@ -136,6 +131,9 @@ const Navbar = () => {
     setCategorize,
     cardsPerRow,
     setCardsPerRow,
+    theme,
+    setTheme,
+    savedTheme,
   } = useSettingsContext();
 
   const [currentFilters, setCurrentFilters] = useState<
@@ -148,6 +146,10 @@ const Navbar = () => {
 
   const [currentCategorizeOption, setCurrentCategorizeOption] =
     useState<categorizeOption | null>(null);
+
+  const [currentTheme, setCurrentTheme] = useState<themeOption | null>(
+    themeOptions[0]
+  );
 
   useEffect(() => {
     const mappedFilters = filter.map(
@@ -175,6 +177,10 @@ const Navbar = () => {
       setCategorize(true);
       setCurrentCategorizeOption(mappedCategorizeBy);
     }
+
+    const mappedTheme = themeOptions.filter((t) => t.label === theme.name)[0];
+
+    setCurrentTheme(mappedTheme);
   }, [
     filter,
     sortOptions,
@@ -183,6 +189,8 @@ const Navbar = () => {
     categorizeOptions,
     categorizeBy,
     setCategorize,
+    themeOptions,
+    theme,
   ]);
 
   const handleFilterChange = (multiValue: MultiValue<filterOption>) => {
@@ -210,6 +218,22 @@ const Navbar = () => {
       } else {
         setCategorize(true);
         setCategorizeBy((newValue as sortOption)?.value ?? sortMethod);
+      }
+    }
+  };
+
+  const handleChangeTheme = (
+    newValue: SingleValue<themeOption> | MultiValue<sortOption>
+  ) => {
+    if (!Array.isArray(newValue)) {
+      setCurrentTheme(newValue as themeOption | null);
+      if ((newValue as themeOption).value === 'custom') {
+        setTheme(savedTheme);
+      } else {
+        const themeToSet = Object.keys(themes).find(
+          (key) => key === (newValue as themeOption).value
+        );
+        setTheme(themes[themeToSet as keyof typeof themes]);
       }
     }
   };
@@ -243,7 +267,7 @@ const Navbar = () => {
             <section>
               <h1 className='title'>Sort</h1>
               <div className='options'>
-                <div className='option'>
+                <div className='group'>
                   <label>Card Per Row: </label>
                   <StyledSlider
                     value={cardsPerRow}
@@ -256,42 +280,44 @@ const Navbar = () => {
                     renderTrack={Track}
                     renderThumb={Thumb}
                   />
+                </div>
+                <div className='group'>
                   <label htmlFor='sortby'>Sort by:</label>
-                  <div className='group'>
-                    <Select
-                      styles={sortStyles}
-                      name='sortby'
-                      value={currentSortOption}
-                      onChange={handleChangeSort}
-                      options={sortOptions}
-                      className='select'
-                      theme={(theme) => ({
-                        ...theme,
-                        borderRadius: 0,
-                        colors: {
-                          ...theme.colors,
-                          primary25: 'var(--secondary-color)',
-                          neutral0: 'var(--primary-color)',
-                        },
-                      })}
+                  <Select
+                    styles={singleStyles}
+                    name='sortby'
+                    value={currentSortOption}
+                    onChange={handleChangeSort}
+                    options={sortOptions}
+                    className='select'
+                    theme={(theme) => ({
+                      ...theme,
+                      borderRadius: 0,
+                      colors: {
+                        ...theme.colors,
+                        primary25: 'var(--secondary-color)',
+                        neutral0: 'var(--primary-color)',
+                      },
+                    })}
+                  />
+                  {isAscending ? (
+                    <FaSortAmountUp
+                      onClick={() => setIsAscending(false)}
+                      className='icon-button'
+                      size={25}
                     />
-                    {isAscending ? (
-                      <FaSortAmountUp
-                        onClick={() => setIsAscending(false)}
-                        className='icon icon-button'
-                        size={25}
-                      />
-                    ) : (
-                      <FaSortAmountDown
-                        onClick={() => setIsAscending(true)}
-                        className='icon icon-button'
-                        size={25}
-                      />
-                    )}
-                  </div>
+                  ) : (
+                    <FaSortAmountDown
+                      onClick={() => setIsAscending(true)}
+                      className='icon-button'
+                      size={25}
+                    />
+                  )}
+                </div>
+                <div className='group'>
                   <label htmlFor='categorizeby'>Group by:</label>
                   <Select
-                    styles={sortStyles}
+                    styles={singleStyles}
                     value={currentCategorizeOption}
                     name='categorizeby'
                     onChange={handleChangeCategorizeBy}
@@ -313,8 +339,8 @@ const Navbar = () => {
             <section>
               <h1 className='title'>Filter</h1>
               <div className='options'>
-                <div className='option'>
-                  <label htmlFor='filterselect'>Game status:</label>
+                <div className='group'>
+                  <label htmlFor='filterselect'>Status:</label>
                   <Select
                     components={animatedComponents}
                     styles={filterStyles}
@@ -325,6 +351,31 @@ const Navbar = () => {
                     name='filterselect'
                     onChange={handleFilterChange}
                     className='select'
+                    theme={(theme) => ({
+                      ...theme,
+                      borderRadius: 0,
+                      colors: {
+                        ...theme.colors,
+                        primary25: 'var(--secondary-color)',
+                        neutral0: 'var(--primary-color)',
+                      },
+                    })}
+                  />
+                </div>
+              </div>
+            </section>
+            <section>
+              <h1 className='title'>Theme</h1>
+              <div className='options'>
+                <div className='group'>
+                  <label htmlFor='theme'>Theme:</label>
+                  <Select
+                    name='theme'
+                    value={currentTheme}
+                    onChange={handleChangeTheme}
+                    styles={singleStyles}
+                    className='select'
+                    options={themeOptions}
                     theme={(theme) => ({
                       ...theme,
                       borderRadius: 0,
@@ -401,7 +452,11 @@ const Sidebar = styled.div<{ isOpen: boolean }>`
     background-color: var(--primary-color);
     border-radius: var(--border-radius);
   }
-  .option {
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     padding: 10px;
   }
 
@@ -409,14 +464,11 @@ const Sidebar = styled.div<{ isOpen: boolean }>`
     width: 100%;
     display: flex;
     align-items: center;
+    gap: 15px;
   }
 
   .group .select {
     flex-grow: 1;
-  }
-
-  .icon {
-    padding: 10px;
   }
 
   .sidebar-content {
@@ -424,6 +476,12 @@ const Sidebar = styled.div<{ isOpen: boolean }>`
     display: flex;
     flex-direction: column;
     gap: 10px;
+  }
+
+  .middle-part {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
   }
 
   .delete-icon {

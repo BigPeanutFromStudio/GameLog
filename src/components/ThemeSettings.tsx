@@ -64,6 +64,7 @@ const ThemeSettings = () => {
   const handleSaveTheme = () => {
     const currentTheme = {
       ...theme,
+      name: 'custom',
       colors: colors,
       borderRadius: borderRadius,
       font: font,

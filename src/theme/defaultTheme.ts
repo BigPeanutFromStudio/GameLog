@@ -1,4 +1,5 @@
 export const defaultTheme = {
+  name: 'Chocolatey',
   colors: {
     primary: '#664343',
     secondary: '#3b3030',
@@ -11,6 +12,7 @@ export const defaultTheme = {
 };
 
 export const preset1Theme = {
+  name: 'Midnight',
   colors: {
     primary: '#352f44',
     secondary: '#2a2438',
@@ -23,6 +25,7 @@ export const preset1Theme = {
 };
 
 export const preset2Theme = {
+  name: 'Light',
   colors: {
     primary: '#3ca8c3',
     secondary: '#1d9083',
@@ -35,6 +38,7 @@ export const preset2Theme = {
 };
 
 export const preset3Theme = {
+  name: 'Dark',
   colors: {
     primary: '#383733',
     secondary: '#2b2a27',
