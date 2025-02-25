@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
-import { IoMdClose, IoMdMenu } from 'react-icons/io';
+import { IoMdClose, IoMdHome, IoMdMenu, IoMdSettings } from 'react-icons/io';
 import styled from 'styled-components';
 import Select, { MultiValue, SingleValue, StylesConfig } from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { useSettingsContext } from '../context/SettingsContext';
 import { FaSortAmountDown, FaSortAmountUp } from 'react-icons/fa';
 import ReactSlider from 'react-slider';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -205,6 +206,7 @@ const Navbar = () => {
       setCurrentCategorizeOption(newValue as sortOption | null);
       if ((newValue as sortOption)?.value === 'none') {
         setCategorize(false);
+        setCategorizeBy((newValue as sortOption)?.value ?? sortMethod);
       } else {
         setCategorize(true);
         setCategorizeBy((newValue as sortOption)?.value ?? sortMethod);
@@ -219,6 +221,14 @@ const Navbar = () => {
         onClick={() => setIsSidebarOpen(true)}
         size={50}
       />
+      <nav>
+        <Link className='link' to='/'>
+          <IoMdHome size={50} className='icon-button' />
+        </Link>
+        <Link className='link' to='/settings'>
+          <IoMdSettings size={50} className='icon-button' />
+        </Link>
+      </nav>
       <div className='overlay'></div>
       <Sidebar isOpen={isSidebarOpen}>
         <div className='sidebar-content'>
@@ -329,7 +339,6 @@ const Navbar = () => {
               </div>
             </section>
           </div>
-          <div className='lower-part'></div>
         </div>
       </Sidebar>
     </Wrapper>
@@ -342,6 +351,7 @@ const Wrapper = styled.div<{ isSidebarOpen: boolean }>`
   background-color: var(--primary-color);
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 20px;
   .icon-button {
     cursor: pointer;
@@ -360,6 +370,14 @@ const Wrapper = styled.div<{ isSidebarOpen: boolean }>`
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
   }
+  .link {
+    text-decoration: none;
+    color: var(--text-color);
+  }
+  nav {
+    display: flex;
+    gap: 20px;
+  }
 `;
 
 const Sidebar = styled.div<{ isOpen: boolean }>`
@@ -373,6 +391,11 @@ const Sidebar = styled.div<{ isOpen: boolean }>`
     isOpen ? 'translateX(0)' : 'translateX(-100%)'};
   transition: transform 0.3s ease-in-out;
   z-index: 1000;
+
+  @media (max-width: 768px) {
+    display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
+    width: 100%;
+  }
 
   .select {
     background-color: var(--primary-color);
@@ -402,6 +425,7 @@ const Sidebar = styled.div<{ isOpen: boolean }>`
     flex-direction: column;
     gap: 10px;
   }
+
   .delete-icon {
     float: right;
   }
@@ -412,6 +436,7 @@ const Sidebar = styled.div<{ isOpen: boolean }>`
     font-size: var(--small-font);
   }
 `;
+
 const StyledSlider = styled(ReactSlider)`
   width: 200px;
   height: 25px;

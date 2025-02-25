@@ -177,8 +177,8 @@ function App() {
     <GameProvider value={gameContextValue}>
       <GlobalStyle theme={theme} />
       <Wrapper>
-        <Navbar />
         <BrowserRouter>
+          <Navbar />
           <Routes>
             <Route
               path='/'

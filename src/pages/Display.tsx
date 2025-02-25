@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Card from '../components/Card';
 import { DisplayProps, game, states } from '../types';
-import { IoIosAddCircle, IoMdSettings } from 'react-icons/io';
+import { IoIosAddCircle } from 'react-icons/io';
 import { useGameContext } from '../context/GameContext';
 import { useSettingsContext } from '../context/SettingsContext';
 import { useState } from 'react';
@@ -11,7 +11,6 @@ import Button from '../components/UI/Button';
 import Input from '../components/UI/Input';
 import { ImDice } from 'react-icons/im';
 import RandomGamePopup from '../components/RandomGamePopup';
-import { Link } from 'react-router-dom';
 
 const Display = ({ games, setSearch, search }: DisplayProps) => {
   const { deleteGame } = useGameContext();
@@ -117,9 +116,6 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
               name='search'
               value={search ?? ''}
             />
-            <Link className='link' to='/settings'>
-              <Button icon={<IoMdSettings size={50} />} onClick={() => null} />
-            </Link>
           </div>
         </div>
       </div>
