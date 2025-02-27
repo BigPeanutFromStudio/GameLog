@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Select, { MultiValue, SingleValue, StylesConfig } from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { themes, useSettingsContext } from '../context/SettingsContext';
-import { FaSortAmountDown, FaSortAmountUp } from 'react-icons/fa';
+import { FaGithub, FaSortAmountDown, FaSortAmountUp } from 'react-icons/fa';
 import ReactSlider from 'react-slider';
 import { Link } from 'react-router-dom';
 import {
@@ -13,6 +13,7 @@ import {
   categorizeOption,
   themeOption,
 } from '../types';
+import { FaBluesky } from 'react-icons/fa6';
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -339,8 +340,8 @@ const Navbar = () => {
             <section>
               <h1 className='title'>Filter</h1>
               <div className='options'>
+                <label htmlFor='filterselect'>Status:</label>
                 <div className='group'>
-                  <label htmlFor='filterselect'>Status:</label>
                   <Select
                     components={animatedComponents}
                     styles={filterStyles}
@@ -390,6 +391,19 @@ const Navbar = () => {
               </div>
             </section>
           </div>
+          <div className='lower-part'>
+            <a href='https://ko-fi.com/Z8Z31AXTR3' target='_blank'>
+              <img
+                className='icon-button'
+                height='36'
+                style={{ border: '0px', height: '36px' }}
+                src='https://storage.ko-fi.com/cdn/kofi4.png?v=6'
+                alt='Buy Me a Coffee at ko-fi.com'
+              />
+            </a>
+            <FaGithub className='icon-button' size={50} />
+            <FaBluesky className='icon-button' size={50} />
+          </div>
         </div>
       </Sidebar>
     </Wrapper>
@@ -427,6 +441,7 @@ const Wrapper = styled.div<{ isSidebarOpen: boolean }>`
   }
   nav {
     display: flex;
+    align-items: center;
     gap: 20px;
   }
 `;
@@ -472,6 +487,7 @@ const Sidebar = styled.div<{ isOpen: boolean }>`
   }
 
   .sidebar-content {
+    height: 100%;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -482,6 +498,14 @@ const Sidebar = styled.div<{ isOpen: boolean }>`
     display: flex;
     flex-direction: column;
     gap: 30px;
+  }
+
+  .lower-part {
+    margin-top: auto;
+    margin-bottom: 50px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
   }
 
   .delete-icon {
