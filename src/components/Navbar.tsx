@@ -250,9 +250,6 @@ const Navbar = () => {
         <Link className='link' to='/'>
           <IoMdHome size={50} className='icon-button' />
         </Link>
-        <Link className='link' to='/settings'>
-          <IoMdSettings size={50} className='icon-button' />
-        </Link>
       </nav>
       <div className='overlay'></div>
       <Sidebar isOpen={isSidebarOpen}>
@@ -366,7 +363,16 @@ const Navbar = () => {
               </div>
             </section>
             <section>
-              <h1 className='title'>Theme</h1>
+              <div className='title'>
+                <h1>Theme</h1>
+                <Link
+                  className='link'
+                  to='/theme-settings'
+                  onClick={() => setIsSidebarOpen(false)}
+                >
+                  <IoMdSettings className='title-icon icon-button' size={30} />
+                </Link>
+              </div>
               <div className='options'>
                 <div className='group'>
                   <label htmlFor='theme'>Theme:</label>
@@ -392,17 +398,22 @@ const Navbar = () => {
             </section>
           </div>
           <div className='lower-part'>
-            <a href='https://ko-fi.com/Z8Z31AXTR3' target='_blank'>
-              <img
-                className='icon-button'
-                height='36'
-                style={{ border: '0px', height: '36px' }}
-                src='https://storage.ko-fi.com/cdn/kofi4.png?v=6'
-                alt='Buy Me a Coffee at ko-fi.com'
-              />
-            </a>
-            <FaGithub className='icon-button' size={50} />
-            <FaBluesky className='icon-button' size={50} />
+            <h3 className='title'>Find me here</h3>
+            <div className='lower-content'>
+              <div className='social-media'>
+                <FaGithub className='icon-button' size={50} />
+                <FaBluesky className='icon-button' size={50} />
+              </div>
+              <a href='https://ko-fi.com/Z8Z31AXTR3' target='_blank'>
+                <img
+                  className='icon-button'
+                  height='36'
+                  style={{ border: '0px', height: '36px' }}
+                  src='https://storage.ko-fi.com/cdn/kofi4.png?v=6'
+                  alt='Buy Me a Coffee at ko-fi.com'
+                />
+              </a>
+            </div>
           </div>
         </div>
       </Sidebar>
@@ -503,16 +514,36 @@ const Sidebar = styled.div<{ isOpen: boolean }>`
   .lower-part {
     margin-top: auto;
     margin-bottom: 50px;
+  }
+
+  .lower-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+  }
+
+  .lower-content a {
+    margin-top: 5px;
+  }
+
+  .social-media {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
   }
 
   .delete-icon {
     float: right;
   }
   .title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     border-bottom: 2px solid var(--accent-color);
+  }
+  .title-icon {
   }
   label {
     font-size: var(--small-font);

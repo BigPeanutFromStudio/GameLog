@@ -13,6 +13,7 @@ import { useSettingsContext } from './context/SettingsContext';
 import { GlobalStyle } from './components/GlobalStyles.tsx';
 import SettingsMenu from './pages/SettingsMenu.tsx';
 import Navbar from './components/Navbar.tsx';
+import ThemeSettingsPage from './pages/ThemeSettingsPage.tsx';
 
 // TODO: Allow the user to choose which category to randomize from
 // TODO: Add tooltips to buttons
@@ -23,6 +24,7 @@ import Navbar from './components/Navbar.tsx';
 // TODO: Change sort to view or something
 // TODO: Sidebar lower bar with socials and kofi
 // TODO: GameNote, GameVault, GameDairy, GameTracker
+// TODO: Friends, see others libraries?
 
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
 function App() {
@@ -191,6 +193,7 @@ function App() {
                 />
               }
             />
+            <Route path='/theme-settings' element={<ThemeSettingsPage />} />
             <Route path='/settings' element={<SettingsMenu />} />
           </Routes>
         </BrowserRouter>
