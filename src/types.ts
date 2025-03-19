@@ -47,6 +47,13 @@ export interface themeOption {
   readonly isfixed?: boolean;
   readonly isdisabled?: boolean;
 }
+export interface fontOption {
+  readonly value: string;
+  readonly label: string;
+  readonly color?: string;
+  readonly isfixed?: boolean;
+  readonly isdisabled?: boolean;
+}
 
 export type CardProps = {
   game: game;

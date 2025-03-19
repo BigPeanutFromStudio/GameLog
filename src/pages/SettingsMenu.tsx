@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import ThemeSettings from '../components/ThemeSettings';
 import { MdNavigateBefore } from 'react-icons/md';
 import DataSettings from '../components/DataSettings';
 import { Link } from 'react-router-dom';
@@ -8,7 +7,7 @@ import { useState } from 'react';
 
 const SettingsMenu = () => {
   const tabs = ['Visual Settings', 'Data Settings'];
-  const tabElements = [<ThemeSettings />, <DataSettings />];
+  const tabElements = [<DataSettings />];
 
   const [currentTab, setCurrentTab] = useState(0);
 

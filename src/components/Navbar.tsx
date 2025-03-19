@@ -181,6 +181,8 @@ const Navbar = () => {
 
     const mappedTheme = themeOptions.filter((t) => t.label === theme.name)[0];
 
+    console.log(theme.name);
+
     setCurrentTheme(mappedTheme);
   }, [
     filter,

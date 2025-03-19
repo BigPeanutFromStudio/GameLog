@@ -1,17 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useSettingsContext } from '../context/SettingsContext';
+import Select, { MultiValue, SingleValue, StylesConfig } from 'react-select';
+import { fontOption } from '../types';
 
 const ThemeSettingsPage = () => {
-  const { theme } = useSettingsContext();
+  const { theme, setTheme, saveTheme } = useSettingsContext();
 
   const [colors, setColors] = useState(theme.colors);
+  const [font, setFont] = useState<fontOption | null>(null);
+  const [borderRadius, setBorderRadius] = useState(theme.borderRadius);
+
+  const fontOptions: fontOption[] = useMemo(
+    () => [
+      { value: 'Lexend', label: 'Lexend' },
+      { value: 'Oswald', label: 'Oswald' },
+      { value: 'Roboto', label: 'Roboto' },
+      { value: 'Inter', label: 'Inter' },
+      { value: 'Funnel Display', label: 'Funnel Display' },
+    ],
+    []
+  );
 
   useEffect(() => {
     setColors(theme.colors);
-    // setBorderRadius(theme.borderRadius);
-    // setFont(theme.font);
-  }, [theme]);
+    setBorderRadius(theme.borderRadius);
+    const mappedFont = fontOptions.find((f) => f.value === theme.font);
+    setFont(mappedFont || fontOptions[0]);
+  }, [theme, fontOptions]);
 
   const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -20,6 +36,70 @@ const ThemeSettingsPage = () => {
       [name]: value,
     }));
   };
+
+  const handleFontFamilyChange = (
+    newValue: SingleValue<fontOption> | MultiValue<fontOption>
+  ) => {
+    if (!Array.isArray(newValue)) {
+      setFont(newValue as SingleValue<fontOption>);
+    }
+  };
+
+  const handleBorderRadiusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setBorderRadius(value);
+  };
+
+  const handleSubmit = () => {
+    if (!font) return;
+    const currentTheme = {
+      ...theme,
+      colors: colors,
+      borderRadius: borderRadius,
+      font: font.value,
+    };
+    setTheme(currentTheme);
+  };
+
+  const handleSaveTheme = () => {
+    if (!font) return;
+    const currentTheme = {
+      ...theme,
+      name: 'Custom',
+      colors: colors,
+      borderRadius: borderRadius,
+      font: font.value,
+    };
+    saveTheme(currentTheme);
+    setTheme(currentTheme);
+  };
+
+  const singleStyles: StylesConfig<fontOption, true> = {
+    control: (styles) => ({
+      ...styles,
+      backgroundColor: 'var(--primary-color)',
+      borderRadius: 'var(--border-radius)',
+      border: 'none',
+    }),
+    option: (styles, { isFocused }) => {
+      return {
+        ...styles,
+        backgroundColor: isFocused
+          ? 'var(--secondary-color)'
+          : 'var(--primary-color)',
+        color: 'var(--text-color)',
+        borderRadius: 'var(--border-radius)',
+      };
+    },
+    singleValue: (styles) => {
+      return {
+        ...styles,
+        borderRadius: 'var(--border-radius)',
+        color: 'var(--text-color)',
+      };
+    },
+  };
+
   return (
     <Wrapper>
       <div className='options'>
@@ -74,6 +154,37 @@ const ThemeSettingsPage = () => {
       </div>
       <div className='options'>
         <h1>Other</h1>
+        <div className='group'>
+          <div className='other'>
+            <label htmlFor='family'>Font Family: </label>
+            <Select
+              name='family'
+              className='select'
+              styles={singleStyles}
+              value={font}
+              onChange={handleFontFamilyChange}
+              options={fontOptions}
+            />
+          </div>
+          <div className='other'>
+            <label htmlFor='borderRadius'>Border Radius:</label>
+            <input
+              type='text'
+              value={borderRadius}
+              onChange={handleBorderRadiusChange}
+              name='borderRadius'
+              className='border-input'
+            />
+          </div>
+          <div className='other'>
+            <input type='button' value='Apply Theme' onClick={handleSubmit} />
+            <input
+              type='button'
+              value='Save Custom Theme'
+              onClick={handleSaveTheme}
+            />
+          </div>
+        </div>
       </div>
     </Wrapper>
   );
@@ -96,10 +207,52 @@ const Wrapper = styled.div`
     padding: 15px;
   }
 
-  .color {
+  .color,
+  .other {
     display: flex;
     align-items: center;
     gap: 5px;
+  }
+
+  .select {
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius);
+    width: 200px;
+  }
+
+  .border-input {
+    all: unset;
+    background-color: var(--primary-color);
+    min-height: inherit;
+    width: 100px;
+    padding: 5px;
+    border-radius: var(--border-radius);
+    font-size: var(--small-font);
+    transition: transform 0.1s ease;
+    cursor: text;
+    box-sizing: border-box;
+  }
+
+  .border-input:hover,
+  .border-input:focus {
+    transform: scale(1.02);
+  }
+
+  input[type='button'] {
+    all: unset;
+    background-color: var(--primary-color);
+    min-height: inherit;
+    padding: 5px;
+    border-radius: var(--border-radius);
+    font-size: var(--small-font);
+    transition: transform 0.1s ease;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+
+  input[type='button']:hover,
+  input[type='button']:hover {
+    transform: scale(1.02);
   }
 
   label {
