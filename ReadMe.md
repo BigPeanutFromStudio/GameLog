@@ -1,3 +1,3 @@
-### Maybe someday I will add this readme
+### Welcome to Gamelog
 
-- [ ] Create an instruction
+It's my ongoing personal project to create a simple web app to organize all the games you've played or are planning to play.
