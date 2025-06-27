@@ -34,13 +34,13 @@ const Wrapper = styled.div<{ min_width?: string }>`
     all: unset;
     background-color: var(--primary-color);
     min-height: inherit;
-    min-width: 100%;
-    width: ${(props) => props.min_width ?? '200px'};
-    padding: 10px;
+    width: 100%;
+    padding: 20px;
     border-radius: var(--border-radius);
     font-size: var(--small-font);
     transition: transform 0.1s ease;
     cursor: text;
+    box-sizing: border-box;
   }
   input:hover,
   input:focus {

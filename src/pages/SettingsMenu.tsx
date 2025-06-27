@@ -1,33 +1,17 @@
 import styled from 'styled-components';
-import ThemeSettings from '../components/ThemeSettings';
-import { MdNavigateBefore } from 'react-icons/md';
-import DataSettings from '../components/DataSettings';
-import { Link } from 'react-router-dom';
-import Button from '../components/UI/Button';
-import { useState } from 'react';
+import ImportButton from '../components/ImportButton';
+import ExportButton from '../components/ExportButton';
 
 const SettingsMenu = () => {
-  const tabs = ['Visual Settings', 'Data Settings'];
-  const tabElements = [<ThemeSettings />, <DataSettings />];
-
-  const [currentTab, setCurrentTab] = useState(0);
-
   return (
     <Wrapper>
-      <div className='tab-switch'>
-        <Link className='link' to='/'>
-          <Button icon={<MdNavigateBefore size={35} />} onClick={() => {}} />
-        </Link>
-        {tabs.map((tab, index) => (
-          <Button
-            key={tab}
-            onClick={() => setCurrentTab(index)}
-            icon={<h1>{tab}</h1>}
-            className={currentTab === index ? 'tab active' : 'tab'}
-          />
-        ))}
+      <h1 className='section-h1'>Data Options</h1>
+      <ImportButton />
+      <div className='export-buttons'>
+        <ExportButton saveMode={0} />
+        <ExportButton saveMode={1} />
+        <ExportButton saveMode={3} />
       </div>
-      {tabElements[currentTab]}
     </Wrapper>
   );
 };

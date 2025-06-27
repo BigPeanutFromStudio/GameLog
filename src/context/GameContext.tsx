@@ -9,7 +9,7 @@ export interface GameContextProps {
   deleteGame: (id: string) => void;
   addGame: (game: game) => void;
   updateGame: (updatedGame: game) => void;
-  getFilteredGames: (name: string | null, filter: string) => game[];
+  getFilteredGames: (name: string | null, filter: string[]) => game[];
   saveData: (saveMode: number) => void;
   loadData: (data: string) => void;
 }

@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 import Card from '../components/Card';
 import { DisplayProps, game, states } from '../types';
-import { FaSortAmountDownAlt, FaSortAmountDown } from 'react-icons/fa';
-import { MdCategory, MdOutlineCategory } from 'react-icons/md';
-import { IoIosAddCircle, IoMdSettings } from 'react-icons/io';
+import { IoIosAddCircle } from 'react-icons/io';
 import { useGameContext } from '../context/GameContext';
 import { useSettingsContext } from '../context/SettingsContext';
 import { useState } from 'react';
@@ -11,26 +9,12 @@ import { createPortal } from 'react-dom';
 import AddGameForm from '../components/AddGameForm';
 import Button from '../components/UI/Button';
 import Input from '../components/UI/Input';
-import Select from '../components/UI/Select';
 import { ImDice } from 'react-icons/im';
 import RandomGamePopup from '../components/RandomGamePopup';
-import { Link } from 'react-router-dom';
 
 const Display = ({ games, setSearch, search }: DisplayProps) => {
   const { deleteGame } = useGameContext();
-  const {
-    filter,
-    setFilter,
-    isAscending,
-    setIsAscending,
-    sortMethod,
-    setSortMethod,
-    categorize,
-    setCategorize,
-    categorizeBy,
-    setCategorizeBy,
-    cardsPerRow,
-  } = useSettingsContext();
+  const { categorize, categorizeBy, cardsPerRow } = useSettingsContext();
 
   const [showAddGameFormModal, setShowAddGameFormModal] = useState(false);
   const [showRandomGameModal, setShowRandomGameModal] = useState(false);
@@ -52,17 +36,6 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-  };
-  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFilter(e.target.value);
-  };
-  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortMethod(e.target.value);
-  };
-  const handleCategorizeByChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setCategorizeBy(e.target.value);
   };
 
   const generateCategories = () => {
@@ -142,73 +115,7 @@ const Display = ({ games, setSearch, search }: DisplayProps) => {
               name='search'
               value={search ?? ''}
             />
-            <Link className='link' to='/settings'>
-              <Button icon={<IoMdSettings size={50} />} onClick={() => null} />
-            </Link>
-          </div>
-          <div className='sort-filters'>
-            <div className='sort-container'>
-              <h1>Sort by:</h1>
-              <Select
-                name='sort'
-                value={sortMethod}
-                onChange={handleSortChange}
-                options={[
-                  { value: 'byname', label: 'Name' },
-                  { value: 'byreview', label: 'Rating' },
-                ]}
-              />
-              <Button
-                icon={
-                  isAscending ? (
-                    <FaSortAmountDownAlt size={30} />
-                  ) : (
-                    <FaSortAmountDown size={30} />
-                  )
-                }
-                onClick={() => setIsAscending(!isAscending)}
-              />
-            </div>
-            <div className='sort-container'>
-              <h1>Filter by:</h1>
-              <Select
-                name='state'
-                value={filter}
-                onChange={handleFilterChange}
-                options={
-                  [{ value: 'all', label: 'All' }].concat(
-                    Object.keys(states).map((key, index) => ({
-                      value: key,
-                      label: Object.values(states)[index],
-                    }))
-                  ) ?? []
-                }
-              />
-              <Button icon={<ImDice size={30} />} onClick={handleRandomGame} />
-            </div>
-
-            <div className='sort-container'>
-              <h1>Group by:</h1>
-              <Select
-                name='categorize'
-                value={categorizeBy}
-                onChange={handleCategorizeByChange}
-                options={[
-                  { value: 'state', label: 'State' },
-                  { value: 'platform', label: 'Platform' },
-                ]}
-              />
-              <Button
-                icon={
-                  categorize ? (
-                    <MdCategory size={30} />
-                  ) : (
-                    <MdOutlineCategory size={30} />
-                  )
-                }
-                onClick={() => setCategorize(!categorize)}
-              />
-            </div>
+            <Button icon={<ImDice size={30} />} onClick={handleRandomGame} />
           </div>
         </div>
       </div>
@@ -249,7 +156,6 @@ const Wrapper = styled.div<{ $cardsPerRow: number }>`
     flex-wrap: wrap;
     gap: 30px;
     @media (max-width: 768px) {
-      flex-direction: column;
       gap: 10px;
     }
   }

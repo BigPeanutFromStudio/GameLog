@@ -22,7 +22,16 @@ export const GlobalStyle = createGlobalStyle<Props>`
     color: ${(props) => props.theme.colors.text};
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+  }
+
+  h1{
+    font-size: var(--large-font);
+  }
+  h2{
+    font-size: var(--medium-font);
+  }
+  h3{
+    font-size: var(--small-font);
   }
 
   :root {
@@ -32,11 +41,12 @@ export const GlobalStyle = createGlobalStyle<Props>`
     --secondary-color: ${(props) => props.theme.colors.secondary};
     --accent-color: ${(props) => props.theme.colors.accent};
 
-    --small-font: ${(props) => props.theme.fontSizes.small};
-    --medium-font: ${(props) => props.theme.fontSizes.medium};
-    --large-font: ${(props) => props.theme.fontSizes.large};
-    --xlarge-font: ${(props) => props.theme.fontSizes.xlarge};
+    --small-font: 1.5rem;
+    --medium-font: 2rem;
+    --large-font: 2.5rem;
+    --xlarge-font: 3rem;
 
     --border-radius: ${(props) => props.theme.borderRadius};
+
   }
 `;

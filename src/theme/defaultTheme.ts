@@ -1,4 +1,5 @@
 export const defaultTheme = {
+  name: 'Chocolatey',
   colors: {
     primary: '#664343',
     secondary: '#3b3030',
@@ -6,17 +7,12 @@ export const defaultTheme = {
     text: '#fff0d1',
     accent: '#fff0d1',
   },
-  fontSizes: {
-    small: '1.75rem',
-    medium: '2.375rem',
-    large: '3rem',
-    xlarge: '4.375rem',
-  },
   borderRadius: '10px',
   font: 'Lexend',
 };
 
 export const preset1Theme = {
+  name: 'Midnight',
   colors: {
     primary: '#352f44',
     secondary: '#2a2438',
@@ -24,17 +20,12 @@ export const preset1Theme = {
     text: '#dbd8e3',
     accent: '#dbd8e3',
   },
-  fontSizes: {
-    small: '1.75rem',
-    medium: '2.375rem',
-    large: '3rem',
-    xlarge: '4.375rem',
-  },
   borderRadius: '10px',
   font: 'Lexend',
 };
 
 export const preset2Theme = {
+  name: 'Light',
   colors: {
     primary: '#3ca8c3',
     secondary: '#1d9083',
@@ -42,29 +33,18 @@ export const preset2Theme = {
     text: '#2c2b2b',
     accent: '#3e3e3c',
   },
-  fontSizes: {
-    small: '1.75rem',
-    medium: '2.375rem',
-    large: '3rem',
-    xlarge: '4.375rem',
-  },
   borderRadius: '10px',
   font: 'Lexend',
 };
 
 export const preset3Theme = {
+  name: 'Dark',
   colors: {
     primary: '#383733',
     secondary: '#2b2a27',
     background: '#272525',
     text: '#ad8e1f',
     accent: '#ad8e1f',
-  },
-  fontSizes: {
-    small: '1.75rem',
-    medium: '2.375rem',
-    large: '3rem',
-    xlarge: '4.375rem',
   },
   borderRadius: '10px',
   font: 'Lexend',

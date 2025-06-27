@@ -14,8 +14,8 @@ export const themes = {
 };
 
 interface SettingsContextProps {
-  filter: string;
-  setFilter: React.Dispatch<React.SetStateAction<string>>;
+  filter: string[];
+  setFilter: React.Dispatch<React.SetStateAction<string[]>>;
   isAscending: boolean;
   setIsAscending: React.Dispatch<React.SetStateAction<boolean>>;
   sortMethod: string;
@@ -50,7 +50,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const initialSettings: {
-    filter: string;
+    filter: string[];
     sortMethod: string;
     isAscending: boolean;
     categorize: boolean;
@@ -60,7 +60,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     savedTheme: typeof defaultTheme;
   } = JSON.parse(
     localStorage.getItem('settings') ||
-      `{ "filter": "all", "sortMethod": "byname", "isAscending": true, "categorize": false, "categorizeBy":"state",  "cardsPerRow": "6", "theme": ${JSON.stringify(
+      `{ "filter": ["100%", "Finished", "Playing", "Queued", "Abandoned"], "sortMethod": "byname", "isAscending": true, "categorize": false, "categorizeBy":"state",  "cardsPerRow": "6", "theme": ${JSON.stringify(
         defaultTheme
       )}, "savedTheme": ${JSON.stringify(defaultTheme)}}`
   );

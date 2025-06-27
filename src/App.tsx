@@ -12,7 +12,8 @@ import {
 import { useSettingsContext } from './context/SettingsContext';
 import { GlobalStyle } from './components/GlobalStyles.tsx';
 import SettingsMenu from './pages/SettingsMenu.tsx';
-import Footer from './components/Footer.tsx';
+import Navbar from './components/Navbar.tsx';
+import ThemeSettingsPage from './pages/ThemeSettingsPage.tsx';
 
 // TODO: Allow the user to choose which category to randomize from
 // TODO: Add tooltips to buttons
@@ -20,7 +21,11 @@ import Footer from './components/Footer.tsx';
 // TODO: Improve data settings tab
 // TODO: Improve scaling on mobile (maybe more)
 // TODO: Allow to make background into an image
-// TODO: Add shadow color option (?)
+// TODO: Change sort to view or something
+// TODO: Sidebar lower bar with socials and kofi
+// TODO: Friends, see others libraries?
+// TODO: Not forget about the add game button and stuff
+// TODO: Make selects also animate the same way as other inputs
 
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
 function App() {
@@ -119,7 +124,7 @@ function App() {
   );
 
   const getFilteredGames = useCallback(
-    (name: string | null, filter: string | states) => {
+    (name: string | null, filter: string[] | states) => {
       return getFilteredGamesUtil(games, name, filter);
     },
     [games]
@@ -177,6 +182,7 @@ function App() {
       <GlobalStyle theme={theme} />
       <Wrapper>
         <BrowserRouter>
+          <Navbar />
           <Routes>
             <Route
               path='/'
@@ -188,10 +194,10 @@ function App() {
                 />
               }
             />
+            <Route path='/theme-settings' element={<ThemeSettingsPage />} />
             <Route path='/settings' element={<SettingsMenu />} />
           </Routes>
         </BrowserRouter>
-        <Footer />
       </Wrapper>
     </GameProvider>
   );
@@ -205,6 +211,5 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: var(--background-color);
-  box-sizing: border-box;
   color: var(--text-color);
 `;

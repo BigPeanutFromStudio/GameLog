@@ -4,7 +4,7 @@ import { defaultTheme } from '../theme/defaultTheme';
 
 export const saveData = (
   games: game[],
-  filter: string,
+  filter: string[],
   sortMethod: string,
   isAscending: boolean,
   categorize: boolean,
@@ -52,7 +52,7 @@ export const saveData = (
 export const loadData = (
   data: string,
   setGames: React.Dispatch<React.SetStateAction<game[]>>,
-  setFilter: React.Dispatch<React.SetStateAction<string>>,
+  setFilter: React.Dispatch<React.SetStateAction<string[]>>,
   setSortMethod: React.Dispatch<React.SetStateAction<string>>,
   setIsAscending: React.Dispatch<React.SetStateAction<boolean>>,
   setCategorize: React.Dispatch<React.SetStateAction<boolean>>,
@@ -85,7 +85,7 @@ export const loadData = (
 export const getFilteredGames = (
   games: game[],
   name: string | null,
-  filter: string | states
+  filter: string[] | states
 ) => {
   let filteredGames = [...games];
   if (name !== null && name !== '') {
@@ -93,10 +93,6 @@ export const getFilteredGames = (
       game.name.toLocaleLowerCase().startsWith(name.toLocaleLowerCase())
     );
   }
-  if (filter === 'all') {
-    return filteredGames;
-  } else {
-    filter = filter === 'FinishedFully' ? '100%' : filter;
-    return filteredGames.filter((game) => game.state == filter);
-  }
+
+  return filteredGames.filter((game) => filter.includes(game.state));
 };
