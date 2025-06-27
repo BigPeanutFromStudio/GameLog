@@ -23,11 +23,9 @@ import ThemeSettingsPage from './pages/ThemeSettingsPage.tsx';
 // TODO: Allow to make background into an image
 // TODO: Change sort to view or something
 // TODO: Sidebar lower bar with socials and kofi
-// TODO: GameNote, GameVault, GameDairy, GameTracker
 // TODO: Friends, see others libraries?
 // TODO: Not forget about the add game button and stuff
 // TODO: Make selects also animate the same way as other inputs
-// TODO: Saving custom theme should change current theme to custom
 
 const initialGames = JSON.parse(localStorage.getItem('games') || '[]');
 function App() {

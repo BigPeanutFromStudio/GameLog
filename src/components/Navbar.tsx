@@ -1,10 +1,15 @@
 import { useEffect, useMemo, useState } from 'react';
-import { IoMdClose, IoMdHome, IoMdMenu, IoMdSettings } from 'react-icons/io';
+import { IoMdClose, IoMdHome, IoMdMenu } from 'react-icons/io';
 import styled from 'styled-components';
 import Select, { MultiValue, SingleValue, StylesConfig } from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { themes, useSettingsContext } from '../context/SettingsContext';
-import { FaGithub, FaSortAmountDown, FaSortAmountUp } from 'react-icons/fa';
+import {
+  FaGithub,
+  FaPaintBrush,
+  FaSortAmountDown,
+  FaSortAmountUp,
+} from 'react-icons/fa';
 import ReactSlider from 'react-slider';
 import { Link } from 'react-router-dom';
 import {
@@ -14,6 +19,7 @@ import {
   themeOption,
 } from '../types';
 import { FaBluesky } from 'react-icons/fa6';
+import { IoSettings } from 'react-icons/io5';
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -252,6 +258,9 @@ const Navbar = () => {
         <Link className='link' to='/'>
           <IoMdHome size={50} className='icon-button' />
         </Link>
+        <Link className='link' to='/settings'>
+          <IoSettings size={40} className='icon-button' />
+        </Link>
       </nav>
       <div className='overlay'></div>
       <Sidebar isOpen={isSidebarOpen}>
@@ -265,7 +274,7 @@ const Navbar = () => {
           </div>
           <div className='middle-part'>
             <section>
-              <h1 className='title'>Sort</h1>
+              <h1 className='title'>View</h1>
               <div className='options'>
                 <div className='group'>
                   <label>Card Per Row: </label>
@@ -372,7 +381,7 @@ const Navbar = () => {
                   to='/theme-settings'
                   onClick={() => setIsSidebarOpen(false)}
                 >
-                  <IoMdSettings className='title-icon icon-button' size={30} />
+                  <FaPaintBrush className='title-icon icon-button' size={30} />
                 </Link>
               </div>
               <div className='options'>
